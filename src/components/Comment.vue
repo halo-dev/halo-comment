@@ -1,18 +1,44 @@
 <template>
   <div>
     Comments of {{ id }}
-    <comment-tree
-      v-for="(comment,index) in comments"
-      :key="index"
-      :comment="comment"
-    />
-    <a-pagination
-      class="center"
-      :defaultCurrent="pagination.page"
-      :pageSize="pagination.rpp"
-      :total="pagination.total"
-      @change="handlePaginationChange"
-    />
+    <a-row>
+      <a-col :span="24">
+        <a-comment>
+          <a-avatar
+            slot="avatar"
+            src="//gravatar.loli.net/avatar?s=256&d=mp"
+            alt="Han Solo"
+          />
+          <div slot="content">
+            <a-form-item>
+              <a-textarea :rows="4"></a-textarea>
+            </a-form-item>
+            <a-form-item>
+              <a-button
+                htmlType="submit"
+                type="primary"
+              >
+                提交评论
+              </a-button>
+            </a-form-item>
+          </div>
+        </a-comment>
+      </a-col>
+      <a-col :span="24">
+        <comment-tree
+          v-for="(comment,index) in comments"
+          :key="index"
+          :comment="comment"
+        />
+        <a-pagination
+          class="center"
+          :defaultCurrent="pagination.page"
+          :pageSize="pagination.rpp"
+          :total="pagination.total"
+          @change="handlePaginationChange"
+        />
+      </a-col>
+    </a-row>
   </div>
 </template>
 
