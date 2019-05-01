@@ -7,7 +7,9 @@
       :comment="comment"
     />
     <a-pagination
+      class="center"
       :defaultCurrent="pagination.page"
+      :pageSize="pagination.rpp"
       :total="pagination.total"
       @change="handlePaginationChange"
     />
@@ -43,7 +45,7 @@ export default {
       comments: [],
       pagination: {
         page: 1,
-        total: 0,
+        total: 0
       }
     }
   },
@@ -57,9 +59,10 @@ export default {
       commentApi.listPostComment(this.id, pagination, 'tree_view').then(response => {
         this.comments = response.data.data.content
         this.pagination.total = response.data.data.total
+        this.pagination.rpp = response.data.data.rpp
       })
     },
-    handlePaginationChange(page, size) {
+    handlePaginationChange(page) {
       this.pagination.page = page
       this.loadComments()
     }
@@ -68,4 +71,7 @@ export default {
 </script>
 
 <style>
+.center {
+  text-align: center;
+}
 </style>
