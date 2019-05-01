@@ -25,11 +25,13 @@
         </a-comment>
       </a-col>
       <a-col :span="24">
-        <comment-tree
-          v-for="(comment,index) in comments"
-          :key="index"
-          :comment="comment"
-        />
+        <a-spin :spinning="spinning">
+          <comment-tree
+            v-for="(comment,index) in comments"
+            :key="index"
+            :comment="comment"
+          />
+        </a-spin>
         <a-pagination
           class="center"
           :defaultCurrent="pagination.page"
@@ -72,7 +74,8 @@ export default {
       pagination: {
         page: 1,
         total: 0
-      }
+      },
+      spinning: true
     }
   },
   created() {
@@ -82,10 +85,12 @@ export default {
     loadComments() {
       const pagination = Object.assign({}, this.pagination)
       pagination.page--
+      this.spinning = true
       commentApi.listPostComment(this.id, pagination, 'tree_view').then(response => {
         this.comments = response.data.data.content
         this.pagination.total = response.data.data.total
         this.pagination.rpp = response.data.data.rpp
+        this.spinning = false
       })
     },
     handlePaginationChange(page) {
