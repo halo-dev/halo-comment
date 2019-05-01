@@ -10,9 +10,22 @@
             alt="Han Solo"
           />
           <div slot="content">
-            <a-form-item>
-              <a-textarea :rows="4"></a-textarea>
-            </a-form-item>
+            <a-tabs type="card">
+              <a-tab-pane
+                tab="Write"
+                key="1"
+              >
+                <a-form-item>
+                  <a-textarea :rows="4" v-model="content"></a-textarea>
+                </a-form-item>
+              </a-tab-pane>
+              <a-tab-pane
+                tab="Preview"
+                key="2"
+              >
+                <div v-html="compiledMarkdown"></div>
+              </a-tab-pane>
+            </a-tabs>
             <a-form-item>
               <a-button
                 htmlType="submit"
@@ -47,6 +60,7 @@
 <script>
 import commentApi from '@/apis/comment'
 import CommentTree from './CommentTree'
+import marked from 'marked'
 
 export default {
   components: {
@@ -75,7 +89,13 @@ export default {
         page: 1,
         total: 0
       },
-      spinning: true
+      spinning: true,
+      content: '# Hello World!'
+    }
+  },
+  computed: {
+    compiledMarkdown: function () {
+      return marked(this.content, { sanitize: true })
     }
   },
   created() {
