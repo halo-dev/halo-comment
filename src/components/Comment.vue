@@ -105,6 +105,16 @@
             ></button>
             {{ error }}
           </div>
+          <div
+            v-if="tip"
+            class="toast toast-success"
+          >
+            <button
+              class="btn btn-clear float-right"
+              @click="tip = null"
+            ></button>
+            {{ tip }}
+          </div>
           <button
             class="btn"
             @click="handleComment"
@@ -150,8 +160,6 @@
 </template>
 
 <script>
-// import 'spectre.css/dist/spectre.min.css'
-
 import commentApi from '@/apis/comment'
 import CommentTree from './CommentTree'
 import CommentNode from './CommentNode'
@@ -197,7 +205,8 @@ export default {
         parentId: 0,
         postId: this.id
       },
-      fieldError: null
+      fieldError: null,
+      tip: null
     }
   },
   computed: {
@@ -259,7 +268,7 @@ export default {
 
       commentApi
         .createComment(this.comment, this.type)
-        .then(() => {
+        .then(response => {
           this.fieldError = null
           this.replyComment = null
           this.loadComments()
@@ -267,6 +276,14 @@ export default {
           localStorage.setItem('author', this.comment.author)
           localStorage.setItem('email', this.comment.email)
           localStorage.setItem('authorUrl', this.comment.authorUrl)
+
+          if (response && response.data && response.data.data) {
+            const createdComment = response.data.data
+            this.$log.debug('Created comment', createdComment)
+            if (createdComment.status === 'AUDITING') {
+              this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
+            }
+          }
         })
         .catch(error => {
           this.$log.debug('Error', error)
