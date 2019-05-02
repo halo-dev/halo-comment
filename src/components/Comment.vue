@@ -1,71 +1,117 @@
 <template>
   <div>
     Comments of {{ id }}
-    <a-row>
-      <a-col :span="24">
-        <a-comment>
-          <a-avatar
-            slot="avatar"
-            src="//gravatar.loli.net/avatar?s=256&d=mp"
-            alt="Han Solo"
-          />
-          <div slot="content">
-            <a-tabs type="card">
-              <a-tab-pane
-                tab="Write"
-                key="1"
+    <hr />
+    <comment-node>
+      <figure
+        class="avatar avatar-lg"
+        slot="comment-icon"
+      >
+        <img
+          src="//gravatar.loli.net/avatar?s=256&d=mp"
+          alt="Annoymouse"
+        >
+      </figure>
+
+      <div
+        class="panel"
+        slot="comment-content"
+      >
+        <div
+          class="panel-header"
+          v-if="replyComment"
+        >
+          回复: {{ replyComment.author }}
+          <blockquote class="blockquote">
+            {{ replyComment.content }}
+          </blockquote>
+        </div>
+        <div class="panel-nav">
+          <ul class="tab">
+            <li class="tab-item">
+              <a
+                :class="{active: editActivated}"
+                @click="editActivate"
               >
-                <a-form-item>
-                  <a-textarea :rows="4" v-model="content"></a-textarea>
-                </a-form-item>
-              </a-tab-pane>
-              <a-tab-pane
-                tab="Preview"
-                key="2"
-              >
-                <div v-html="compiledMarkdown"></div>
-              </a-tab-pane>
-            </a-tabs>
-            <a-form-item>
-              <a-button
-                htmlType="submit"
-                type="primary"
-              >
-                提交评论
-              </a-button>
-            </a-form-item>
+                编辑
+              </a>
+            </li>
+            <li class="tab-item">
+              <a
+                :class="{active: previewActivated}"
+                @click="previewActivate"
+              >预览</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="panel-body">
+          <div v-show="editActivated">
+            <textarea
+              class="form-input comment-textarea"
+              name="comment-editor"
+              id="comment-editor"
+              rows="6"
+              v-model="content"
+            ></textarea>
+            <p class="comment-textarea-tip">支持 markdown 格式</p>
           </div>
-        </a-comment>
-      </a-col>
-      <a-col :span="24">
-        <a-spin :spinning="spinning">
-          <comment-tree
-            v-for="(comment,index) in comments"
-            :key="index"
-            :comment="comment"
-          />
-        </a-spin>
-        <a-pagination
-          class="center"
-          :defaultCurrent="pagination.page"
-          :pageSize="pagination.rpp"
-          :total="pagination.total"
-          @change="handlePaginationChange"
-        />
-      </a-col>
-    </a-row>
+
+          <div v-show="previewActivated">
+            <div
+              class="markdown-content"
+              v-html="compileContent"
+            ></div>
+          </div>
+
+        </div>
+
+        <div class="panel-footer">
+          <button class="btn">
+            <i class="icon icon-upload"></i>
+            提交评论
+          </button>
+        </div>
+      </div>
+    </comment-node>
+
+    <div
+      class="divider text-center"
+      data-content="评论"
+    ></div>
+
+    <comment-tree
+      v-for="(comment,index) in comments"
+      :key="index"
+      :comment="comment"
+      @reply="handleReplyClick"
+    />
+    <div
+      class="p-centered text-center"
+      v-if="!havingComment"
+    >
+      <span>Ops! 当前暂无评论</span>
+    </div>
+    <pagination
+      :hasPrev="false"
+      :hasNext="true"
+    />
   </div>
 </template>
 
 <script>
+// import 'spectre.css/dist/spectre.min.css'
+
 import commentApi from '@/apis/comment'
 import CommentTree from './CommentTree'
+import CommentNode from './CommentNode'
+import Pagination from './Pagination'
+
 import marked from 'marked'
-import '../use'
 
 export default {
   name: 'Comment',
-  components: { CommentTree },
+  components: { CommentTree, CommentNode, Pagination },
   props: {
     id: {
       type: Number,
@@ -90,18 +136,32 @@ export default {
         total: 0
       },
       spinning: true,
-      content: '# Hello World!'
+      content: '# Hello World!',
+      editActivated: true,
+      previewActivated: false,
+      replyComment: null
     }
   },
   computed: {
-    compiledMarkdown: function () {
+    compileContent() {
       return marked(this.content, { sanitize: true })
+    },
+    havingComment() {
+      return this.comments && this.comments.length > 0
     }
   },
   created() {
     this.loadComments()
   },
   methods: {
+    editActivate() {
+      this.editActivated = true
+      this.previewActivated = false
+    },
+    previewActivate() {
+      this.editActivated = false
+      this.previewActivated = true
+    },
     loadComments() {
       const pagination = Object.assign({}, this.pagination)
       pagination.page--
@@ -116,15 +176,39 @@ export default {
     handlePaginationChange(page) {
       this.pagination.page = page
       this.loadComments()
+    },
+    handleReplyClick(comment) {
+      this.replyComment = comment
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
-@import '~ant-design-vue/dist/antd.css';
+<style lang="scss">
+@import '~spectre.css/src/spectre.scss';
+@import '~spectre.css/src/spectre-icons.scss';
 
 .center {
   text-align: center;
+}
+.comment-textarea {
+  border-bottom: 1px dashed #dfe2e5;
+}
+
+.comment-textarea-tip {
+  padding: 0.5rem;
+  border: 1px solid #dfe2e5;
+  border-top: 0;
+  margin-bottom: 0;
+}
+
+.tab-item {
+  a {
+    cursor: pointer;
+  }
+}
+
+.markdown-content {
+  padding: 0.5rem;
 }
 </style>

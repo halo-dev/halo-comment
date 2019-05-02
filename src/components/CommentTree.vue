@@ -1,36 +1,52 @@
 <template>
-  <a-comment v-if="comment">
-    <span slot="actions">回复</span>
-    <a slot="author">{{ comment.author }}</a>
-    <a-avatar
-      slot="avatar"
-      :src="avatar"
-      :alt="comment.author"
-    />
-    <p
-      slot="content"
-      v-html="comment.content"
-    />
-    <a-tooltip
-      slot="datetime"
-      :title="comment.userAgent"
-    >
-      <span>{{ createTimeAgo }} ago</span>
-    </a-tooltip>
-    <template v-if="comment.children">
-      <comment-tree
-        v-for="(child, index) in comment.children"
-        :key="index"
-        :comment="child"
+  <div>
+    <comment-node v-if="comment">
+      <figure
+        class="avatar avatar-lg"
+        slot="comment-icon"
+      >
+        <img
+          :src="avatar"
+          :alt="comment.author"
+        >
+      </figure>
+
+      <span slot="comment-title">{{ createTimeAgo }} ago</span>
+      <p
+        slot="comment-content"
+        v-html="comment.content"
       />
-    </template>
-  </a-comment>
+
+      <p slot="comment-action-bottom">
+        <button
+          class="btn btn-sm"
+          @click="handleReplyClick"
+        >回复</button>
+      </p>
+
+      <template v-if="comment.children">
+        <comment-tree
+          slot="comment-inner"
+          v-for="(child, index) in comment.children"
+          :key="index"
+          :comment="child"
+        />
+      </template>
+
+    </comment-node>
+  </div>
 </template>
 
 <script>
 import { timeAgo } from '@/utils/time'
+
+import CommentNode from './CommentNode'
+
 export default {
   name: 'CommentTree',
+  components: {
+    CommentNode
+  },
   props: {
     comment: {
       type: Object,
@@ -45,10 +61,14 @@ export default {
     createTimeAgo() {
       return timeAgo(this.comment.createTime)
     }
+  },
+  methods: {
+    handleReplyClick() {
+      this.$emit('reply', this.comment)
+    }
   }
 }
 </script>
 
-<style lang="less" scoped>
-@import '~ant-design-vue/dist/antd.css';
+<style lang="scss">
 </style>
