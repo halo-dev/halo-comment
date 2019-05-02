@@ -16,7 +16,8 @@
     "marked": "^0.6.2",
     "nprogress": "^0.2.0",
     "spectre.css": "^0.5.8",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuejs-logger": "^1.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",

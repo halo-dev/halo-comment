@@ -1,27 +1,25 @@
 <template>
   <div>
     <div class="tile">
-      <slot
-        name="comment-icon"
-        class="tile-icon"
-      />
+      <div class="tile-icon">
+        <slot name="comment-icon" />
+      </div>
       <div class="tile-content">
-        <slot
-          name="comment-title"
-          class="tile-title"
-        />
-        <slot
-          name="comment-content"
-          class="tile-subtitle"
-        />
+        <div class="tile-title">
+          <slot name="comment-title" />
+        </div>
+
+        <div class="tile-subtitle">
+          <slot name="comment-content" />
+        </div>
         <slot name="comment-action-bottom" />
 
         <slot name="comment-inner" />
       </div>
-      <slot
-        name="comment-action"
-        class="tile-action"
-      />
+
+      <div class="tile-action">
+        <slot name="comment-action" />
+      </div>
     </div>
   </div>
 </template>

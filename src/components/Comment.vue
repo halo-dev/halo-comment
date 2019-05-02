@@ -1,7 +1,5 @@
 <template>
   <div>
-    Comments of {{ id }}
-    <hr />
     <comment-node>
       <figure
         class="avatar avatar-lg"
@@ -22,9 +20,19 @@
           v-if="replyComment"
         >
           回复: {{ replyComment.author }}
-          <blockquote class="blockquote">
-            {{ replyComment.content }}
+          <blockquote
+            class="blockquote"
+            v-html="replyComment.content"
+          >
           </blockquote>
+
+          <button
+            class="btn"
+            @click="replyComment = null"
+          >
+            <i class="icon icon-cross"></i>
+            取消
+          </button>
         </div>
         <div class="panel-nav">
           <ul class="tab">
@@ -46,16 +54,35 @@
         </div>
 
         <div class="panel-body">
-          <div v-show="editActivated">
+          <form v-show="editActivated">
+            <div class="columns input-wrapper">
+              <input
+                v-model="comment.email"
+                class="form-input col-4 col-sm-12"
+                type="email"
+                placeholder="邮箱"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
+              />
+              <input
+                v-model="comment.author"
+                class="form-input col-4 col-sm-12"
+                placeholder="昵称"
+              />
+              <input
+                v-model="comment.authorUrl"
+                class="form-input col-4 col-sm-12"
+                placeholder="个人网址"
+              />
+            </div>
             <textarea
               class="form-input comment-textarea"
               name="comment-editor"
               id="comment-editor"
               rows="6"
-              v-model="content"
+              v-model="comment.content"
             ></textarea>
-            <p class="comment-textarea-tip">支持 markdown 格式</p>
-          </div>
+            <p class="form-input-hint comment-textarea-tip">支持 markdown 格式</p>
+          </form>
 
           <div v-show="previewActivated">
             <div
@@ -67,7 +94,21 @@
         </div>
 
         <div class="panel-footer">
-          <button class="btn">
+          <div
+            class="toast toast-error"
+            v-for="(error, index) in errors"
+            :key="index"
+          >
+            <button
+              class="btn btn-clear float-right"
+              @click="fieldError = null"
+            ></button>
+            {{ error }}
+          </div>
+          <button
+            class="btn"
+            @click="handleComment"
+          >
             <i class="icon icon-upload"></i>
             提交评论
           </button>
@@ -86,13 +127,22 @@
       :comment="comment"
       @reply="handleReplyClick"
     />
+
     <div
-      class="p-centered text-center"
+      class="empty"
       v-if="!havingComment"
     >
-      <span>Ops! 当前暂无评论</span>
+      <div class="empty-icon">
+        <i class="icon icon-3x icon-people"></i>
+      </div>
+      <p class="empty-title h5">当前还没有人留言</p>
+      <p class="empty-subtitle">有什么想对作者说的么?</p>
+      <div class="empty-action">
+        <button class="btn btn-primary">请留言</button>
+      </div>
     </div>
     <pagination
+      v-else
       :hasPrev="false"
       :hasNext="true"
     />
@@ -136,22 +186,44 @@ export default {
         total: 0
       },
       spinning: true,
-      content: '# Hello World!',
       editActivated: true,
       previewActivated: false,
-      replyComment: null
+      replyComment: null,
+      comment: {
+        author: null,
+        authorUrl: null,
+        content: '# Hello World!',
+        email: null,
+        parentId: 0,
+        postId: this.id
+      },
+      fieldError: null
     }
   },
   computed: {
     compileContent() {
-      return marked(this.content, { sanitize: true })
+      return marked(this.comment.content, { sanitize: true })
     },
     havingComment() {
       return this.comments && this.comments.length > 0
+    },
+    errors() {
+      const errors = []
+      if (this.fieldError) {
+        Object.keys(this.fieldError).forEach(key => {
+          errors.push(this.fieldError[key])
+        })
+      }
+      return errors
     }
   },
   created() {
     this.loadComments()
+
+    // Load user data
+    this.comment.author = localStorage.getItem('author')
+    this.comment.email = localStorage.getItem('email')
+    this.comment.authorUrl = localStorage.getItem('authorUrl')
   },
   methods: {
     editActivate() {
@@ -179,6 +251,36 @@ export default {
     },
     handleReplyClick(comment) {
       this.replyComment = comment
+    },
+    handleComment() {
+      if (this.replyComment) {
+        this.comment.parentId = this.replyComment.id
+      }
+
+      commentApi
+        .createComment(this.comment, this.type)
+        .then(() => {
+          this.fieldError = null
+          this.replyComment = null
+          this.loadComments()
+          // Set local storage
+          localStorage.setItem('author', this.comment.author)
+          localStorage.setItem('email', this.comment.email)
+          localStorage.setItem('authorUrl', this.comment.authorUrl)
+        })
+        .catch(error => {
+          this.$log.debug('Error', error)
+          if (error.response) {
+            this.fieldError = error.response.data.data
+            if (this.fieldError) {
+              this.fieldError.message = error.response.data.message
+            } else {
+              this.fieldError = { message: error.response.data.message }
+            }
+          } else {
+            this.fieldError = { message: '服务器响应失败' }
+          }
+        })
     }
   }
 }
@@ -191,6 +293,24 @@ export default {
 .center {
   text-align: center;
 }
+
+.input-wrapper {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.form-input {
+  border-radius: 0;
+}
+
+.panel .panel-body {
+  padding: 0;
+}
+
+.toast {
+  margin-bottom: 0.8rem;
+}
+
 .comment-textarea {
   border-bottom: 1px dashed #dfe2e5;
 }
@@ -200,6 +320,7 @@ export default {
   border: 1px solid #dfe2e5;
   border-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .tab-item {

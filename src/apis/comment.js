@@ -13,7 +13,7 @@ function listComment(target, targetId, view, pagination) {
   return service({
     url: `${baseUrl}/${target}/${targetId}/comments/${view}`,
     params: pagination,
-    methods: 'get'
+    method: 'get'
   })
 }
 
@@ -25,7 +25,7 @@ function listComment(target, targetId, view, pagination) {
 function createComment(target, comment) {
   return service({
     url: `${baseUrl}/${target}/comments`,
-    methods: 'post',
+    method: 'post',
     data: comment
   })
 }
@@ -54,6 +54,18 @@ commentApi.createSheetComment = comment => {
 
 commentApi.createJournalComment = comment => {
   return createComment('journals', comment)
+}
+
+commentApi.createComment = (comment, type) => {
+  if (type == 'sheet') {
+    return commentApi.createSheetComment(comment)
+  }
+
+  if (type == 'journal') {
+    return commentApi.createJournalComment(comment)
+  }
+
+  return commentApi.createPostComment(comment)
 }
 
 export default commentApi
