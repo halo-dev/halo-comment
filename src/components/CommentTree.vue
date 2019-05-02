@@ -49,5 +49,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+@import '~ant-design-vue/dist/antd.css';
 </style>

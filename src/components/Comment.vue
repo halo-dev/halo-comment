@@ -61,11 +61,11 @@
 import commentApi from '@/apis/comment'
 import CommentTree from './CommentTree'
 import marked from 'marked'
+import '../use'
 
 export default {
-  components: {
-    CommentTree
-  },
+  name: 'Comment',
+  components: { CommentTree },
   props: {
     id: {
       type: Number,
@@ -121,7 +121,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+@import '~ant-design-vue/dist/antd.css';
+
 .center {
   text-align: center;
 }
