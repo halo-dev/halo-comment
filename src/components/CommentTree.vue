@@ -2,7 +2,7 @@
   <div>
     <comment-node v-if="comment">
       <figure
-        class="avatar"
+        class="avatar avatar-lg"
         slot="comment-icon"
       >
         <img

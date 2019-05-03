@@ -6,7 +6,7 @@
         slot="comment-icon"
       >
         <img
-          src="//gravatar.loli.net/avatar?s=256&d=mp"
+          :src="avatar"
           alt="Annoymouse"
         >
       </figure>
@@ -57,16 +57,16 @@
           <form v-show="editActivated">
             <div class="columns input-wrapper">
               <input
+                v-model="comment.author"
+                class="form-input col-4 col-sm-12"
+                placeholder="*昵称"
+              />
+              <input
                 v-model="comment.email"
                 class="form-input col-4 col-sm-12"
                 type="email"
                 placeholder="邮箱"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
-              />
-              <input
-                v-model="comment.author"
-                class="form-input col-4 col-sm-12"
-                placeholder="昵称"
               />
               <input
                 v-model="comment.authorUrl"
@@ -81,7 +81,7 @@
               rows="6"
               v-model="comment.content"
             ></textarea>
-            <p class="form-input-hint comment-textarea-tip">支持 markdown 格式</p>
+            <p class="form-input-hint comment-textarea-tip">Markdown Support</p>
           </form>
 
           <div v-show="previewActivated">
@@ -116,11 +116,10 @@
             {{ tip }}
           </div>
           <button
-            class="btn"
+            class="btn pull-right"
             @click="handleComment"
           >
-            <i class="icon icon-upload"></i>
-            提交评论
+            提交
           </button>
         </div>
       </div>
@@ -212,6 +211,9 @@ export default {
     }
   },
   computed: {
+    avatar() {
+      return `//gravatar.loli.net/avatar/${this.comment.gavatarMd5}/?s=256&d=mp`
+    },
     compileContent() {
       return marked(this.comment.content, { sanitize: true })
     },
@@ -235,6 +237,7 @@ export default {
     this.comment.author = localStorage.getItem('author')
     this.comment.email = localStorage.getItem('email')
     this.comment.authorUrl = localStorage.getItem('authorUrl')
+    this.comment.gavatarMd5 = localStorage.getItem('avatar')
   },
   methods: {
     editActivate() {
@@ -278,6 +281,7 @@ export default {
           if (response && response.data && response.data.data) {
             const createdComment = response.data.data
             this.$log.debug('Created comment', createdComment)
+            localStorage.setItem('avatar', createdComment.gavatarMd5)
             if (createdComment.status === 'AUDITING') {
               this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
             }
