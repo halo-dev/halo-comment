@@ -284,6 +284,8 @@ export default {
             localStorage.setItem('avatar', createdComment.gavatarMd5)
             if (createdComment.status === 'AUDITING') {
               this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
+            } else if (createdComment.status === 'PUBLISHED') {
+              this.tip = '您的评论已经创建成功！'
             }
           }
         })

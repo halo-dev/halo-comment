@@ -9,10 +9,8 @@
     "build-comment": "vue-cli-service build --target wc --name halo-comment './src/components/Comment.vue'"
   },
   "dependencies": {
-    "ant-design-vue": "^1.3.8",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
-    "lodash": "^4.17.11",
     "marked": "^0.6.2",
     "nprogress": "^0.2.0",
     "spectre.css": "^0.5.8",
