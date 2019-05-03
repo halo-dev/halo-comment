@@ -286,18 +286,22 @@ export default {
           }
         })
         .catch(error => {
+          this.fieldError = {}
           this.$log.debug('Error', error)
-          if (error.response) {
-            this.fieldError = error.response.data.data
-            if (this.fieldError) {
-              this.fieldError.message = error.response.data.message
-            } else {
-              this.fieldError = { message: error.response.data.message }
+          const response = error.response
+          if (response && response.data) {
+            if (this.isObject(response.data.data)) {
+              this.fieldError = response.data.data
             }
+
+            this.fieldError.message = response.data.message
           } else {
-            this.fieldError = { message: '服务器响应失败' }
+            this.fieldError.message = '服务器响应失败'
           }
         })
+    },
+    isObject(value) {
+      return value && typeof value === 'object' && value.constructor === Object
     }
   }
 }
