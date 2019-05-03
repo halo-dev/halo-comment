@@ -265,6 +265,7 @@ export default {
       if (this.replyComment) {
         this.comment.parentId = this.replyComment.id
       }
+      this.tip = null
 
       commentApi
         .createComment(this.comment, this.type)

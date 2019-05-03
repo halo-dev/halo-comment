@@ -37,7 +37,7 @@
           v-for="(child, index) in comment.children"
           :key="index"
           :comment="child"
-          @reply="$emit('reply', child)"
+          @reply="handleSubReply"
         />
       </template>
 
@@ -73,6 +73,9 @@ export default {
   methods: {
     handleReplyClick() {
       this.$emit('reply', this.comment)
+    },
+    handleSubReply(comment) {
+      this.$emit('reply', comment)
     }
   }
 }
