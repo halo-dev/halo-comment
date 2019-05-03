@@ -153,8 +153,10 @@
     </div>
     <pagination
       v-else
-      :hasPrev="false"
-      :hasNext="true"
+      v-model="pagination.page"
+      :size="pagination.rpp"
+      :total="pagination.total"
+      @change="handlePaginationChange"
     />
   </div>
 </template>
@@ -190,10 +192,10 @@ export default {
     return {
       comments: [],
       pagination: {
-        page: 1,
+        page: 0,
+        size: 10,
         total: 0
       },
-      spinning: true,
       editActivated: true,
       previewActivated: false,
       replyComment: null,
@@ -244,18 +246,13 @@ export default {
       this.previewActivated = true
     },
     loadComments() {
-      const pagination = Object.assign({}, this.pagination)
-      pagination.page--
-      this.spinning = true
-      commentApi.listPostComment(this.id, pagination, 'tree_view').then(response => {
+      commentApi.listPostComment(this.id, this.pagination, 'tree_view').then(response => {
         this.comments = response.data.data.content
         this.pagination.total = response.data.data.total
         this.pagination.rpp = response.data.data.rpp
-        this.spinning = false
       })
     },
-    handlePaginationChange(page) {
-      this.pagination.page = page
+    handlePaginationChange() {
       this.loadComments()
     },
     handleReplyClick(comment) {
