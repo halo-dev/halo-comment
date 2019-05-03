@@ -1,0 +1,16 @@
+@import 'variables';
+
+@import '~spectre.css/src/spectre.scss';
+@import '~spectre.css/src/spectre-icons.scss';
+
+.form-input {
+  border-radius: 0;
+}
+
+.panel .panel-body {
+  padding: 0;
+}
+
+.toast {
+  margin-bottom: 0.8rem;
+}

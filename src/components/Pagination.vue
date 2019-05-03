@@ -21,7 +21,17 @@
 export default {
   name: 'Pagination',
   props: {
-    current: {
+    page: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    size: {
+      type: Number,
+      required: false,
+      default: 10
+    },
+    total: {
       type: Number,
       required: false,
       default: 0

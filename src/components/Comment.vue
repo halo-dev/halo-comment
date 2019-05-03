@@ -309,8 +309,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~spectre.css/src/spectre.scss';
-@import '~spectre.css/src/spectre-icons.scss';
+@import './comment.scss';
 
 .center {
   text-align: center;
@@ -319,18 +318,6 @@ export default {
 .input-wrapper {
   margin-left: 0;
   margin-right: 0;
-}
-
-.form-input {
-  border-radius: 0;
-}
-
-.panel .panel-body {
-  padding: 0;
-}
-
-.toast {
-  margin-bottom: 0.8rem;
 }
 
 .comment-textarea {
