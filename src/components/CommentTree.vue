@@ -20,7 +20,7 @@
 
       <p
         slot="comment-content"
-        v-html="comment.content"
+        v-html="compileContent"
       />
 
       <template slot="comment-action-bottom">
@@ -48,8 +48,9 @@
 
 <script>
 import { timeAgo } from '@/utils/time'
-
 import CommentNode from './CommentNode'
+
+import marked from 'marked'
 
 export default {
   name: 'CommentTree',
@@ -69,6 +70,9 @@ export default {
     },
     createTimeAgo() {
       return timeAgo(this.comment.createTime)
+    },
+    compileContent() {
+      return marked(this.comment.content, { sanitize: true })
     }
   },
   methods: {

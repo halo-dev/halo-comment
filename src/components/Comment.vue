@@ -1,5 +1,11 @@
 <template>
   <div class="comment-wrapper">
+
+    <div
+      class="divider text-center"
+      data-content="撰写评论"
+    ></div>
+
     <comment-node>
       <figure
         class="avatar avatar-lg"
@@ -22,7 +28,7 @@
           回复: {{ replyComment.author }}
           <blockquote
             class="blockquote"
-            v-html="replyComment.content"
+            v-html="compiledReplyCommentContent"
           >
           </blockquote>
 
@@ -65,7 +71,7 @@
                 v-model="comment.email"
                 class="form-input col-4 col-sm-12"
                 type="email"
-                placeholder="邮箱"
+                placeholder="*邮箱"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
               />
               <input
@@ -127,7 +133,7 @@
 
     <div
       class="divider text-center"
-      data-content="评论"
+      data-content="评论详情"
     ></div>
 
     <comment-tree
@@ -216,6 +222,12 @@ export default {
     },
     compileContent() {
       return marked(this.comment.content, { sanitize: true })
+    },
+    compiledReplyCommentContent() {
+      if (!this.replyComment) {
+        return null
+      }
+      return marked(this.replyComment.content, { sanitize: true })
     },
     havingComment() {
       return this.comments && this.comments.length > 0
