@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment-wrapper">
     <comment-node>
       <figure
         class="avatar avatar-lg"
@@ -280,7 +280,6 @@ export default {
 
           if (response && response.data && response.data.data) {
             const createdComment = response.data.data
-            this.$log.debug('Created comment', createdComment)
             localStorage.setItem('avatar', createdComment.gavatarMd5)
             if (createdComment.status === 'AUDITING') {
               this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
@@ -291,7 +290,6 @@ export default {
         })
         .catch(error => {
           this.fieldError = {}
-          this.$log.debug('Error', error)
           const response = error.response
           if (response && response.data) {
             if (this.isObject(response.data.data)) {
@@ -313,6 +311,10 @@ export default {
 
 <style lang="scss">
 @import './comment.scss';
+
+.comment-wrapper {
+  padding: 1rem;
+}
 
 .center {
   text-align: center;

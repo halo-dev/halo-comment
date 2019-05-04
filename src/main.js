@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import './logger'
 import App from './App.vue'
 Vue.config.productionTip = false
 

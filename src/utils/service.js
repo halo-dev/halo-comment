@@ -1,7 +1,7 @@
 import axios from "axios";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import Vue from "vue";
+// import Vue from "vue";
 
 const service = axios.create({
   baseURL: process.env.NODE_ENV === "production" ? "http://terransforce.ddns.net:8090" : "http://localhost:8090",
@@ -29,20 +29,20 @@ service.interceptors.response.use(
     NProgress.done();
 
     if (axios.isCancel(error)) {
-      Vue.$log.debug("Cancelled uploading by user.");
+      // Vue.$log.debug("Cancelled uploading by user.");
       return Promise.reject(error);
     }
 
-    Vue.$log.error("Response failed", error);
+    // Vue.$log.error("Response failed", error);
 
     const response = error.response;
-    const status = response ? response.status : -1;
-    Vue.$log.error("Server response status", status);
+    // const status = response ? response.status : -1;
+    // Vue.$log.error("Server response status", status);
 
     const data = response ? response.data : null;
     if (data) {
       // Business response
-      Vue.$log.error("Business response status", data.status);
+      // Vue.$log.error("Business response status", data.status);
       if (data.status === 400) {
         // TODO handle 400 status error
       } else if (data.status === 401) {
