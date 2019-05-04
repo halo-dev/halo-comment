@@ -1,55 +1,76 @@
 <template>
   <div>
-
     <ul class="pagination">
       <li
-        class="page-item page-prev"
-        :class="{disabled: !hasPrev}"
+        class="page-item"
+        :class="{ disabled: !hasPrev }"
       >
-        <a @click="handlePrevClick">
-          <div class="page-item-subtitle">
-            <i class="icon icon-arrow-left"></i>
-          </div>
-          <div class="page-item-title h5">上一页</div>
-        </a>
-      </li>
-      <li
-        class="page-item page-next"
-        :class="{disabled: !hasNext}"
-      >
-        <a @click="handleNextClick">
-          <div class="page-item-subtitle">
-            <i class="icon icon-arrow-right"></i>
-          </div>
-          <div class="page-item-title h5">下一页</div>
-        </a>
-      </li>
-    </ul>
-
-    <ul class="pagination">
-      <li class="page-item disabled">
         <a
-          href="#"
           tabindex="-1"
+          href="javascript:void(0)"
+          @click="handlePrevClick"
         >Previous</a>
       </li>
-      <li class="page-item active">
-        <a href="#">1</a>
+      <!-- Show first page -->
+      <li
+        class="page-item"
+        v-if="firstPage != null"
+        :class="{ active: page === firstPage}"
+      >
+        <a
+          href="javascript:void(0)"
+          @click="handlePageItemClick(firstPage)"
+        >{{ firstPage + 1}}</a>
       </li>
-      <li class="page-item">
-        <a href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a href="#">3</a>
-      </li>
-      <li class="page-item">
+      <li
+        class="page-item"
+        v-show="hasMorePrev"
+      >
         <span>...</span>
       </li>
-      <li class="page-item">
-        <a href="#">12</a>
+      <!-- Show middle page -->
+      <li
+        class="page-item"
+        v-for="middlePage in middlePages"
+        :key="middlePage"
+        :class="{ active: middlePage === page }"
+      >
+        <a
+          href="javascript:void(0)"
+          @click="handlePageItemClick(middlePage)"
+        >
+          {{ middlePage + 1}}
+        </a>
       </li>
-      <li class="page-item">
-        <a href="#">Next</a>
+
+      <li
+        class="page-item"
+        v-show="hasMoreNext"
+      >
+        <span>...</span>
+      </li>
+      <!-- Show last page -->
+      <li
+        class="page-item"
+        v-if="lastPage"
+        :class="{ active: page === lastPage}"
+      >
+        <a
+          href="javascript:void(0)"
+          @click="handlePageItemClick(lastPage)"
+        >
+          {{ lastPage + 1 }}
+        </a>
+      </li>
+
+      <li
+        class="page-item"
+        :class="{ disabled: !hasNext }"
+      >
+        <a
+          href="javascript:void(0)"
+          @click="handleNextClick"
+        >Next</a>
       </li>
     </ul>
 
@@ -89,6 +110,52 @@ export default {
     },
     hasPrev() {
       return this.page > 0
+    },
+    firstPage() {
+      if (this.pages === 0) {
+        return null
+      }
+      return 0
+    },
+    hasMorePrev() {
+      if (this.firstPage === null) {
+        return false
+      }
+      return this.page - 2 > this.firstPage
+    },
+    hasMoreNext() {
+      if (this.lastPage === null) {
+        return false
+      }
+      return this.page + 2 < this.lastPage
+    },
+    middlePages() {
+      if (this.pages <= 2) {
+        return []
+      }
+
+      if (this.pages <= 7) {
+        return this.range(1, this.lastPage)
+      }
+
+      let left = this.page - 2
+      let right = this.page + 2
+
+      if (this.page <= this.firstPage + 2 + 1) {
+        left = this.firstPage + 1
+        right = left + 5 - 1
+      } else if (this.page >= this.lastPage - 2 - 1) {
+        right = this.lastPage - 1
+        left = right - 5 + 1
+      }
+
+      return this.range(left, right + 1)
+    },
+    lastPage() {
+      if (this.pages === 0 || this.pages === 1) {
+        return 0
+      }
+      return this.pages - 1
     }
   },
   methods: {
@@ -101,6 +168,20 @@ export default {
       if (this.hasPrev) {
         this.$emit('change', this.page - 1)
       }
+    },
+    handlePageItemClick(page) {
+      this.$emit('change', page)
+    },
+    range(left, right) {
+      if (left >= right) {
+        return []
+      }
+
+      const result = []
+      for (let i = left; i < right; i++) {
+        result.push(i)
+      }
+      return result
     }
   }
 }
