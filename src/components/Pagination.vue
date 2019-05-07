@@ -22,13 +22,13 @@
           @click="handlePageItemClick(firstPage)"
         >{{ firstPage + 1}}</a>
       </li>
+      <!-- Show middle page -->
       <li
         class="page-item"
         v-show="hasMorePrev"
       >
         <span>...</span>
       </li>
-      <!-- Show middle page -->
       <li
         class="page-item"
         v-for="middlePage in middlePages"
@@ -101,6 +101,11 @@ export default {
       default: 0
     }
   },
+  data() {
+    return {
+      middleSize: 5
+    }
+  },
   computed: {
     pages() {
       return Math.ceil(this.total / this.size)
@@ -134,19 +139,21 @@ export default {
         return []
       }
 
-      if (this.pages <= 7) {
+      if (this.pages <= 2 + this.middleSize) {
         return this.range(1, this.lastPage)
       }
 
-      let left = this.page - 2
-      let right = this.page + 2
+      const halfMiddleSize = Math.floor(this.middleSize / 2)
 
-      if (this.page <= this.firstPage + 2 + 1) {
+      let left = this.page - halfMiddleSize
+      let right = this.page + halfMiddleSize
+
+      if (this.page <= this.firstPage + halfMiddleSize + 1) {
         left = this.firstPage + 1
-        right = left + 5 - 1
-      } else if (this.page >= this.lastPage - 2 - 1) {
+        right = left + this.middleSize - 1
+      } else if (this.page >= this.lastPage - halfMiddleSize - 1) {
         right = this.lastPage - 1
-        left = right - 5 + 1
+        left = right - this.middleSize + 1
       }
 
       return this.range(left, right + 1)

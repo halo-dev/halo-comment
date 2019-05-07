@@ -1,45 +1,45 @@
-import axios from "axios";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import axios from 'axios'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 // import Vue from "vue";
 
 const service = axios.create({
-  baseURL: process.env.NODE_ENV === "production" ? "http://terransforce.ddns.net:8090" : "http://localhost:8090",
+  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8090',
   timeout: 5000,
   withCredentials: true
-});
+})
 
 service.interceptors.request.use(
   config => {
-    NProgress.start();
-    return config;
+    NProgress.start()
+    return config
   },
   error => {
-    NProgress.remove();
-    return Promise.reject(error);
+    NProgress.remove()
+    return Promise.reject(error)
   }
-);
+)
 
 service.interceptors.response.use(
   response => {
-    NProgress.done();
-    return response;
+    NProgress.done()
+    return response
   },
   error => {
-    NProgress.done();
+    NProgress.done()
 
     if (axios.isCancel(error)) {
       // Vue.$log.debug("Cancelled uploading by user.");
-      return Promise.reject(error);
+      return Promise.reject(error)
     }
 
     // Vue.$log.error("Response failed", error);
 
-    const response = error.response;
+    const response = error.response
     // const status = response ? response.status : -1;
     // Vue.$log.error("Server response status", status);
 
-    const data = response ? response.data : null;
+    const data = response ? response.data : null
     if (data) {
       // Business response
       // Vue.$log.error("Business response status", data.status);
@@ -58,8 +58,8 @@ service.interceptors.response.use(
       // TODO Server unavailable
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-export default service;
+export default service
