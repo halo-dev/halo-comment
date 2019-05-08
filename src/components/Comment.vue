@@ -1,41 +1,18 @@
 <template>
   <div class="comment-wrapper">
-
-    <div
-      class="divider text-center"
-      data-content="撰写评论"
-    ></div>
+    <div class="divider text-center" data-content="撰写评论"></div>
 
     <comment-node>
-      <figure
-        class="avatar avatar-lg"
-        slot="comment-icon"
-      >
-        <img
-          :src="avatar"
-          alt="Annoymouse"
-        >
+      <figure class="avatar avatar-lg" slot="comment-icon">
+        <img :src="avatar" alt="Annoymouse">
       </figure>
 
-      <div
-        class="panel"
-        slot="comment-content"
-      >
-        <div
-          class="panel-header"
-          v-if="replyComment"
-        >
+      <div class="panel" slot="comment-content">
+        <div class="panel-header" v-if="replyComment">
           回复: {{ replyComment.author }}
-          <blockquote
-            class="blockquote"
-            v-html="compiledReplyCommentContent"
-          >
-          </blockquote>
+          <blockquote class="blockquote" v-html="compiledReplyCommentContent"></blockquote>
 
-          <button
-            class="btn"
-            @click="replyComment = null"
-          >
+          <button class="btn" @click="replyComment = null">
             <i class="icon icon-cross"></i>
             取消
           </button>
@@ -43,18 +20,10 @@
         <div class="panel-nav">
           <ul class="tab">
             <li class="tab-item">
-              <a
-                :class="{active: editActivated}"
-                @click="editActivate"
-              >
-                编辑
-              </a>
+              <a :class="{active: editActivated}" @click="editActivate">编辑</a>
             </li>
             <li class="tab-item">
-              <a
-                :class="{active: previewActivated}"
-                @click="previewActivate"
-              >预览</a>
+              <a :class="{active: previewActivated}" @click="previewActivate">预览</a>
             </li>
           </ul>
         </div>
@@ -64,24 +33,24 @@
             <div class="columns input-wrapper">
               <input
                 v-model="comment.author"
-                class="form-input col-4 col-sm-12"
+                class="form-input col-4 col-sm-12 halo-input"
                 placeholder="*昵称"
-              />
+              >
               <input
                 v-model="comment.email"
-                class="form-input col-4 col-sm-12"
+                class="form-input col-4 col-sm-12 halo-input"
                 type="email"
                 placeholder="*邮箱"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
-              />
+              >
               <input
                 v-model="comment.authorUrl"
-                class="form-input col-4 col-sm-12"
+                class="form-input col-4 col-sm-12 halo-input"
                 placeholder="个人网址"
-              />
+              >
             </div>
             <textarea
-              class="form-input comment-textarea"
+              class="form-input comment-textarea halo-input"
               name="comment-editor"
               id="comment-editor"
               rows="6"
@@ -91,50 +60,25 @@
           </form>
 
           <div v-show="previewActivated">
-            <div
-              class="markdown-content"
-              v-html="compileContent"
-            ></div>
+            <div class="markdown-content" v-html="compileContent"></div>
           </div>
-
         </div>
 
         <div class="panel-footer">
-          <div
-            class="toast toast-error"
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            <button
-              class="btn btn-clear float-right"
-              @click="fieldError = null"
-            ></button>
+          <div class="toast toast-error" v-for="(error, index) in errors" :key="index">
+            <button class="btn btn-clear float-right" @click="fieldError = null"></button>
             {{ error }}
           </div>
-          <div
-            v-if="tip"
-            class="toast toast-success"
-          >
-            <button
-              class="btn btn-clear float-right"
-              @click="tip = null"
-            ></button>
+          <div v-if="tip" class="toast toast-success">
+            <button class="btn btn-clear float-right" @click="tip = null"></button>
             {{ tip }}
           </div>
-          <button
-            class="btn pull-right"
-            @click="handleComment"
-          >
-            提交
-          </button>
+          <button class="halo-subButton" @click="handleComment">提交</button>
         </div>
       </div>
     </comment-node>
 
-    <div
-      class="divider text-center"
-      data-content="评论详情"
-    ></div>
+    <div class="divider text-center" data-content="评论详情"></div>
 
     <comment-tree
       v-for="(comment,index) in comments"
@@ -143,10 +87,7 @@
       @reply="handleReplyClick"
     />
 
-    <div
-      class="empty"
-      v-if="!havingComment"
-    >
+    <div class="empty" v-if="!havingComment">
       <div class="empty-icon">
         <i class="icon icon-3x icon-people"></i>
       </div>
@@ -176,7 +117,11 @@ import marked from 'marked'
 
 export default {
   name: 'Comment',
-  components: { CommentTree, CommentNode, Pagination },
+  components: {
+    CommentTree,
+    CommentNode,
+    Pagination
+  },
   props: {
     id: {
       type: Number,
@@ -221,13 +166,17 @@ export default {
       return `//gravatar.loli.net/avatar/${this.comment.gavatarMd5}/?s=256&d=mp`
     },
     compileContent() {
-      return marked(this.comment.content, { sanitize: true })
+      return marked(this.comment.content, {
+        sanitize: true
+      })
     },
     compiledReplyCommentContent() {
       if (!this.replyComment) {
         return null
       }
-      return marked(this.replyComment.content, { sanitize: true })
+      return marked(this.replyComment.content, {
+        sanitize: true
+      })
     },
     havingComment() {
       return this.comments && this.comments.length > 0
@@ -357,5 +306,31 @@ export default {
 
 .markdown-content {
   padding: 0.5rem;
+}
+
+.halo-subButton {
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  line-height: 1.499;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 32px;
+}
+
+.halo-input:hover {
+  border-color: #40a9ff;
+  border-right-width: 1px !important;
 }
 </style>
