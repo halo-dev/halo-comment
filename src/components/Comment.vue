@@ -73,7 +73,7 @@
             <button class="btn btn-clear float-right" @click="tip = null"></button>
             {{ tip }}
           </div>
-          <button class="halo-subButton" @click="handleComment">提交</button>
+          <button class="halo-Button" @click="handleComment">提交</button>
         </div>
       </div>
     </comment-node>
@@ -94,7 +94,7 @@
       <p class="empty-title h5">当前还没有人留言</p>
       <p class="empty-subtitle">有什么想对作者说的么?</p>
       <div class="empty-action">
-        <button class="btn btn-primary">请留言</button>
+        <button class="halo-Button">请留言</button>
       </div>
     </div>
     <pagination
@@ -306,31 +306,5 @@ export default {
 
 .markdown-content {
   padding: 0.5rem;
-}
-
-.halo-subButton {
-  color: #fff;
-  background-color: #1890ff;
-  border-color: #1890ff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
-  line-height: 1.499;
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  touch-action: manipulation;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 0 15px;
-  font-size: 14px;
-  border-radius: 4px;
-  height: 32px;
-}
-
-.halo-input:hover {
-  border-color: #40a9ff;
-  border-right-width: 1px !important;
 }
 </style>

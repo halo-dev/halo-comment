@@ -8,7 +8,9 @@
 }
 
 .panel .panel-body {
-  padding: 0;
+  padding: 10px;
+  box-shadow: inset 1px 1px 10px #cccccc;
+  border-radius: 5px;
 }
 
 .toast {
@@ -21,4 +23,53 @@
 
 .divider[data-content] {
   margin: 2rem 0;
+}
+
+.panel {
+  border: 0rem;
+}
+
+.tab {
+  border-bottom: 0rem;
+}
+
+.tab .tab-item.active a,
+.tab .tab-item a.active {
+  border-bottom-color: #1890ff;
+  color: #1890ff;
+}
+
+.tab .tab-item a:focus,
+.tab .tab-item a:hover {
+  color: #1890ff;
+}
+
+.panel .panel-nav {
+  margin-bottom: 0.2rem;
+}
+
+.halo-Button {
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  line-height: 1.499;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 32px;
+}
+
+.halo-input:hover {
+  border-color: #40a9ff;
+  border-right-width: 1px !important;
 }
