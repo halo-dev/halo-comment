@@ -284,15 +284,12 @@ export default {
 .input-wrapper {
   margin-left: 0;
   margin-right: 0;
-}
-
-.comment-textarea {
-  border-bottom: 1px dashed #dfe2e5;
+  margin-bottom: 5px;
 }
 
 .comment-textarea-tip {
   padding: 0.5rem;
-  border: 1px solid #dfe2e5;
+  padding-bottom: 0rem;
   border-top: 0;
   margin-bottom: 0;
   margin-top: 0;

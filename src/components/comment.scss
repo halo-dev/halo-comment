@@ -5,12 +5,13 @@
 
 .form-input {
   border-radius: 0;
+  border: 0rem;
 }
 
 .panel .panel-body {
   padding: 10px;
   box-shadow: inset 1px 1px 10px #cccccc;
-  border-radius: 5px;
+  border-radius: 0.2rem;
 }
 
 .toast {
@@ -48,6 +49,13 @@
   margin-bottom: 0.2rem;
 }
 
+.comment-textarea {
+  border-bottom: 0px;
+  border: 0px;
+  resize: none;
+  margin: 0.1rem;
+}
+
 .halo-Button {
   color: #fff;
   background-color: #1890ff;
@@ -69,7 +77,35 @@
   height: 32px;
 }
 
+.halo-input {
+  border-radius: 0.2rem;
+}
+
 .halo-input:hover {
-  border-color: #40a9ff;
+  // border-color: #1890ff;
+  // border-right-width: 1px !important;
+  box-shadow: 0px 0px 20px 0px #cccccc;
+  z-index: 1000;
+  transform: translateX(0.5px);
+  -ms-transform: translateX(0.5px);
+  -moz-transform: translateX(0.5px);
+  -webkit-transform: translateX(0.5px);
+  -o-transform: translateX(0.5px);
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.halo-input:focus {
+  outline: none;
+  // border: 1px solid #1890ff;
+  box-shadow: 0px 0px 20px 0px #cccccc;
   border-right-width: 1px !important;
+  z-index: 1000;
+  transform: translateX(0.5px);
+  -ms-transform: translateX(0.5px);
+  -moz-transform: translateX(0.5px);
+  -webkit-transform: translateX(0.5px);
+  -o-transform: translateX(0.5px);
 }
