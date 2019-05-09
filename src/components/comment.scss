@@ -9,7 +9,10 @@
 }
 
 .panel .panel-body {
-  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  padding-top: 10px;
   box-shadow: inset 1px 1px 10px #cccccc;
   border-radius: 0.2rem;
 }
@@ -56,10 +59,15 @@
   margin: 0.1rem;
 }
 
+.col-4 {
+  width: 33%;
+}
+
 .halo-Button {
+  outline: none;
   color: #fff;
-  background-color: #1890ff;
-  border-color: #1890ff;
+  background-color: #cccccc;
+  // border-color: #1890ff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   line-height: 1.499;
@@ -75,6 +83,53 @@
   font-size: 14px;
   border-radius: 4px;
   height: 32px;
+  float: right;
+  box-shadow: 0px 0px 20px 0px #cccccc;
+
+
+  position: relative;
+  //隐藏溢出的径向渐变背景
+  overflow: hidden;
+}
+
+// .halo-Button:hover {
+//   // border-color: #1890ff;
+//   // border-right-width: 1px !important;
+//   box-shadow: 0px 0px 20px 0px #cccccc;
+//   z-index: 1000;
+//   transform: rotateY(-20deg);
+//   -ms-transform: rotateY(-20deg);
+//   -moz-transform: rotateY(-20deg);
+//   -webkit-transform: rotateY(-20deg);
+//   -o-transform: rotateY(-20deg);
+//   -webkit-transition: all 0.3s ease-in;
+//   -moz-transition: all 0.3s ease-in;
+//   -o-transition: all 0.3s ease-in;
+//   transition: all 0.3s ease-in;
+// }
+
+.halo-Button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  //设置径向渐变
+  background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .5s, opacity .5s;
+}
+
+.halo-Button:active:after {
+  transform: scale(0, 0);
+  opacity: .5;
+  transition: .5s;
 }
 
 .halo-input {

@@ -31,21 +31,50 @@
         <div class="panel-body">
           <form v-show="editActivated">
             <div class="columns input-wrapper">
+              <!-- <div class="column col-4">
+                <input
+                  v-model="comment.author"
+                  class="column form-input col-11 col-mr-auto col-sm-12 halo-input"
+                  placeholder="*昵称"
+                >
+                <div class="column col-1"></div>
+              </div>
+
+              <div class="column col-4">
+                <input
+                  v-model="comment.email"
+                  class="column form-input col-11 col-mx-auto col-sm-12 halo-input"
+                  type="email"
+                  placeholder="*邮箱"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
+                >
+                <div class="column col-1"></div>
+              </div>
+
+              <div class="column col-4">
+                <input
+                  v-model="comment.authorUrl"
+                  class="column form-input col-11 col-ml-auto col-sm-12 halo-input"
+                  placeholder="个人网址"
+                >
+                <div class="column col-1"></div>
+              </div>-->
+
               <input
                 v-model="comment.author"
-                class="form-input col-4 col-sm-12 halo-input"
+                class="form-input col-4 col-mr-auto col-sm-12 halo-input"
                 placeholder="*昵称"
               >
               <input
                 v-model="comment.email"
-                class="form-input col-4 col-sm-12 halo-input"
+                class="form-input col-4 col-mx-auto col-sm-12 halo-input"
                 type="email"
                 placeholder="*邮箱"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
               >
               <input
                 v-model="comment.authorUrl"
-                class="form-input col-4 col-sm-12 halo-input"
+                class="form-input col-4 col-ml-auto col-sm-12 halo-input"
                 placeholder="个人网址"
               >
             </div>
@@ -56,7 +85,10 @@
               rows="6"
               v-model="comment.content"
             ></textarea>
-            <p class="form-input-hint comment-textarea-tip">Markdown Support</p>
+            <p class="form-input-hint comment-textarea-tip">
+              Markdown Support
+              <button class="halo-Button" @click="handleComment">提交</button>
+            </p>
           </form>
 
           <div v-show="previewActivated">
@@ -73,7 +105,7 @@
             <button class="btn btn-clear float-right" @click="tip = null"></button>
             {{ tip }}
           </div>
-          <button class="halo-Button" @click="handleComment">提交</button>
+          <!-- <button class="halo-Button" @click="handleComment">提交</button> -->
         </div>
       </div>
     </comment-node>
@@ -114,6 +146,7 @@ import CommentNode from './CommentNode'
 import Pagination from './Pagination'
 
 import marked from 'marked'
+import { setTimeout } from 'timers'
 
 export default {
   name: 'Comment',
@@ -284,7 +317,7 @@ export default {
 .input-wrapper {
   margin-left: 0;
   margin-right: 0;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .comment-textarea-tip {
