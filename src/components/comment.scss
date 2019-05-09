@@ -86,7 +86,6 @@
   float: right;
   box-shadow: 0px 0px 20px 0px #cccccc;
 
-
   position: relative;
   //隐藏溢出的径向渐变背景
   overflow: hidden;
@@ -109,7 +108,7 @@
 // }
 
 .halo-Button:after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 100%;
@@ -123,13 +122,13 @@
   background-position: 50%;
   transform: scale(10, 10);
   opacity: 0;
-  transition: transform .5s, opacity .5s;
+  transition: transform 0.5s, opacity 0.5s;
 }
 
 .halo-Button:active:after {
   transform: scale(0, 0);
-  opacity: .5;
-  transition: .5s;
+  opacity: 0.5;
+  transition: 0.5s;
 }
 
 .halo-input {
@@ -165,6 +164,6 @@
   -o-transform: translateX(0.5px);
 }
 
-.avatar{
+.avatar {
   background: none;
 }

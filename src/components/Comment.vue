@@ -1,18 +1,39 @@
 <template>
   <div class="comment-wrapper">
-    <div class="divider text-center" data-content="撰写评论"></div>
+    <div
+      class="divider text-center"
+      data-content="撰写评论"
+    ></div>
 
     <comment-node>
-      <figure class="avatar avatar-lg" slot="comment-icon">
-        <img :src="avatar" alt="Annoymouse">
+      <figure
+        class="avatar avatar-lg"
+        slot="comment-icon"
+      >
+        <img
+          :src="avatar"
+          alt="Annoymouse"
+        >
       </figure>
 
-      <div class="panel" slot="comment-content">
-        <div class="panel-header" v-if="replyComment">
+      <div
+        class="panel"
+        slot="comment-content"
+      >
+        <div
+          class="panel-header"
+          v-if="replyComment"
+        >
           回复: {{ replyComment.author }}
-          <blockquote class="blockquote" v-html="compiledReplyCommentContent"></blockquote>
+          <blockquote
+            class="blockquote"
+            v-html="compiledReplyCommentContent"
+          ></blockquote>
 
-          <button class="btn" @click="replyComment = null">
+          <button
+            class="btn"
+            @click="replyComment = null"
+          >
             <i class="icon icon-cross"></i>
             取消
           </button>
@@ -20,10 +41,16 @@
         <div class="panel-nav">
           <ul class="tab">
             <li class="tab-item">
-              <a :class="{active: editActivated}" @click="editActivate">编辑</a>
+              <a
+                :class="{active: editActivated}"
+                @click="editActivate"
+              >编辑</a>
             </li>
             <li class="tab-item">
-              <a :class="{active: previewActivated}" @click="previewActivate">预览</a>
+              <a
+                :class="{active: previewActivated}"
+                @click="previewActivate"
+              >预览</a>
             </li>
           </ul>
         </div>
@@ -31,35 +58,6 @@
         <div class="panel-body">
           <form v-show="editActivated">
             <div class="columns input-wrapper">
-              <!-- <div class="column col-4">
-                <input
-                  v-model="comment.author"
-                  class="column form-input col-11 col-mr-auto col-sm-12 halo-input"
-                  placeholder="*昵称"
-                >
-                <div class="column col-1"></div>
-              </div>
-
-              <div class="column col-4">
-                <input
-                  v-model="comment.email"
-                  class="column form-input col-11 col-mx-auto col-sm-12 halo-input"
-                  type="email"
-                  placeholder="*邮箱"
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$"
-                >
-                <div class="column col-1"></div>
-              </div>
-
-              <div class="column col-4">
-                <input
-                  v-model="comment.authorUrl"
-                  class="column form-input col-11 col-ml-auto col-sm-12 halo-input"
-                  placeholder="个人网址"
-                >
-                <div class="column col-1"></div>
-              </div>-->
-
               <input
                 v-model="comment.author"
                 class="form-input col-4 col-mr-auto col-sm-12 halo-input"
@@ -85,24 +83,46 @@
               rows="6"
               v-model="comment.content"
             ></textarea>
-            <p class="form-input-hint comment-textarea-tip">
-              Markdown Support
-              <button class="halo-Button" @click="handleComment">提交</button>
-            </p>
+            <div class="form-input-hint">
+              <span class="form-input-hint comment-textarea-tip">
+                Markdown Support
+              </span>
+              <button
+                type="button"
+                class="halo-Button"
+                @click="handleComment"
+              >提交</button>
+            </div>
           </form>
 
           <div v-show="previewActivated">
-            <div class="markdown-content" v-html="compileContent"></div>
+            <div
+              class="markdown-content"
+              v-html="compileContent"
+            ></div>
           </div>
         </div>
 
         <div class="panel-footer">
-          <div class="toast toast-error" v-for="(error, index) in errors" :key="index">
-            <button class="btn btn-clear float-right" @click="fieldError = null"></button>
+          <div
+            class="toast toast-error"
+            v-for="(error, index) in errors"
+            :key="index"
+          >
+            <button
+              class="btn btn-clear float-right"
+              @click="fieldError = null"
+            ></button>
             {{ error }}
           </div>
-          <div v-if="tip" class="toast toast-success">
-            <button class="btn btn-clear float-right" @click="tip = null"></button>
+          <div
+            v-if="tip"
+            class="toast toast-success"
+          >
+            <button
+              class="btn btn-clear float-right"
+              @click="tip = null"
+            ></button>
             {{ tip }}
           </div>
           <!-- <button class="halo-Button" @click="handleComment">提交</button> -->
@@ -110,7 +130,10 @@
       </div>
     </comment-node>
 
-    <div class="divider text-center" data-content="评论详情"></div>
+    <div
+      class="divider text-center"
+      data-content="评论详情"
+    ></div>
 
     <comment-tree
       v-for="(comment,index) in comments"
@@ -119,7 +142,10 @@
       @reply="handleReplyClick"
     />
 
-    <div class="empty" v-if="!havingComment">
+    <div
+      class="empty"
+      v-if="!havingComment"
+    >
       <div class="empty-icon">
         <i class="icon icon-3x icon-people"></i>
       </div>
@@ -146,7 +172,6 @@ import CommentNode from './CommentNode'
 import Pagination from './Pagination'
 
 import marked from 'marked'
-import { setTimeout } from 'timers'
 
 export default {
   name: 'Comment',
@@ -256,45 +281,47 @@ export default {
       this.replyComment = comment
     },
     handleComment() {
-      if (this.replyComment) {
-        this.comment.parentId = this.replyComment.id
-      }
-      this.tip = null
+      setTimeout(() => {
+        if (this.replyComment) {
+          this.comment.parentId = this.replyComment.id
+        }
+        this.tip = null
 
-      commentApi
-        .createComment(this.comment, this.type)
-        .then(response => {
-          this.fieldError = null
-          this.replyComment = null
-          this.loadComments()
-          // Set local storage
-          localStorage.setItem('author', this.comment.author)
-          localStorage.setItem('email', this.comment.email)
-          localStorage.setItem('authorUrl', this.comment.authorUrl)
+        commentApi
+          .createComment(this.comment, this.type)
+          .then(response => {
+            this.fieldError = null
+            this.replyComment = null
+            this.loadComments()
+            // Set local storage
+            localStorage.setItem('author', this.comment.author)
+            localStorage.setItem('email', this.comment.email)
+            localStorage.setItem('authorUrl', this.comment.authorUrl)
 
-          if (response && response.data && response.data.data) {
-            const createdComment = response.data.data
-            localStorage.setItem('avatar', createdComment.gavatarMd5)
-            if (createdComment.status === 'AUDITING') {
-              this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
-            } else if (createdComment.status === 'PUBLISHED') {
-              this.tip = '您的评论已经创建成功！'
+            if (response && response.data && response.data.data) {
+              const createdComment = response.data.data
+              localStorage.setItem('avatar', createdComment.gavatarMd5)
+              if (createdComment.status === 'AUDITING') {
+                this.tip = '您的评论已经投递至博主，待博主审核后进行展示。'
+              } else if (createdComment.status === 'PUBLISHED') {
+                this.tip = '您的评论已经创建成功！'
+              }
             }
-          }
-        })
-        .catch(error => {
-          this.fieldError = {}
-          const response = error.response
-          if (response && response.data) {
-            if (this.isObject(response.data.data)) {
-              this.fieldError = response.data.data
-            }
+          })
+          .catch(error => {
+            this.fieldError = {}
+            const response = error.response
+            if (response && response.data) {
+              if (this.isObject(response.data.data)) {
+                this.fieldError = response.data.data
+              }
 
-            this.fieldError.message = response.data.message
-          } else {
-            this.fieldError.message = '服务器响应失败'
-          }
-        })
+              this.fieldError.message = response.data.message
+            } else {
+              this.fieldError.message = '服务器响应失败'
+            }
+          })
+      }, 500)
     },
     isObject(value) {
       return value && typeof value === 'object' && value.constructor === Object
