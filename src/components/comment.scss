@@ -6,6 +6,7 @@
 .form-input {
   border-radius: 0;
   border: 0rem;
+  max-width: 99.5%;
 }
 
 .panel .panel-body {
@@ -56,17 +57,22 @@
   border-bottom: 0px;
   border: 0px;
   resize: none;
-  margin: 0.1rem;
+  margin-top: 1rem;
 }
 
-.col-4 {
-  width: 33%;
+.form-input-hint {
+  margin-top: 0.5rem;
+  color: #cccccc;
 }
+
+// .col-4 {
+//   width: 33%;
+// }
 
 .halo-Button {
   outline: none;
-  color: #fff;
-  background-color: #cccccc;
+  color: #cccccc;
+  background-color: #ffffff;
   // border-color: #1890ff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
@@ -87,48 +93,54 @@
   box-shadow: 0px 0px 20px 0px #cccccc;
 
   position: relative;
-  //隐藏溢出的径向渐变背景
-  overflow: hidden;
+  //此处不需要设置overflow:hidden,因为after元素需要溢出显示
 }
 
-// .halo-Button:hover {
-//   // border-color: #1890ff;
-//   // border-right-width: 1px !important;
-//   box-shadow: 0px 0px 20px 0px #cccccc;
-//   z-index: 1000;
-//   transform: rotateY(-20deg);
-//   -ms-transform: rotateY(-20deg);
-//   -moz-transform: rotateY(-20deg);
-//   -webkit-transform: rotateY(-20deg);
-//   -o-transform: rotateY(-20deg);
-//   -webkit-transition: all 0.3s ease-in;
-//   -moz-transition: all 0.3s ease-in;
-//   -o-transition: all 0.3s ease-in;
-//   transition: all 0.3s ease-in;
-// }
+.halo-Button:hover {
+  // border-color: #1890ff;
+  // border-right-width: 1px !important;
+  box-shadow: 0px 0px 20px 0px #cccccc;
+  z-index: 1000;
+  transform: scale(1.08, 1.08);
+  -ms-transform: scale(1.08, 1.08);
+  -moz-transform: scale(1.08, 1.08);
+  -webkit-transform: scale(1.08, 1.08);
+  -o-transform: rotateY(-20deg);
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.halo-Button:focus {
+  outline: none;
+}
 
 .halo-Button:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  //扩大伪类元素4个方向各10px
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
   pointer-events: none;
-  //设置径向渐变
-  background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+  background-color: #969696;
   background-repeat: no-repeat;
   background-position: 50%;
-  transform: scale(10, 10);
   opacity: 0;
-  transition: transform 0.5s, opacity 0.5s;
+  transition: all .3s;
 }
 
 .halo-Button:active:after {
-  transform: scale(0, 0);
-  opacity: 0.5;
-  transition: 0.5s;
+  opacity: .3;
+  //设置初始状态
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0s;
 }
 
 .halo-input {
