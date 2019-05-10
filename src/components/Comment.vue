@@ -236,7 +236,7 @@ export default {
       comment: {
         author: null,
         authorUrl: null,
-        content: '# Hello World!',
+        content: '',
         email: null,
         parentId: 0,
         postId: this.id
