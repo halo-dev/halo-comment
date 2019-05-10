@@ -294,11 +294,29 @@ export default {
       this.previewActivated = true
     },
     loadComments() {
-      commentApi.listPostComment(this.id, this.pagination, 'tree_view').then(response => {
-        this.comments = response.data.data.content
-        this.pagination.total = response.data.data.total
-        this.pagination.rpp = response.data.data.rpp
-      })
+      switch (this.type) {
+        case 'post':
+          commentApi.listPostComment(this.id, this.pagination, 'tree_view').then(response => {
+            this.comments = response.data.data.content
+            this.pagination.total = response.data.data.total
+            this.pagination.rpp = response.data.data.rpp
+          })
+          break
+        case 'sheet':
+          commentApi.listSheetComment(this.id, this.pagination, 'tree_view').then(response => {
+            this.comments = response.data.data.content
+            this.pagination.total = response.data.data.total
+            this.pagination.rpp = response.data.data.rpp
+          })
+          break
+        case 'journal':
+          commentApi.listJournalComment(this.id, this.pagination, 'tree_view').then(response => {
+            this.comments = response.data.data.content
+            this.pagination.total = response.data.data.total
+            this.pagination.rpp = response.data.data.rpp
+          })
+          break
+      }
     },
     handlePaginationChange() {
       this.loadComments()

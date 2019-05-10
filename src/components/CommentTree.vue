@@ -19,6 +19,7 @@
       </p>
 
       <p
+        class="comment-content-wrapper"
         slot="comment-content"
         v-html="compileContent"
       />
