@@ -1,39 +1,18 @@
 <template>
   <div class="comment-wrapper">
-    <div
-      class="divider text-center"
-      data-content="撰写评论"
-    ></div>
+    <div class="divider text-center" data-content="撰写评论"></div>
 
     <comment-node>
-      <figure
-        class="avatar avatar-lg"
-        slot="comment-icon"
-      >
-        <img
-          :src="avatar"
-          alt="Annoymouse"
-        >
+      <figure class="avatar avatar-lg" slot="comment-icon">
+        <img :src="avatar" alt="Annoymouse">
       </figure>
 
-      <div
-        class="panel"
-        slot="comment-content"
-      >
-        <div
-          class="panel-header"
-          v-if="replyComment"
-        >
+      <div class="panel" slot="comment-content">
+        <div class="panel-header" v-if="replyComment">
           回复: {{ replyComment.author }}
-          <blockquote
-            class="blockquote"
-            v-html="compiledReplyCommentContent"
-          ></blockquote>
+          <blockquote class="blockquote" v-html="compiledReplyCommentContent"></blockquote>
 
-          <button
-            class="btn"
-            @click="replyComment = null"
-          >
+          <button class="btn" @click="replyComment = null">
             <i class="icon icon-cross"></i>
             取消
           </button>
@@ -41,16 +20,10 @@
         <div class="panel-nav">
           <ul class="tab">
             <li class="tab-item">
-              <a
-                :class="{active: editActivated}"
-                @click="editActivate"
-              >编辑</a>
+              <a :class="{active: editActivated}" @click="editActivate">编辑</a>
             </li>
             <li class="tab-item">
-              <a
-                :class="{active: previewActivated}"
-                @click="previewActivate"
-              >预览</a>
+              <a :class="{active: previewActivated}" @click="previewActivate">预览</a>
             </li>
           </ul>
         </div>
@@ -58,15 +31,11 @@
         <div class="panel-body">
           <form v-show="editActivated">
             <div class="columns input-wrapper">
-              <div class="col-sm-12 form-input col-4 col-mr-auto">
-                <input
-                  v-model="comment.author"
-                  class="form-input halo-input"
-                  placeholder="*昵称"
-                >
+              <div class="col-sm-12 col-4">
+                <input v-model="comment.author" class="form-input halo-input" placeholder="*昵称">
               </div>
 
-              <div class="col-sm-12 form-input col-4 col-mx-auto">
+              <div class="col-sm-12 col-4">
                 <input
                   v-model="comment.email"
                   class="form-input halo-input"
@@ -76,12 +45,8 @@
                 >
               </div>
 
-              <div class="col-sm-12 form-input col-4 col-ml-auto">
-                <input
-                  v-model="comment.authorUrl"
-                  class="form-input halo-input"
-                  placeholder="个人网址"
-                >
+              <div class="col-sm-12 col-4">
+                <input v-model="comment.authorUrl" class="form-input halo-input" placeholder="个人网址">
               </div>
 
               <!-- <input
@@ -105,6 +70,7 @@
             <div class="col-12 col-mx-auto">
               <textarea
                 class="form-input comment-textarea halo-input"
+                style="max-width: 99.5%;"
                 name="comment-editor"
                 id="comment-editor"
                 rows="6"
@@ -113,42 +79,22 @@
             </div>
             <div class="form-input-hint">
               <span class="form-input-hint comment-textarea-tip">Markdown Support</span>
-              <button
-                type="button"
-                class="halo-Button"
-                @click="handleComment"
-              >提交</button>
+              <button type="button" class="halo-Button" @click="handleComment">提交</button>
             </div>
           </form>
 
           <div v-show="previewActivated">
-            <div
-              class="markdown-content"
-              v-html="compileContent"
-            ></div>
+            <div class="markdown-content" v-html="compileContent"></div>
           </div>
         </div>
 
         <div class="panel-footer">
-          <div
-            class="toast toast-error"
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            <button
-              class="btn btn-clear float-right"
-              @click="fieldError = null"
-            ></button>
+          <div class="toast toast-error" v-for="(error, index) in errors" :key="index">
+            <button class="btn btn-clear float-right" @click="fieldError = null"></button>
             {{ error }}
           </div>
-          <div
-            v-if="tip"
-            class="toast toast-success"
-          >
-            <button
-              class="btn btn-clear float-right"
-              @click="tip = null"
-            ></button>
+          <div v-if="tip" class="toast toast-success">
+            <button class="btn btn-clear float-right" @click="tip = null"></button>
             {{ tip }}
           </div>
           <!-- <button class="halo-Button" @click="handleComment">提交</button> -->
@@ -156,10 +102,7 @@
       </div>
     </comment-node>
 
-    <div
-      class="divider text-center"
-      data-content="评论详情"
-    ></div>
+    <div class="divider text-center" data-content="评论详情"></div>
 
     <comment-tree
       v-for="(comment,index) in comments"
@@ -168,10 +111,7 @@
       @reply="handleReplyClick"
     />
 
-    <div
-      class="empty"
-      v-if="!havingComment"
-    >
+    <div class="empty" v-if="!havingComment">
       <div class="empty-icon">
         <i class="icon icon-3x icon-people"></i>
       </div>

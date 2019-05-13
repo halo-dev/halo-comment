@@ -145,6 +145,7 @@
 
 .halo-input {
   border-radius: 0.2rem;
+  max-width: 98%;
 }
 
 .halo-input:hover {
@@ -180,7 +181,7 @@
   background: none;
 }
 
-.comment-content-wrapper{
+.comment-content-wrapper {
   h1 {
     font-size: 18px;
   }
