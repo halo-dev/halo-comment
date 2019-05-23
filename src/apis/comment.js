@@ -26,4 +26,11 @@ commentApi.listComments = (target, targetId, view = 'list_view', pagination) => 
   })
 }
 
+commentApi.listChildren = (target, targetId, commentId) => {
+  return service({
+    url: `${baseUrl}/${target}/${targetId}/comments/${commentId}/children`,
+    method: 'get'
+  })
+}
+
 export default commentApi

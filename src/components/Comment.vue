@@ -22,7 +22,7 @@
     </section>
 
     <section class="body">
-      <comment-body />
+      <comment-body :comments="comments" />
     </section>
 
     <section class="pagination">
@@ -39,13 +39,11 @@
 import CommentBody from './CommentBody'
 import CommentEditor from './CommentEditor'
 import pagination from './Pagination'
+import commentApi from '../apis/comment'
 
 export default {
   name: 'Comment',
   components: { CommentBody, CommentEditor, pagination },
-  data() {
-    return {}
-  },
   props: {
     id: {
       type: Number,
@@ -60,6 +58,35 @@ export default {
         // The value must match one of these strings
         return ['post', 'sheet', 'journal'].indexOf(value) !== -1
       }
+    },
+    options: {
+      type: Object,
+      required: false,
+      default: () => {}
+    }
+  },
+  data() {
+    return {
+      comments: [],
+      pagination: {
+        page: 0,
+        sort: ''
+      }
+    }
+  },
+  computed: {
+    target() {
+      return `${this.type}s`
+    }
+  },
+  created() {
+    this.loadComments()
+  },
+  methods: {
+    loadComments() {
+      commentApi.listComments(this.target, this.id, 'top_view', this.pagination).then(response => {
+        this.comments = response.data.data.content
+      })
     }
   }
 }
