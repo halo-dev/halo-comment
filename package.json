@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-comment": "vue-cli-service build --target wc --name halo-comment './src/components/Comment.vue'",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.8",
     "marked": "^0.6.2",
+    "simplemde": "^1.11.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {
