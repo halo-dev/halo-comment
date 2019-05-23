@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <HelloWorld />
+    <Comment :id="7" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Comment from './components/Comment'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    HelloWorld
+    Comment
   }
-};
+}
 </script>
 
 <style>
