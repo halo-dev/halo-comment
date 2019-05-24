@@ -170,16 +170,8 @@ export default {
       this.editorVisiable = false
     },
     handleEditorExit() {
-      if (this.editingComment.content) {
-        const answer = window.confirm('评论还未发布，是否放弃？')
-        if (answer) {
-          this.editorVisiable = false
-          this.editingComment.content = ''
-        }
-      } else {
-        this.editorVisiable = false
-        this.editingComment.content = ''
-      }
+      this.handleEditorClose()
+      this.editingComment.content = null
     },
     handleEditorInput(comment) {
       this.editingComment = comment

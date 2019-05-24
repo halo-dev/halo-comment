@@ -151,6 +151,10 @@ export default {
       this.$emit('close', false)
     },
     exit() {
+      if (this.comment.content && !window.confirm('评论还未发布，是否放弃？')) {
+        return
+      }
+
       this.$emit('exit', false)
     },
     handleAuthorInput() {
