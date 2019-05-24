@@ -134,9 +134,7 @@ export default {
       this.$emit('reply', comment, repliedSuccess)
     },
     repliedSuccess() {
-      if (this.hasChildrenBody) {
-        this.handleMoreClick()
-      }
+      // DO NOTHING...
     }
   }
 }
