@@ -5,6 +5,48 @@
       @click="editorVisiable = true"
     >
       <comment-author :comment="editingComment" />
+
+    </section>
+    <section class="comment-alert">
+      <!-- Info -->
+      <div
+        class="alert info"
+        v-for="(info, index) in infoes"
+        :key="index"
+      >
+        <span
+          class="closebtn"
+          @click="clearAlertClose"
+        >&times;</span>
+        <strong>{{ info }}</strong>
+      </div>
+
+      <!-- Success -->
+      <div
+        class="alert success"
+        v-for="(success, index) in successes"
+        :key="index"
+      >
+        <span
+          class="closebtn"
+          @click="clearAlertClose"
+        >&times;</span>
+        <strong>{{ success }}</strong>
+      </div>
+
+      <!-- Warning -->
+      <div
+        class="alert warning"
+        v-for="(warning, index) in warnings"
+        :key="index"
+      >
+        <span
+          class="closebtn"
+          @click="clearAlertClose"
+        >&times;</span>
+        <strong>{{ warning }}</strong>
+      </div>
+
     </section>
 
     <section class="body">
@@ -31,6 +73,8 @@
         :target="target"
         @close="handleEditorClose"
         @input="handleEditorInput"
+        @created="handleCommentCreated"
+        @failed="handleFailedToCreateComment"
       />
     </section>
 
@@ -40,6 +84,7 @@
 <script>
 import './index'
 import commentApi from '../apis/comment'
+import { isObject } from '../utils/util'
 
 export default {
   name: 'Comment',
@@ -74,13 +119,26 @@ export default {
         total: 0
       },
       editorVisiable: false,
-      editingComment: {}
+      alertVisiable: false,
+      editingComment: {},
+      infoes: [],
+      warnings: [],
+      successes: []
     }
   },
   computed: {
     target() {
       // pluralize it
       return `${this.type}s`
+    },
+    infoAlertVisiable() {
+      return this.infoes !== null && this.infoes.length > 0
+    },
+    warningAlertVisiable() {
+      return this.warnings !== null && this.warnings.length > 0
+    },
+    successAlertVisiable() {
+      return this.successes !== null && this.successes.length > 0
     }
   },
   created() {
@@ -104,6 +162,37 @@ export default {
     },
     handleEditorInput(comment) {
       this.editingComment = comment
+    },
+    handleCommentCreated(createdComment) {
+      this.clearAlertClose()
+
+      if (createdComment.status === 'PUBLISHED') {
+        this.loadComments()
+        this.successes.push('评论成功')
+      } else {
+        // Show tips
+        this.infoes.push('您的评论已经投递至博主，等待博主审核！')
+      }
+    },
+    handleFailedToCreateComment(response) {
+      this.clearAlertClose()
+
+      if (response.status === 400) {
+        this.warnings.push(response.data.message)
+        if (response.data) {
+          const errorDetail = response.data.data
+          if (isObject(errorDetail)) {
+            Object.keys(errorDetail).forEach(key => {
+              this.warnings.push(errorDetail[key])
+            })
+          }
+        }
+      }
+    },
+    clearAlertClose() {
+      this.infoes = []
+      this.warnings = []
+      this.successes = []
     }
   }
 }

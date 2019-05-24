@@ -1,5 +1,8 @@
 <template>
-  <div class="comment-placeholder">
+  <div
+    id="comment-author"
+    class="comment-placeholder"
+  >
     <div class="comment-item">
       <img
         class="comment-item-author-avatar"
@@ -17,7 +20,7 @@
             v-if="this.comment.content"
             v-html="renderedContent"
           ></p>
-          <p v-else>撰写评论...</p>
+          <p v-else>撰写评论...（1000 个字符内）</p>
         </div>
       </div>
     </div>

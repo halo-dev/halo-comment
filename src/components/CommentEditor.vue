@@ -10,18 +10,18 @@
         <div class="comment-poster-container active">
           <ul class="comment-poster-controls">
             <li class="poster-item-close">
-              <button
-                type="button"
-                class="editor-btn-close"
+              <span
+                class="closebtn"
                 @click="close"
-              >&times;</button>
+              >&times;</span>
             </li>
           </ul>
           <div class="comment-poster-main">
             <div class="comment-poster-main-body">
               <img
                 class="comment-poster-body-avatar"
-                src="https://cdn.ryanc.cc/img/blog/thumbnails/d233b4c9312f1d4e19b962009a9f2635.gif"
+                :src="avatar"
+                :alt="comment.author"
               >
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
@@ -38,7 +38,7 @@
                     <input
                       type="email"
                       v-model="comment.email"
-                      placeholder="邮箱*"
+                      placeholder="邮箱 *"
                     >
                     <span></span>
                   </li>
@@ -54,7 +54,7 @@
                 <div class="comment-poster-body-editor">
                   <div class="comment-poster-editor-wrapper">
                     <textarea
-                      placeholder="撰写评论..."
+                      placeholder="撰写评论...（1000 个字符内）"
                       style="height: 132px;"
                       v-model="comment.content"
                       @input="handleContentInput"
@@ -65,15 +65,15 @@
                       <button
                         class="editor-btn-reply"
                         type="button"
-                        title="回复"
+                        @click="handleSubmitClick"
+                        :disabled="!commentValid"
                       >评论</button>
                     </li>
                     <li class="editor-item-preview">
-                      <button
+                      <a
                         class="editor-btn-preview"
-                        title="预览"
-                        type="button"
-                      >预览</button>
+                        href="#comment-author"
+                      >预览</a>
                     </li>
                   </ul>
                 </div>
@@ -87,6 +87,10 @@
 </template>
 
 <script>
+import md5 from 'md5'
+import { isEmpty } from '../utils/util'
+import commentApi from '../apis/comment'
+
 export default {
   name: 'CommentEditor',
   props: {
@@ -115,6 +119,24 @@ export default {
       }
     }
   },
+  computed: {
+    avatar() {
+      if (!this.comment.email) {
+        return 'https://gravatar.loli.net/avatar?d=mp'
+      }
+      const gavatarMd5 = md5(this.comment.email)
+      return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=mp`
+    },
+    commentValid() {
+      return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
+    }
+  },
+  created() {
+    // Get info from local storage
+    this.comment.author = localStorage.getItem('comment-author')
+    this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
+    this.comment.email = localStorage.getItem('comment-email')
+  },
   methods: {
     close() {
       this.$emit('close', false)
@@ -127,6 +149,25 @@ export default {
     },
     input() {
       this.$emit('input', this.comment)
+    },
+    handleSubmitClick() {
+      // Submit the comment
+      this.comment.postId = this.targetId
+      commentApi
+        .createComment(this.target, this.comment)
+        .then(response => {
+          // Store comment author, email, authorUrl
+          localStorage.setItem('comment-author', this.comment.author)
+          localStorage.setItem('comment-email', this.comment.email)
+          localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
+
+          // Emit a created event
+          this.$emit('created', response.data.data)
+          this.$emit('close', false)
+        })
+        .catch(error => {
+          this.$emit('failed', error.response)
+        })
     }
   }
 }

@@ -29,3 +29,11 @@ export function isUrl(str) {
     return false
   }
 }
+
+export function isEmpty(content) {
+  return content === null || content === undefined || content === ''
+}
+
+export function isObject(value) {
+  return value && typeof value === 'object' && value.constructor === Object
+}
