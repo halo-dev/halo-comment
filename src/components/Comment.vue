@@ -2,7 +2,7 @@
   <div class="halo-comment">
     <section
       class="header"
-      @click="editorVisiable = true"
+      @click="handleCommentHeaderClick"
     >
       <comment-author :comment="editingComment" />
 
@@ -155,6 +155,11 @@ export default {
         this.pagination.size = response.data.data.rpp
         this.pagination.total = response.data.data.total
       })
+    },
+    handleCommentHeaderClick() {
+      this.editorVisiable = true
+      this.replyingComment = null
+      this.repliedSuccess = null
     },
     handlePaginationChange(page) {
       this.pagination.page = page
