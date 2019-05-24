@@ -218,7 +218,8 @@
       margin: 0;
       li {
         display: inline;
-        a {
+        a,
+        span {
           color: #1890ff;
           float: left;
           padding: 4px 12px;

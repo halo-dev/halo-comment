@@ -21,16 +21,21 @@
       </div>
     </section>
 
+    <section class="pagination">
+      <pagination
+        :page="pagination.page"
+        :size="pagination.size"
+        :total="pagination.total"
+        @change="handlePaginationChange"
+      />
+    </section>
+
     <section class="body">
       <comment-body
         :comments="comments"
         :targetId="id"
         :target="target"
       />
-    </section>
-
-    <section class="pagination">
-      <pagination />
     </section>
 
     <section class="footer-editor">
@@ -71,7 +76,9 @@ export default {
       comments: [],
       pagination: {
         page: 0,
-        sort: ''
+        sort: '',
+        size: 5,
+        total: 0
       }
     }
   },
@@ -87,7 +94,13 @@ export default {
     loadComments() {
       commentApi.listComments(this.target, this.id, 'top_view', this.pagination).then(response => {
         this.comments = response.data.data.content
+        this.pagination.size = response.data.data.rpp
+        this.pagination.total = response.data.data.total
       })
+    },
+    handlePaginationChange(page) {
+      this.pagination.page = page
+      this.loadComments()
     }
   }
 }
