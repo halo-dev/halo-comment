@@ -46,7 +46,10 @@
               @click="handleMoreClick"
             >更多</button>
           </li>
-          <li><button class="item-control-reply">回复</button></li>
+          <li><button
+              class="item-control-reply"
+              @click="handleReplyClick"
+            >回复</button></li>
         </ul>
       </div>
     </div>
@@ -58,6 +61,7 @@
         :comments="children"
         :targetId="targetId"
         :target="target"
+        @reply="handleChildReply"
       />
     </div>
   </div>
@@ -122,6 +126,17 @@ export default {
       commentApi.listChildren(this.target, this.targetId, this.comment.id).then(response => {
         this.children = response.data.data
       })
+    },
+    handleReplyClick() {
+      this.$emit('reply', this.comment, this.repliedSuccess)
+    },
+    handleChildReply(comment, repliedSuccess) {
+      this.$emit('reply', comment, repliedSuccess)
+    },
+    repliedSuccess() {
+      if (this.hasChildrenBody) {
+        this.handleMoreClick()
+      }
     }
   }
 }

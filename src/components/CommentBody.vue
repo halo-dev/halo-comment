@@ -6,6 +6,7 @@
         :targetId="targetId"
         :target="target"
         :key="index"
+        @reply="handleReply"
       />
     </template>
   </div>
@@ -37,6 +38,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    handleReply(comment, repliedSuccess) {
+      this.$emit('reply', comment, repliedSuccess)
+    }
   }
 }
 </script>

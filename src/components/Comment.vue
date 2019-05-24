@@ -54,6 +54,7 @@
         :comments="comments"
         :targetId="id"
         :target="target"
+        @reply="handleReply"
       />
     </section>
 
@@ -68,9 +69,10 @@
 
     <section class="footer-editor">
       <comment-editor
-        v-if="editorVisiable"
+        v-show="editorVisiable"
         :targetId="id"
         :target="target"
+        :replyingComment="replyingComment"
         @close="handleEditorClose"
         @input="handleEditorInput"
         @created="handleCommentCreated"
@@ -123,7 +125,9 @@ export default {
       editingComment: {},
       infoes: [],
       warnings: [],
-      successes: []
+      successes: [],
+      repliedSuccess: null,
+      replyingComment: null
     }
   },
   computed: {
@@ -168,14 +172,20 @@ export default {
 
       if (createdComment.status === 'PUBLISHED') {
         this.loadComments()
+        if (this.repliedSuccess) {
+          this.repliedSuccess()
+        }
         this.successes.push('评论成功')
       } else {
         // Show tips
         this.infoes.push('您的评论已经投递至博主，等待博主审核！')
       }
+
+      this.repliedSuccess = null
     },
     handleFailedToCreateComment(response) {
       this.clearAlertClose()
+      this.repliedSuccess = null
 
       if (response.status === 400) {
         this.warnings.push(response.data.message)
@@ -188,6 +198,11 @@ export default {
           }
         }
       }
+    },
+    handleReply(comment, repliedSuccess) {
+      this.replyingComment = comment
+      this.repliedSuccess = repliedSuccess
+      this.editorVisiable = true
     },
     clearAlertClose() {
       this.infoes = []

@@ -51,6 +51,7 @@
                     <span></span>
                   </li>
                 </ul>
+                <span v-if="replyingComment">@{{replyingComment.author}}#{{replyingComment.id}}</span>
                 <div class="comment-poster-body-editor">
                   <div class="comment-poster-editor-wrapper">
                     <textarea
@@ -107,6 +108,11 @@ export default {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
       }
+    },
+    replyingComment: {
+      type: Object,
+      required: false,
+      default: null
     }
   },
   data() {
@@ -153,6 +159,10 @@ export default {
     handleSubmitClick() {
       // Submit the comment
       this.comment.postId = this.targetId
+      if (this.replyingComment) {
+        // Set parent id if available
+        this.comment.parentId = this.replyingComment.id
+      }
       commentApi
         .createComment(this.target, this.comment)
         .then(response => {
@@ -160,6 +170,9 @@ export default {
           localStorage.setItem('comment-author', this.comment.author)
           localStorage.setItem('comment-email', this.comment.email)
           localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
+
+          // clearn comment
+          this.comment.content = null
 
           // Emit a created event
           this.$emit('created', response.data.data)
