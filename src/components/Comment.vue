@@ -40,14 +40,11 @@
 </template>
 
 <script>
-import CommentBody from './CommentBody'
-import CommentEditor from './CommentEditor'
-import pagination from './Pagination'
+import './index'
 import commentApi from '../apis/comment'
 
 export default {
   name: 'Comment',
-  components: { CommentBody, CommentEditor, pagination },
   props: {
     id: {
       type: Number,

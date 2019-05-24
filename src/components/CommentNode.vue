@@ -57,11 +57,9 @@
 import { timeAgo, isUrl } from '@/utils/util'
 import marked from 'marked'
 import commentApi from '../apis/comment'
-import CommentBody from './CommentBody'
 
 export default {
   name: 'CommentNode',
-  components: { CommentBody },
   props: {
     comment: {
       type: Object,
