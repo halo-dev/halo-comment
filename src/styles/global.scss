@@ -148,6 +148,12 @@
             color: #667c99;
             display: inline-block;
           }
+          .header-id {
+            float: right;
+            font-size: 13px;
+            color: #667c99;
+            font-style: italic;
+          }
         }
         .comment-item-content {
           word-wrap: break-word;
@@ -248,7 +254,7 @@
     width: 100%;
     height: 100%;
     z-index: 9998;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0);
     -webkit-transition: opacity 0.3s ease;
     -o-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;

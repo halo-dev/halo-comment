@@ -1,5 +1,8 @@
 <template>
-  <div class="comment-item">
+  <div
+    class="comment-item"
+    :id="comment.id"
+  >
     <img
       class="comment-item-author-avatar"
       :src="avatar"
@@ -23,10 +26,17 @@
         <span
           class="header-time"
           v-text="createTimeAgo"
-        />
+        ></span>
+        <span class="header-id">
+          #{{ comment.id }}
+        </span>
       </div>
       <div class="comment-item-content">
-        <p v-html="compileContent" />
+        <a
+          v-if="hasParent"
+          :href="'#' + comment.parentId"
+        >@{{ comment.parentId }}</a>
+        <p v-html="compileContent"></p>
       </div>
       <div class="comment-item-contols">
         <ul>
@@ -101,6 +111,9 @@ export default {
     },
     hasChildrenBody() {
       return this.comment.hasChildren && this.children !== null && this.children.length > 0
+    },
+    hasParent() {
+      return this.comment.parentId !== null && this.comment.parentId > 0
     }
   },
   methods: {

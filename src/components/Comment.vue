@@ -4,24 +4,15 @@
       class="header"
       @click="editorVisiable = true"
     >
-      <div class="comment-placeholder">
-        <div class="comment-item">
-          <img
-            class="comment-item-author-avatar"
-            src="https://cdn.ryanc.cc/img/blog/thumbnails/d233b4c9312f1d4e19b962009a9f2635.gif"
-          >
-          <div class="comment-item-main">
-            <div class="comment-item-header">
-              <span class="header-author">
-                Ryan Wang
-              </span>
-            </div>
-            <div class="comment-item-content">
-              <p>撰写评论...</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <comment-author :comment="editingComment" />
+    </section>
+
+    <section class="body">
+      <comment-body
+        :comments="comments"
+        :targetId="id"
+        :target="target"
+      />
     </section>
 
     <section class="pagination">
@@ -33,22 +24,16 @@
       />
     </section>
 
-    <section class="body">
-      <comment-body
-        :comments="comments"
-        :targetId="id"
-        :target="target"
-      />
-    </section>
-
     <section class="footer-editor">
       <comment-editor
         v-if="editorVisiable"
         :targetId="id"
         :target="target"
         @close="handleEditorClose"
+        @input="handleEditorInput"
       />
     </section>
+
   </div>
 </template>
 
@@ -88,11 +73,13 @@ export default {
         size: 5,
         total: 0
       },
-      editorVisiable: false
+      editorVisiable: false,
+      editingComment: {}
     }
   },
   computed: {
     target() {
+      // pluralize it
       return `${this.type}s`
     }
   },
@@ -113,6 +100,10 @@ export default {
     },
     handleEditorClose() {
       this.editorVisiable = false
+      this.editingComment = {}
+    },
+    handleEditorInput(comment) {
+      this.editingComment = comment
     }
   }
 }

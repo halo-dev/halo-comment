@@ -3,13 +3,10 @@
     <div
       autofocus
       class="comment-modal"
-      @click="close"
+      @click.self="close"
       @keydown.esc.once="close"
     >
-      <div
-        class="comment-modal-container"
-        @click.stop
-      >
+      <div class="comment-modal-container">
         <div class="comment-poster-container active">
           <ul class="comment-poster-controls">
             <li class="poster-item-close">
@@ -32,6 +29,7 @@
                     <input
                       type="text"
                       v-model="comment.author"
+                      @input="handleAuthorInput"
                       placeholder="昵称 *"
                     >
                     <span></span>
@@ -59,6 +57,7 @@
                       placeholder="撰写评论..."
                       style="height: 132px;"
                       v-model="comment.content"
+                      @input="handleContentInput"
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
@@ -119,6 +118,15 @@ export default {
   methods: {
     close() {
       this.$emit('close', false)
+    },
+    handleAuthorInput() {
+      this.input()
+    },
+    handleContentInput() {
+      this.input()
+    },
+    input() {
+      this.$emit('input', this.comment)
     }
   }
 }

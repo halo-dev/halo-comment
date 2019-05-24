@@ -2,12 +2,14 @@
 import Vue from 'vue'
 
 // pro components
+import CommentAuthor from './CommentAuthor'
 import CommentBody from './CommentBody'
 import CommentNode from './CommentNode'
 import CommentEditor from './CommentEditor'
 import Pagination from './Pagination'
 
 const _components = {
+  CommentAuthor,
   CommentBody,
   CommentNode,
   CommentEditor,
