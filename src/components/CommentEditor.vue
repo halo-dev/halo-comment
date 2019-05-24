@@ -12,7 +12,7 @@
             <li class="poster-item-close">
               <span
                 class="closebtn"
-                @click="close"
+                @click="exit"
               >&times;</span>
             </li>
           </ul>
@@ -149,6 +149,9 @@ export default {
   methods: {
     close() {
       this.$emit('close', false)
+    },
+    exit() {
+      this.$emit('exit', false)
     },
     handleAuthorInput() {
       this.input()

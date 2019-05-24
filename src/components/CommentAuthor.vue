@@ -50,6 +50,12 @@ export default {
       const gavatarMd5 = md5(this.comment.email)
       return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=mp`
     }
+  },
+  created() {
+    // Get info from local storage
+    this.comment.author = localStorage.getItem('comment-author')
+    this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
+    this.comment.email = localStorage.getItem('comment-email')
   }
 }
 </script>

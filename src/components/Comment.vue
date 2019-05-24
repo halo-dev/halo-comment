@@ -74,6 +74,7 @@
         :target="target"
         :replyingComment="replyingComment"
         @close="handleEditorClose"
+        @exit="handleEditorExit"
         @input="handleEditorInput"
         @created="handleCommentCreated"
         @failed="handleFailedToCreateComment"
@@ -166,6 +167,9 @@ export default {
       this.loadComments()
     },
     handleEditorClose() {
+      this.editorVisiable = false
+    },
+    handleEditorExit() {
       this.editorVisiable = false
       this.editingComment = {}
     },
