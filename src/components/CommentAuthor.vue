@@ -12,7 +12,7 @@
       <div class="comment-item-main">
         <div class="comment-item-header">
           <span class="header-author">
-            {{ comment.author }}
+            {{ comment.author || '...' }}
           </span>
         </div>
         <div class="comment-item-content">
@@ -20,7 +20,7 @@
             v-if="this.comment.content"
             v-html="renderedContent"
           ></p>
-          <p v-else>撰写评论...（1000 个字符内）</p>
+          <p v-else>撰写评论...</p>
         </div>
       </div>
     </div>

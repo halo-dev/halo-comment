@@ -51,12 +51,15 @@
                     <span></span>
                   </li>
                 </ul>
-                <span v-if="replyingComment">@{{replyingComment.author}}#{{replyingComment.id}}</span>
+                <span
+                  class="comment-poster-body-reply"
+                  v-if="replyingComment"
+                >@{{replyingComment.author}} <small>#{{replyingComment.id}}</small></span>
                 <div class="comment-poster-body-editor">
                   <div class="comment-poster-editor-wrapper">
                     <textarea
                       placeholder="撰写评论...（1000 个字符内）"
-                      style="height: 132px;"
+                      :style="replyingComment==null?'height: 146px;':'height: 128px;'"
                       v-model="comment.content"
                       @input="handleContentInput"
                     ></textarea>
@@ -71,10 +74,10 @@
                       >评论</button>
                     </li>
                     <li class="editor-item-preview">
-                      <a
+                      <button
                         class="editor-btn-preview"
-                        href="#comment-author"
-                      >预览</a>
+                        type="button"
+                      >预览</button>
                     </li>
                   </ul>
                 </div>
