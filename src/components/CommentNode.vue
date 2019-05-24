@@ -57,7 +57,11 @@
       class="comment-item-children"
       v-if="hasChildrenBody"
     >
+      <section class="loading">
+        <comment-loading v-show="commentLoading" />
+      </section>
       <comment-body
+        v-show="!commentLoading"
         :comments="children"
         :targetId="targetId"
         :target="target"
@@ -97,7 +101,8 @@ export default {
   },
   data() {
     return {
-      children: []
+      children: [],
+      commentLoading: false
     }
   },
   computed: {
@@ -123,8 +128,12 @@ export default {
   methods: {
     handleMoreClick() {
       // Get children
+      this.commentLoading = true
       commentApi.listChildren(this.target, this.targetId, this.comment.id).then(response => {
         this.children = response.data.data
+        setTimeout(() => {
+          this.commentLoading = false
+        }, 300)
       })
     },
     handleReplyClick() {

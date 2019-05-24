@@ -1,15 +1,17 @@
 <template>
-  <div class="comment-items">
-    <template v-for="(comment, index) in comments">
-      <comment-node
-        :comment="comment"
-        :targetId="targetId"
-        :target="target"
-        :key="index"
-        @reply="handleReply"
-      />
-    </template>
-  </div>
+  <transition name="comment-fade">
+    <div class="comment-items">
+      <template v-for="(comment, index) in comments">
+        <comment-node
+          :comment="comment"
+          :targetId="targetId"
+          :target="target"
+          :key="index"
+          @reply="handleReply"
+        />
+      </template>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -47,5 +49,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.comment-fade-enter-active,
+.comment-fade-leave-active {
+  transition: all 1s ease-in-out;
+}
+.comment-fade-enter,
+.comment-fade-leave-to {
+  opacity: 0;
+}
 </style>
