@@ -30,9 +30,25 @@
       </div>
       <div class="comment-item-contols">
         <ul>
+          <li v-if="comment.hasChildren">
+            <button
+              class="item-control-more"
+              @click="handleMoreClick"
+            >更多</button>
+          </li>
           <li><button class="item-control-reply">回复</button></li>
         </ul>
       </div>
+    </div>
+    <div
+      class="comment-item-children"
+      v-if="hasChildrenBody"
+    >
+      <comment-body
+        :comments="children"
+        :targetId="targetId"
+        :target="target"
+      />
     </div>
   </div>
 </template>
@@ -40,18 +56,37 @@
 <script>
 import { timeAgo, isUrl } from '@/utils/util'
 import marked from 'marked'
+import commentApi from '../apis/comment'
+import CommentBody from './CommentBody'
 
 export default {
   name: 'CommentNode',
+  components: { CommentBody },
   props: {
     comment: {
       type: Object,
       required: false,
       default: () => {}
+    },
+    targetId: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    target: {
+      type: String,
+      required: false,
+      default: 'posts',
+      validator: function(value) {
+        // The value must match one of these strings
+        return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
+      }
     }
   },
   data() {
-    return {}
+    return {
+      children: []
+    }
   },
   computed: {
     avatar() {
@@ -65,9 +100,19 @@ export default {
     },
     urlValid() {
       return isUrl(this.comment.authorUrl)
+    },
+    hasChildrenBody() {
+      return this.comment.hasChildren && this.children !== null && this.children.length > 0
     }
   },
-  methods: {}
+  methods: {
+    handleMoreClick() {
+      // Get children
+      commentApi.listChildren(this.target, this.targetId, this.comment.id).then(response => {
+        this.children = response.data.data
+      })
+    }
+  }
 }
 </script>
 

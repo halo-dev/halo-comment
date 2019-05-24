@@ -22,7 +22,11 @@
     </section>
 
     <section class="body">
-      <comment-body :comments="comments" />
+      <comment-body
+        :comments="comments"
+        :targetId="id"
+        :target="target"
+      />
     </section>
 
     <section class="pagination">
