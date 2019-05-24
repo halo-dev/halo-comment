@@ -1,6 +1,9 @@
 <template>
   <div class="halo-comment">
-    <section class="header">
+    <section
+      class="header"
+      @click="editorVisiable = true"
+    >
       <div class="comment-placeholder">
         <div class="comment-item">
           <img
@@ -39,7 +42,12 @@
     </section>
 
     <section class="footer-editor">
-      <comment-editor />
+      <comment-editor
+        v-if="editorVisiable"
+        :targetId="id"
+        :target="target"
+        @close="handleEditorClose"
+      />
     </section>
   </div>
 </template>
@@ -79,7 +87,8 @@ export default {
         sort: '',
         size: 5,
         total: 0
-      }
+      },
+      editorVisiable: false
     }
   },
   computed: {
@@ -101,6 +110,9 @@ export default {
     handlePaginationChange(page) {
       this.pagination.page = page
       this.loadComments()
+    },
+    handleEditorClose() {
+      this.editorVisiable = false
     }
   }
 }
@@ -108,4 +120,14 @@ export default {
 
 <style lang="scss">
 @import '../styles/global';
+
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
 </style>
