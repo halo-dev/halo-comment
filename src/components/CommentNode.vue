@@ -24,9 +24,14 @@
           />
         </span>
         <span class="header-time">{{createTimeAgo}}</span>
-        <span class="header-id">
-          #{{ comment.id }}
-        </span>
+        <a :href="'#'+comment.id">
+          <span
+            class="header-id"
+            :id="comment.id"
+          >
+            #{{ comment.id }}
+          </span>
+        </a>
       </div>
       <div class="comment-item-content">
         <a
