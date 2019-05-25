@@ -48,11 +48,11 @@ function formatDate(date, fmt) {
     }
   }
   return fmt;
-};
+}
 
 function padLeftZero(str) {
   return ('00' + str).substr(str.length);
-};
+}
 
 // From <https://www.w3resource.com/javascript-exercises/javascript-regexp-exercise-9.php>
 export function isUrl(str) {
