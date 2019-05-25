@@ -1,6 +1,6 @@
 .halo-comment {
   * {
-    font-family: -apple-system,BlinkMacSystemFont,'System Latin','System Emoji','System SC',sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'System Latin', 'System Emoji', 'System SC', sans-serif;
     outline: none;
     font-size: 13px;
     line-height: 1.5;
@@ -31,7 +31,8 @@
   }
 
   .alert {
-    padding: 20px;
+    border-radius: 4px;
+    padding: 8px 16px;
     background-color: #f44336;
     color: white;
     opacity: 1;
@@ -57,7 +58,7 @@
     font-weight: bold;
     float: right;
     font-size: 22px;
-    line-height: 20px;
+    line-height: 16px;
     cursor: pointer;
     transition: 0.3s;
 
@@ -218,6 +219,22 @@
           position: relative;
           margin-bottom: 6px;
           padding-top: 6px;
+
+          a {
+            text-decoration: none;
+          }
+
+          .content-at-author {
+            font-size: 13px;
+            color: #1890ff;
+            font-weight: 500;
+          }
+
+          .content-at-id {
+            font-size: 13px;
+            color: #667c99;
+            font-style: italic;
+          }
 
           p {
             overflow: auto;

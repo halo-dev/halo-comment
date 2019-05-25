@@ -32,7 +32,14 @@
         <a
           v-if="hasParent"
           :href="'#' + comment.parentId"
-        >@{{ comment.parentId }}</a>
+        >
+          <span class="content-at-author">
+            @{{ comment.author }}
+          </span>
+          <span class="content-at-id">
+            #{{ comment.parentId }}
+          </span>
+        </a>
         <p v-html="compileContent"></p>
       </div>
       <div class="comment-item-contols">
@@ -125,6 +132,7 @@ export default {
   methods: {
     handleMoreClick() {
       // Get children
+      this.children = []
       this.commentLoading = true
       commentApi.listChildren(this.target, this.targetId, this.comment.id).then(response => {
         this.children = response.data.data

@@ -50,7 +50,7 @@
     </section>
 
     <section class="loading">
-      <comment-loading v-show="commentLoading"/>
+      <comment-loading v-show="commentLoading" />
     </section>
 
     <section class="body">
@@ -63,10 +63,7 @@
       />
     </section>
 
-    <section
-      class="pagination"
-      v-show="!commentLoading"
-    >
+    <section class="pagination">
       <pagination
         :page="pagination.page"
         :size="pagination.size"
@@ -160,6 +157,7 @@ export default {
   },
   methods: {
     loadComments() {
+      this.comments = []
       this.commentLoading = true
       commentApi.listComments(this.target, this.id, 'top_view', this.pagination).then(response => {
         this.comments = response.data.data.content

@@ -54,7 +54,7 @@
                 <span
                   class="comment-poster-body-reply"
                   v-if="replyingComment"
-                >@{{replyingComment.author}} <small>#{{replyingComment.id}}</small></span>
+                >回复：@{{replyingComment.author}} <small>#{{replyingComment.id}}</small></span>
                 <div class="comment-poster-body-editor">
                   <div class="comment-poster-editor-wrapper">
                     <textarea
@@ -77,6 +77,7 @@
                       <button
                         class="editor-btn-preview"
                         type="button"
+                        @click="handlePreviewClick"
                       >预览</button>
                     </li>
                   </ul>
@@ -191,6 +192,9 @@ export default {
         .catch(error => {
           this.$emit('failed', error.response)
         })
+    },
+    handlePreviewClick() {
+      window.location.href = '#comment-author'
     }
   }
 }
