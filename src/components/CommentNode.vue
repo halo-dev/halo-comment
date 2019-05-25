@@ -23,7 +23,7 @@
             v-text="comment.author"
           />
         </span>
-        <span class="header-time">{{createTimeAgo}} ago</span>
+        <span class="header-time">{{createTimeAgo}}</span>
         <span class="header-id">
           #{{ comment.id }}
         </span>

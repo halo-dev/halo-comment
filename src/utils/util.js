@@ -1,24 +1,58 @@
-export function pluralize(time, label) {
-  if (time <= 1) {
-    return time + ' ' + label
-  }
-  return time + ' ' + label + 's'
-}
-
 /**
  * time ago
  * @param {*} time
  */
 export function timeAgo(time) {
-  const between = (Date.now() - Number(time)) / 1000
-  if (between < 3600) {
-    return pluralize(~~(between / 60), ' minute')
-  } else if (between < 86400) {
-    return pluralize(~~(between / 3600), ' hour')
+  var currentTime = new Date().getTime()
+  var between = currentTime - time
+  var days = Math.floor(between / (24 * 3600 * 1000))
+  if (days === 0) {
+    var leave1 = between % (24 * 3600 * 1000)
+    var hours = Math.floor(leave1 / (3600 * 1000))
+    if (hours === 0) {
+      var leave2 = leave1 % (3600 * 1000)
+      var minutes = Math.floor(leave2 / (60 * 1000))
+      if (minutes === 0) {
+        var leave3 = leave2 % (60 * 1000)
+        var seconds = Math.round(leave3 / 1000)
+        return seconds + ' 秒前'
+      }
+      return minutes + ' 分钟前'
+    }
+    return hours + ' 小时前'
+  }
+  if (days < 0) return '刚刚'
+  if (days < 1) {
+    return days + ' 天前'
   } else {
-    return pluralize(~~(between / 86400), ' day')
+    return formatDate(time, 'yyyy/MM/dd hh:mm');
   }
 }
+
+function formatDate(date, fmt) {
+  date = new Date(date);
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+  }
+  let o = {
+    'M+': date.getMonth() + 1,
+    'd+': date.getDate(),
+    'h+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds()
+  };
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      let str = o[k] + '';
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+    }
+  }
+  return fmt;
+};
+
+function padLeftZero(str) {
+  return ('00' + str).substr(str.length);
+};
 
 // From <https://www.w3resource.com/javascript-exercises/javascript-regexp-exercise-9.php>
 export function isUrl(str) {
