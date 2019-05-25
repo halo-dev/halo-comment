@@ -49,8 +49,13 @@
 
     </section>
 
+    <section class="loading">
+      <comment-loading v-show="commentLoading"/>
+    </section>
+
     <section class="body">
       <comment-body
+        v-show="!commentLoading"
         :comments="comments"
         :targetId="id"
         :target="target"
@@ -58,7 +63,10 @@
       />
     </section>
 
-    <section class="pagination">
+    <section
+      class="pagination"
+      v-show="!commentLoading"
+    >
       <pagination
         :page="pagination.page"
         :size="pagination.size"
@@ -121,6 +129,7 @@ export default {
         size: 5,
         total: 0
       },
+      commentLoading: false,
       editorVisiable: false,
       alertVisiable: false,
       editingComment: {},
@@ -151,10 +160,14 @@ export default {
   },
   methods: {
     loadComments() {
+      this.commentLoading = true
       commentApi.listComments(this.target, this.id, 'top_view', this.pagination).then(response => {
         this.comments = response.data.data.content
         this.pagination.size = response.data.data.rpp
         this.pagination.total = response.data.data.total
+        setTimeout(() => {
+          this.commentLoading = false
+        }, 300)
       })
     },
     handleCommentHeaderClick() {

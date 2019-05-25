@@ -1,6 +1,6 @@
 .halo-comment {
   * {
-    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,'System Latin','System Emoji','System SC',sans-serif;
     outline: none;
     font-size: 13px;
     line-height: 1.5;
@@ -145,8 +145,6 @@
       line-height: 2;
       color: #555;
       border-bottom: 1px solid #e8ecf3;
-      -webkit-transition: all 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
 
       .comment-item-author-avatar {
         float: left;
@@ -222,6 +220,7 @@
           padding-top: 6px;
 
           p {
+            overflow: auto;
             line-height: 2;
             font-size: 14px;
             color: #111;
@@ -326,9 +325,6 @@
     height: 100%;
     z-index: 9998;
     background-color: rgba(0, 0, 0, 0);
-    -webkit-transition: opacity 0.3s ease;
-    -o-transition: opacity 0.3s ease;
-    transition: opacity 0.3s ease;
     display: flex;
     justify-content: center;
     justify-items: flex-end;
@@ -347,9 +343,6 @@
         pointer-events: auto;
         -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-        -webkit-transition: background 0.2s, box-shadow 0.2s;
-        -o-transition: background 0.2s, box-shadow 0.2s;
-        transition: background 0.2s, box-shadow 0.2s;
         height: 248px;
         bottom: -248px;
         display: none;
@@ -456,12 +449,13 @@
                 }
               }
 
-              .comment-poster-body-reply{
+              .comment-poster-body-reply {
                 max-height: 18px;
                 border-left: 2px solid #667c99;
                 padding: 0 5px;
                 color: #667c99;
-                small{
+
+                small {
                   color: #0084fe;
                 }
               }
