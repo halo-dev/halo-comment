@@ -38,9 +38,6 @@
           v-if="hasParent"
           :href="'#' + comment.parentId"
         >
-          <span class="content-at-author">
-            @{{ comment.author }}
-          </span>
           <span class="content-at-id">
             #{{ comment.parentId }}
           </span>
