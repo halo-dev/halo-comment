@@ -103,6 +103,10 @@ export default {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
       }
+    },
+    options: {
+      required: false,
+      default: []
     }
   },
   data() {
@@ -113,7 +117,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `//gravatar.loli.net/avatar/${this.comment.gavatarMd5}/?s=256&d=mp`
+      return `//gravatar.loli.net/avatar/${this.comment.gavatarMd5}/?s=256&d=` + this.options.comment_gavatar_default
     },
     createTimeAgo() {
       return timeAgo(this.comment.createTime)

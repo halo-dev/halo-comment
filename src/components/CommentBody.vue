@@ -7,6 +7,7 @@
           :targetId="targetId"
           :target="target"
           :key="index"
+          :options="options"
           @reply="handleReply"
         />
       </template>
@@ -36,6 +37,10 @@ export default {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
       }
+    },
+    options: {
+      required: false,
+      default: []
     }
   },
   data() {

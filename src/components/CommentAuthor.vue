@@ -20,7 +20,7 @@
             v-if="this.comment.content"
             v-html="renderedContent"
           ></p>
-          <p v-else>撰写评论...</p>
+          <p v-else>{{ options.comment_content_placeholder || '撰写评论...'}}</p>
         </div>
       </div>
     </div>
@@ -37,6 +37,10 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    options: {
+      required: false,
+      default: []
     }
   },
   computed: {
@@ -45,10 +49,10 @@ export default {
     },
     avatar() {
       if (!this.comment.email) {
-        return 'https://gravatar.loli.net/avatar?d=mp'
+        return 'https://gravatar.loli.net/avatar?d=' + this.options.comment_gavatar_default
       }
       const gavatarMd5 = md5(this.comment.email)
-      return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=mp`
+      return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=` + this.options.comment_gavatar_default
     }
   },
   created() {

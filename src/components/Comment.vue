@@ -4,10 +4,14 @@
       class="header"
       @click="handleCommentHeaderClick"
     >
-      <comment-author :comment="editingComment" />
+      <comment-author
+        :comment="editingComment"
+        :options="options"
+      />
 
     </section>
-    <section class="comment-alert">
+    <section class="
+        comment-alert">
       <!-- Info -->
       <div
         class="alert info"
@@ -59,6 +63,7 @@
         :comments="comments"
         :targetId="id"
         :target="target"
+        :options="options"
         @reply="handleReply"
       />
     </section>
@@ -78,6 +83,7 @@
         :targetId="id"
         :target="target"
         :replyingComment="replyingComment"
+        :options="options"
         @close="handleEditorClose"
         @exit="handleEditorExit"
         @input="handleEditorInput"
@@ -92,6 +98,7 @@
 <script>
 import './index'
 import commentApi from '../apis/comment'
+import optionApi from '../apis/option'
 import { isObject } from '../utils/util'
 
 export default {
@@ -110,11 +117,6 @@ export default {
         // The value must match one of these strings
         return ['post', 'sheet', 'journal'].indexOf(value) !== -1
       }
-    },
-    options: {
-      type: Object,
-      required: false,
-      default: () => {}
     }
   },
   data() {
@@ -134,7 +136,8 @@ export default {
       warnings: [],
       successes: [],
       repliedSuccess: null,
-      replyingComment: null
+      replyingComment: null,
+      options: []
     }
   },
   computed: {
@@ -154,6 +157,7 @@ export default {
   },
   created() {
     this.loadComments()
+    this.loadOptions()
   },
   methods: {
     loadComments() {
@@ -166,6 +170,11 @@ export default {
         setTimeout(() => {
           this.commentLoading = false
         }, 300)
+      })
+    },
+    loadOptions() {
+      optionApi.list().then(response => {
+        this.options = response.data.data
       })
     },
     handleCommentHeaderClick() {

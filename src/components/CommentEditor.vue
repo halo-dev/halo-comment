@@ -117,6 +117,10 @@ export default {
       type: Object,
       required: false,
       default: null
+    },
+    options: {
+      required: false,
+      default: []
     }
   },
   data() {
@@ -132,10 +136,10 @@ export default {
   computed: {
     avatar() {
       if (!this.comment.email) {
-        return 'https://gravatar.loli.net/avatar?d=mp'
+        return 'https://gravatar.loli.net/avatar?d=' + this.options.comment_gavatar_default
       }
       const gavatarMd5 = md5(this.comment.email)
-      return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=mp`
+      return `//gravatar.loli.net/avatar/${gavatarMd5}/?s=256&d=` + this.options.comment_gavatar_default
     },
     commentValid() {
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
