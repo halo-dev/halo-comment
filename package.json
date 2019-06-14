@@ -1,13 +1,23 @@
 {
-  "name": "comment",
-  "version": "0.1.0",
-  "private": true,
+  "name": "halo-comment",
+  "version": "1.0.2",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build-comment": "vue-cli-service build --target wc --name halo-comment './src/components/Comment.vue'",
     "lint": "vue-cli-service lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halo-dev/halo-comment.git"
+  },
+  "author": "halo-dev",
+  "contributors": ["ruibaby","johnniang"],
+  "bugs": {
+    "url": "https://github.com/halo-dev/halo-comment/issues"
+  },
+  "homepage": "https://halo.run",
   "dependencies": {
     "axios": "^0.18.1",
     "core-js": "^2.6.8",
