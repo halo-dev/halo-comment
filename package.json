@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-comment": "vue-cli-service build --target wc --name halo-comment './src/components/Comment.vue'",
+    "build-comment": "vue-cli-service build --target wc --name halo-comment 'src/components/Comment.vue'",
     "lint": "vue-cli-service lint"
   },
   "repository": {
