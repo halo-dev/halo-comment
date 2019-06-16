@@ -139,7 +139,7 @@ export default {
         return '//cn.gravatar.com/avatar?d=' + this.options.comment_gavatar_default
       }
       const gavatarMd5 = md5(this.comment.email)
-      return `//cn.gravatar.com/avatar/${gavatarMd5}/?s=256&d=` + this.options.comment_gavatar_default
+      return `//cn.gravatar.com/avatar/${gavatarMd5}?s=256&d=` + this.options.comment_gavatar_default
     },
     commentValid() {
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)

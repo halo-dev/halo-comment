@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `//cn.gravatar.com/avatar/${this.comment.gavatarMd5}/?s=256&d=` + this.options.comment_gavatar_default
+      return `//cn.gravatar.com/avatar/${this.comment.gavatarMd5}?s=256&d=` + this.options.comment_gavatar_default
     },
     createTimeAgo() {
       return timeAgo(this.comment.createTime)
