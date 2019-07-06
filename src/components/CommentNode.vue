@@ -71,6 +71,7 @@
         :comments="children"
         :targetId="targetId"
         :target="target"
+        :options="options"
         @reply="handleChildReply"
       />
     </div>
