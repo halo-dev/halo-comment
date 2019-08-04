@@ -1,20 +1,15 @@
 <template>
-  <transition name="loading-fade" mode="in-out">
-    <div class="comment-loading">
-      <svg viewBox="0 0 50 50">
-        <circle
-          class="ring"
-          cx="25"
-          cy="25"
-          r="20"
-        ></circle>
-        <circle
-          class="ball"
-          cx="25"
-          cy="5"
-          r="3.5"
-        ></circle>
-      </svg>
+  <transition
+    name="loading-fade"
+    mode="in-out"
+  >
+    <div class="comment-loader-container">
+      <div class="comment-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </transition>
 </template>
@@ -24,28 +19,44 @@ export default {
 }
 </script>
 <style lang="scss">
-.comment-loading {
+.comment-loader-container {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  .comment-loader {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 2em;
 
-  svg {
-    width: 3.75em;
-    animation: 1.5s spin ease infinite;
-
-    .ring {
-      fill: none;
-      stroke: hsla(341, 97%, 59%, 0.3);
-      stroke-width: 2;
+    span {
+      width: 0.3em;
+      height: 1em;
+      background-color: #3b83ee;
+      &:nth-of-type(1) {
+        animation: grow 1s -0.45s ease-in-out infinite;
+      }
+      &:nth-of-type(2) {
+        animation: grow 1s -0.3s ease-in-out infinite;
+      }
+      &:nth-of-type(3) {
+        animation: grow 1s -0.15s ease-in-out infinite;
+      }
+      &:nth-of-type(4) {
+        animation: grow 1s ease-in-out infinite;
+      }
     }
 
-    .ball {
-      fill: #fc2f70;
-      stroke: none;
-    }
-  }
+    @keyframes grow {
+      0%,
+      100% {
+        transform: scaleY(1);
+      }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
+      50% {
+        transform: scaleY(2);
+      }
     }
   }
 }
