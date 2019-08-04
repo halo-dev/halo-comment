@@ -19,6 +19,7 @@
           <div class="comment-poster-main">
             <div class="comment-poster-main-body">
               <img
+                v-if="options.comment_gravatar_default"
                 class="comment-poster-body-avatar"
                 :src="avatar"
                 :alt="comment.author"

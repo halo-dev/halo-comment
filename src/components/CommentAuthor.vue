@@ -5,6 +5,7 @@
   >
     <div class="comment-item">
       <img
+        v-if="options.comment_gravatar_default"
         class="comment-item-author-avatar"
         :src="avatar"
         :alt="comment.author"
