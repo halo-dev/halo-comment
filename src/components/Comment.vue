@@ -163,14 +163,16 @@ export default {
     loadComments() {
       this.comments = []
       this.commentLoading = true
-      commentApi.listComments(this.target, this.id, 'top_view', this.pagination).then(response => {
-        this.comments = response.data.data.content
-        this.pagination.size = response.data.data.rpp
-        this.pagination.total = response.data.data.total
-        setTimeout(() => {
+      commentApi
+        .listComments(this.target, this.id, 'top_view', this.pagination)
+        .then(response => {
+          this.comments = response.data.data.content
+          this.pagination.size = response.data.data.rpp
+          this.pagination.total = response.data.data.total
+        })
+        .finally(() => {
           this.commentLoading = false
-        }, 300)
-      })
+        })
     },
     loadOptions() {
       optionApi.list().then(response => {

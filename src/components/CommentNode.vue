@@ -51,7 +51,7 @@
             <button
               class="item-control-more"
               @click="handleMoreClick"
-            >加载更多</button>
+            >更多</button>
           </li>
           <li><button
               class="item-control-reply"
