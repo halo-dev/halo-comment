@@ -76,7 +76,7 @@
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      border: 2px dashed #bd9090;
+      border: 2px dashed #3b83ee;
     }
 
     .comment-item {
@@ -209,7 +209,6 @@
             float: right;
             font-size: 13px;
             color: #667c99;
-            font-style: italic;
           }
         }
 
@@ -281,49 +280,11 @@
       }
 
       .comment-item-children {
-        margin-left: 2rem;
+        margin-left: 4rem;
         padding-left: 1rem;
         border-left: 0.1rem solid cccccc;
-        margin-left: 2em;
         padding-left: 0;
         padding-right: 0;
-      }
-    }
-  }
-
-  .comment-pagination {
-    margin-top: 20px;
-    text-align: center;
-
-    .pagination {
-      display: inline-block;
-      padding: 0;
-      margin: 0;
-
-      li {
-        display: inline;
-
-        a,
-        span {
-          color: #1890ff;
-          float: left;
-          padding: 4px 12px;
-          text-decoration: none;
-          border-radius: 0.1rem;
-          transition: all 0.4s ease-in-out;
-
-          &:hover:not(.active) {
-            background-color: #1890ff;
-            color: #fff;
-          }
-        }
-
-        &.active {
-          a {
-            color: #fff;
-            background-color: #1890ff;
-          }
-        }
       }
     }
   }
@@ -335,7 +296,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    z-index: 9998;
+    z-index: 2147483647;
     background-color: rgba(0, 0, 0, 0);
     display: flex;
     justify-content: center;
@@ -441,7 +402,7 @@
                       color: #667c99;
                     }
 
-                    &:focus~span {
+                    &:focus ~ span {
                       transform-origin: bottom left;
                       transform: scaleX(1);
                     }
@@ -562,6 +523,133 @@
     @media screen and (max-width: 768px) {
       .comment-modal-container {
         width: 100%;
+      }
+    }
+  }
+
+  // Loader
+  .comment-loader-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+    .comment-loader {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      width: 2em;
+
+      span {
+        width: 0.3em;
+        height: 1em;
+        background-color: #3b83ee;
+        &:nth-of-type(1) {
+          animation: grow 1s -0.45s ease-in-out infinite;
+        }
+        &:nth-of-type(2) {
+          animation: grow 1s -0.3s ease-in-out infinite;
+        }
+        &:nth-of-type(3) {
+          animation: grow 1s -0.15s ease-in-out infinite;
+        }
+        &:nth-of-type(4) {
+          animation: grow 1s ease-in-out infinite;
+        }
+      }
+
+      @keyframes grow {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+
+        50% {
+          transform: scaleY(2);
+        }
+      }
+    }
+  }
+
+  .loading-fade-enter-active,
+  .loading-fade-leave-active {
+    transition: all 0.1s ease-in-out;
+  }
+  .loading-fade-enter,
+  .loading-fade-leave-to {
+    opacity: 0;
+  }
+
+  // Pagination
+  .comment-pagination {
+    margin-top: 20px;
+    text-align: center;
+
+    .pagination {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline;
+      }
+
+      button {
+        z-index: 1;
+        position: relative;
+        font-size: inherit;
+        font-family: inherit;
+        color: rgb(0, 0, 0);
+        padding: 0.5em 1em;
+        outline: none;
+        border: none;
+        background-color: hsl(0, 0%, 100%);
+
+        &::before {
+          content: '';
+          z-index: -1;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #3b83ee;
+          transform-origin: center top;
+          transform: scaleY(0);
+          transition: transform 0.25s ease-in-out;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &::before {
+            transform-origin: center bottom;
+            transform: scaleY(1);
+          }
+        }
+      }
+
+      .prev-button {
+        &::before {
+          transform-origin: center left;
+          transform: scaleX(0);
+        }
+        &:hover::before {
+          transform-origin: center right;
+          transform: scaleX(1);
+        }
+      }
+      .next-button {
+        &::before {
+          transform-origin: center left;
+          transform: scaleX(0);
+        }
+        &:hover::before {
+          transform-origin: center left;
+          transform: scaleX(1);
+        }
+      }
+      .active {
+        background-color: #3b83ee;
       }
     }
   }

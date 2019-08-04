@@ -5,11 +5,11 @@
         class="page-item"
         :class="{ disabled: !hasPrev }"
       >
-        <a
+        <button
+          class="prev-button"
           tabindex="-1"
-          href="javascript:void(0)"
           @click="handlePrevClick"
-        >上一页</a>
+        >上一页</button>
       </li>
       <!-- Show first page -->
       <li
@@ -17,10 +17,10 @@
         v-if="firstPage != null"
         :class="{ active: page === firstPage}"
       >
-        <a
-          href="javascript:void(0)"
+        <button
           @click="handlePageItemClick(firstPage)"
-        >{{ firstPage + 1}}</a>
+          :class="{ active: page === firstPage}"
+        >{{ firstPage + 1}}</button>
       </li>
       <!-- Show middle page -->
       <li
@@ -35,12 +35,12 @@
         :key="middlePage"
         :class="{ active: middlePage === page }"
       >
-        <a
-          href="javascript:void(0)"
+        <button
           @click="handlePageItemClick(middlePage)"
+          :class="{ active: middlePage === page }"
         >
           {{ middlePage + 1}}
-        </a>
+        </button>
       </li>
 
       <li
@@ -55,22 +55,22 @@
         v-if="lastPage"
         :class="{ active: page === lastPage}"
       >
-        <a
-          href="javascript:void(0)"
+        <button
           @click="handlePageItemClick(lastPage)"
+          :class="{ active: page === lastPage}"
         >
           {{ lastPage + 1 }}
-        </a>
+        </button>
       </li>
 
       <li
         class="page-item"
         :class="{ disabled: !hasNext }"
       >
-        <a
-          href="javascript:void(0)"
+        <button
+          class="next-button"
           @click="handleNextClick"
-        >下一页</a>
+        >下一页</button>
       </li>
     </ul>
   </div>
