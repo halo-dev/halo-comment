@@ -6,6 +6,14 @@
       @click.self="close"
       @keydown.esc.once="close"
     >
+      <div class="comment-poster-editor-emoji">
+        <VEmojiPicker
+          :pack="pack"
+          @select="selectEmoji"
+          v-show="emojiDialogVisible"
+          labelSearch="搜索"
+        />
+      </div>
       <div class="comment-modal-container">
         <div class="comment-poster-container active">
           <ul class="comment-poster-controls">
@@ -81,6 +89,15 @@
                         @click="handlePreviewClick"
                       >预览</button>
                     </li>
+                    <li class="editor-item-emoji">
+                      <button
+                        class="editor-btn-emoji"
+                        type="button"
+                        @click="toogleDialogEmoji"
+                      >
+                        😃
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -94,11 +111,16 @@
 
 <script>
 import md5 from 'md5'
+import VEmojiPicker from 'v-emoji-picker'
+import packData from 'v-emoji-picker/data/emojis.json'
 import { isEmpty } from '../utils/util'
 import commentApi from '../apis/comment'
 
 export default {
   name: 'CommentEditor',
+  components: {
+    VEmojiPicker
+  },
   props: {
     targetId: {
       type: Number,
@@ -126,11 +148,13 @@ export default {
   },
   data() {
     return {
+      pack: packData,
+      emojiDialogVisible: false,
       comment: {
         author: null,
         authorUrl: null,
         email: null,
-        content: null
+        content: ''
       }
     }
   },
@@ -153,6 +177,13 @@ export default {
     this.comment.email = localStorage.getItem('comment-email')
   },
   methods: {
+    toogleDialogEmoji() {
+      this.emojiDialogVisible = !this.emojiDialogVisible
+    },
+    selectEmoji(emoji) {
+      this.comment.content += emoji.emoji
+      this.toogleDialogEmoji()
+    },
     close() {
       this.$emit('close', false)
     },
@@ -160,7 +191,6 @@ export default {
       if (this.comment.content && !window.confirm('评论还未发布，是否放弃？')) {
         return
       }
-
       this.$emit('exit', false)
     },
     handleAuthorInput() {

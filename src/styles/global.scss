@@ -516,6 +516,25 @@
                       }
                     }
                   }
+                  .editor-item-emoji {
+                    .editor-btn-emoji {
+                      font-size: inherit;
+                      font-family: inherit;
+                      color: #667c99;
+                      padding: 0.5em 1em;
+                      outline: none;
+                      border: none;
+                      background-color: #e8ecf3;
+                      border-radius: 4px;
+                      cursor: pointer;
+                      transition: all 0.4s ease-in-out;
+
+                      &:hover {
+                        background-color: #d7dfea;
+                        transition: all 0.4s ease-in-out;
+                      }
+                    }
+                  }
                 }
               }
             }
