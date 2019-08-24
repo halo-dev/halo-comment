@@ -602,7 +602,7 @@
         color: rgb(0, 0, 0);
         padding: 0.5em 1em;
         outline: none;
-        border: none;
+        border: 0;
         background-color: hsl(0, 0%, 100%);
 
         &::before {
@@ -620,6 +620,7 @@
         }
 
         &:hover {
+          color: #fff;
           cursor: pointer;
           &::before {
             transform-origin: center bottom;
@@ -650,6 +651,7 @@
       }
       .active {
         background-color: #3b83ee;
+        color: #fff;
       }
     }
   }
