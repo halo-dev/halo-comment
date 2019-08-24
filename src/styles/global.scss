@@ -100,6 +100,7 @@
         text-align: center;
         margin-left: 12px;
         margin-right: 12px;
+        border: 1px solid #f5f5f5;
       }
 
       .comment-item-main {
@@ -139,6 +140,7 @@
   }
 
   .comment-items {
+    padding: 0 12px;
     .comment-item {
       padding-top: 15px;
       position: relative;
@@ -158,6 +160,7 @@
         box-sizing: content-box;
         text-align: center;
         margin-right: 12px;
+        border: 1px solid #f5f5f5;
       }
 
       .comment-item-main {
@@ -373,6 +376,7 @@
               display: block;
               box-sizing: content-box;
               text-align: center;
+              border: 1px solid #f5f5f5;
             }
 
             .comment-poster-body-content {
