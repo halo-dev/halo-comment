@@ -54,7 +54,7 @@
 
   .closebtn {
     margin-left: 15px;
-    color: gray;
+    color: #fff;
     font-weight: bold;
     float: right;
     font-size: 22px;
@@ -141,6 +141,7 @@
 
   .comment-items {
     padding: 0 12px;
+
     .comment-item {
       padding-top: 15px;
       position: relative;
@@ -308,9 +309,21 @@
 
     .comment-modal-container {
       width: 768px;
+      position: relative;
+      .comment-poster-editor-emoji {
+        -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        position: absolute;
+        bottom: 58px;
+        left: 19%;
+        z-index: 1;
+      }
 
-      // margin-right: auto;
-      // margin-left: auto;
+      #EmojiPicker {
+        height: 364px;
+        width: 100%;
+      }
+
       .comment-poster-container {
         border-radius: 4px 4px 0 0;
         background: rgba(255, 255, 255, 0.95);
@@ -406,7 +419,7 @@
                       color: #667c99;
                     }
 
-                    &:focus ~ span {
+                    &:focus~span {
                       transform-origin: bottom left;
                       transform: scaleX(1);
                     }
@@ -516,6 +529,7 @@
                       }
                     }
                   }
+
                   .editor-item-emoji {
                     .editor-btn-emoji {
                       font-size: inherit;
@@ -556,6 +570,7 @@
     display: flex;
     justify-content: center;
     margin: 2rem 0;
+
     .comment-loader {
       display: flex;
       flex-flow: row nowrap;
@@ -567,21 +582,26 @@
         width: 0.3em;
         height: 1em;
         background-color: #3b83ee;
+
         &:nth-of-type(1) {
           animation: grow 1s -0.45s ease-in-out infinite;
         }
+
         &:nth-of-type(2) {
           animation: grow 1s -0.3s ease-in-out infinite;
         }
+
         &:nth-of-type(3) {
           animation: grow 1s -0.15s ease-in-out infinite;
         }
+
         &:nth-of-type(4) {
           animation: grow 1s ease-in-out infinite;
         }
       }
 
       @keyframes grow {
+
         0%,
         100% {
           transform: scaleY(1);
@@ -598,6 +618,7 @@
   .loading-fade-leave-active {
     transition: all 0.1s ease-in-out;
   }
+
   .loading-fade-enter,
   .loading-fade-leave-to {
     opacity: 0;
@@ -645,6 +666,7 @@
         &:hover {
           color: #fff;
           cursor: pointer;
+
           &::before {
             transform-origin: center bottom;
             transform: scaleY(1);
@@ -657,21 +679,25 @@
           transform-origin: center left;
           transform: scaleX(0);
         }
+
         &:hover::before {
           transform-origin: center right;
           transform: scaleX(1);
         }
       }
+
       .next-button {
         &::before {
           transform-origin: center left;
           transform: scaleX(0);
         }
+
         &:hover::before {
           transform-origin: center left;
           transform: scaleX(1);
         }
       }
+
       .active {
         background-color: #3b83ee;
         color: #fff;

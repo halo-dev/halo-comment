@@ -6,15 +6,15 @@
       @click.self="close"
       @keydown.esc.once="close"
     >
-      <div class="comment-poster-editor-emoji">
-        <VEmojiPicker
-          :pack="pack"
-          @select="selectEmoji"
-          v-show="emojiDialogVisible"
-          labelSearch="搜索"
-        />
-      </div>
       <div class="comment-modal-container">
+        <div class="comment-poster-editor-emoji">
+          <VEmojiPicker
+            :pack="pack"
+            @select="selectEmoji"
+            v-show="emojiDialogVisible"
+            labelSearch="搜索"
+          />
+        </div>
         <div class="comment-poster-container active">
           <ul class="comment-poster-controls">
             <li class="poster-item-close">
