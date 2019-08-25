@@ -112,7 +112,7 @@
 <script>
 import md5 from 'md5'
 import VEmojiPicker from './EmojiPicker/VEmojiPicker'
-import emojiData from './EmojiPicker/data/emojis.json'
+import emojiData from './EmojiPicker/data/emojis.js'
 import { isEmpty } from '../utils/util'
 import commentApi from '../apis/comment'
 
