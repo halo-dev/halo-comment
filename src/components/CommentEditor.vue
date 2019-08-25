@@ -12,7 +12,7 @@
             :pack="pack"
             @select="selectEmoji"
             v-show="emojiDialogVisible"
-            labelSearch="搜索"
+            labelSearch="搜索表情"
           />
         </div>
         <div class="comment-poster-container active">
@@ -111,8 +111,8 @@
 
 <script>
 import md5 from 'md5'
-import VEmojiPicker from 'v-emoji-picker'
-import packData from 'v-emoji-picker/data/emojis.json'
+import VEmojiPicker from './EmojiPicker/VEmojiPicker'
+import emojiData from './EmojiPicker/data/emojis.json'
 import { isEmpty } from '../utils/util'
 import commentApi from '../apis/comment'
 
@@ -148,7 +148,7 @@ export default {
   },
   data() {
     return {
-      pack: packData,
+      pack: emojiData,
       emojiDialogVisible: false,
       comment: {
         author: null,

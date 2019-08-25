@@ -27,8 +27,6 @@
     "marked": "^0.6.2",
     "md5": "^2.2.1",
     "nprogress": "^0.2.0",
-    "simplemde": "^1.11.2",
-    "v-emoji-picker": "^1.1.5",
     "vue": "^2.6.10"
   },
   "devDependencies": {
