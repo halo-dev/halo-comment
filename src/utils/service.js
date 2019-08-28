@@ -1,4 +1,5 @@
 import axios from 'axios'
+require('promise.prototype.finally').shim();
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 // import Vue from "vue";
