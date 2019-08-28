@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+require('promise.prototype.finally').shim();
 
 Vue.config.productionTip = false
 
