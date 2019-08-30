@@ -50,21 +50,22 @@
     &.warning {
       background-color: #ff9800;
     }
-  }
 
-  .closebtn {
-    margin-left: 15px;
-    color: #fff;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 16px;
-    cursor: pointer;
-    transition: 0.3s;
+    .closebtn {
+      margin-left: 15px;
+      color: #fff;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 16px;
+      cursor: pointer;
+      transition: 0.3s;
 
-    &:hover {
-      color: black;
+      &:hover {
+        color: black;
+      }
     }
+
   }
 
   .comment-placeholder {
@@ -356,22 +357,17 @@
           }
 
           .editor-btn-close {
-            float: right;
-            font-size: 28px;
+            margin-left: 15px;
+            color: #c39b9b;
             font-weight: bold;
-            font-family: inherit;
-            color: #667c99;
-            padding: 0.2rem 0.8rem;
-            outline: none;
-            border: none;
-            // background-color: #e8ecf3;
-            background-color: rgba(0, 0, 0, 0);
-            border-radius: 4px;
+            float: right;
+            font-size: 22px;
+            line-height: 16px;
             cursor: pointer;
+            transition: 0.3s;
 
             &:hover {
-              background-color: #d7dfea;
-              transition: all 0.4s ease-in-out;
+              color: #000;
             }
           }
         }
@@ -510,28 +506,8 @@
                     }
                   }
 
-                  .editor-item-preview {
-                    .editor-btn-preview {
-                      font-size: inherit;
-                      font-family: inherit;
-                      color: #667c99;
-                      padding: 0.5em 1em;
-                      outline: none;
-                      border: none;
-                      background-color: #e8ecf3;
-                      border-radius: 4px;
-                      cursor: pointer;
-                      transition: all 0.4s ease-in-out;
-
-                      &:hover {
-                        background-color: #d7dfea;
-                        transition: all 0.4s ease-in-out;
-                      }
-                    }
-                  }
-
-                  .editor-item-emoji {
-                    .editor-btn-emoji {
+                  .editor-item-preview,.editor-item-emoji {
+                    .editor-btn-preview,.editor-btn-emoji {
                       font-size: inherit;
                       font-family: inherit;
                       color: #667c99;
@@ -704,7 +680,6 @@
       }
     }
   }
-
 
   #EmojiPicker {
     font-family: Noto, Twemoji, NotomojiColor, Notomoji, Symbola, sans-serif;

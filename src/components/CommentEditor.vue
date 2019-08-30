@@ -19,7 +19,7 @@
           <ul class="comment-poster-controls">
             <li class="poster-item-close">
               <span
-                class="closebtn"
+                class="editor-btn-close"
                 @click="exit"
               >&times;</span>
             </li>
