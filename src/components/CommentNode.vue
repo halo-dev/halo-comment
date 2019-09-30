@@ -24,6 +24,7 @@
             v-text="comment.author"
           />
         </span>
+        <span v-if="comment.isAdmin" class="header-admin">博主</span>
         <span class="header-time">{{createTimeAgo}}</span>
         <a :href="'#'+comment.id">
           <span
