@@ -71,6 +71,7 @@
                       :style="replyingComment==null?'height: 146px;':'height: 128px;'"
                       v-model="comment.content"
                       @input="handleContentInput"
+                      @focus="()=>this.emojiDialogVisible=false"
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
@@ -95,7 +96,7 @@
                         type="button"
                         @click="toogleDialogEmoji"
                       >
-                        😃
+                        表情
                       </button>
                     </li>
                   </ul>
