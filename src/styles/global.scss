@@ -143,6 +143,10 @@
             line-height: 2;
             font-size: 16px;
             color: #667c99;
+
+            img {
+              width: 100%;
+            }
           }
         }
       }
@@ -640,7 +644,8 @@
         cursor: pointer;
         transition: all 0.8s;
         font-weight: normal;
-        color: rgba(0,0,0,.65);
+        color: rgba(0, 0, 0, .65);
+
         &:hover {
           color: #1890ff;
           border-color: #1890ff;
