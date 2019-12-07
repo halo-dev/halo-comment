@@ -161,7 +161,7 @@ export default {
   },
   computed: {
     avatar() {
-      if (!this.comment.email) {
+      if (!this.comment.email||!this.validEmail(this.comment.email)) {
         return '//cn.gravatar.com/avatar?d=' + this.options.comment_gravatar_default
       }
       const gravatarMd5 = md5(this.comment.email)
@@ -231,6 +231,10 @@ export default {
     },
     handlePreviewClick() {
       window.location.href = '#comment-author'
+    },
+    validEmail(email) {
+      var re = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
+      return re.test(email);
     }
   }
 }
