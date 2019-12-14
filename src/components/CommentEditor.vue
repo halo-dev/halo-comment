@@ -162,10 +162,10 @@ export default {
   computed: {
     avatar() {
       if (!this.comment.email||!this.validEmail(this.comment.email)) {
-        return '//cn.gravatar.com/avatar?d=' + this.options.comment_gravatar_default
+        return '//cdn.v2ex.com/gravatar?d=' + this.options.comment_gravatar_default
       }
       const gravatarMd5 = md5(this.comment.email)
-      return `//cn.gravatar.com/avatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
+      return `//cdn.v2ex.com/gravatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
     },
     commentValid() {
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)

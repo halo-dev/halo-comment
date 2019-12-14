@@ -6545,11 +6545,11 @@ var md5_default = /*#__PURE__*/__webpack_require__.n(md5);
 
     avatar() {
       if (!this.comment.email) {
-        return '//cn.gravatar.com/avatar?d=' + this.options.comment_gravatar_default;
+        return '//cdn.v2ex.com/gravatar?d=' + this.options.comment_gravatar_default;
       }
 
       var gravatarMd5 = md5_default()(this.comment.email);
-      return `//cn.gravatar.com/avatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
+      return `//cdn.v2ex.com/gravatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
     }
 
   },
@@ -7005,7 +7005,7 @@ commentApi.listChildren = (target, targetId, commentId) => {
 
   computed: {
     avatar() {
-      return `//cn.gravatar.com/avatar/${this.comment.gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
+      return `//cdn.v2ex.com/gravatar/${this.comment.gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
     },
 
     createTimeAgo() {
@@ -7965,11 +7965,11 @@ class emojis_Emoji {
   computed: {
     avatar() {
       if (!this.comment.email) {
-        return '//cn.gravatar.com/avatar?d=' + this.options.comment_gravatar_default;
+        return '//cdn.v2ex.com/gravatar?d=' + this.options.comment_gravatar_default;
       }
 
       var gravatarMd5 = md5_default()(this.comment.email);
-      return `//cn.gravatar.com/avatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
+      return `//cdn.v2ex.com/gravatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default;
     },
 
     commentValid() {
