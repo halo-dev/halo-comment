@@ -120,7 +120,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `//cn.gravatar.com/avatar/${this.comment.gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
+      return `//cdn.v2ex.com/gravatar/${this.comment.gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
     },
     createTimeAgo() {
       return timeAgo(this.comment.createTime)

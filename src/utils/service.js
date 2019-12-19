@@ -1,7 +1,5 @@
 import axios from 'axios'
 require('promise.prototype.finally').shim();
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 // import Vue from "vue";
 
 const service = axios.create({
@@ -12,22 +10,18 @@ const service = axios.create({
 
 service.interceptors.request.use(
   config => {
-    NProgress.start()
     return config
   },
   error => {
-    NProgress.remove()
     return Promise.reject(error)
   }
 )
 
 service.interceptors.response.use(
   response => {
-    NProgress.done()
     return response
   },
   error => {
-    NProgress.done()
 
     if (axios.isCancel(error)) {
       // Vue.$log.debug("Cancelled uploading by user.");

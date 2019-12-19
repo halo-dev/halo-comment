@@ -50,10 +50,10 @@ export default {
     },
     avatar() {
       if (!this.comment.email) {
-        return '//cn.gravatar.com/avatar?d=' + this.options.comment_gravatar_default
+        return '//cdn.v2ex.com/gravatar?d=' + this.options.comment_gravatar_default
       }
       const gravatarMd5 = md5(this.comment.email)
-      return `//cn.gravatar.com/avatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
+      return `//cdn.v2ex.com/gravatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
     }
   },
   created() {
