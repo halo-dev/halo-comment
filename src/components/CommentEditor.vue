@@ -205,9 +205,15 @@ export default {
         .createComment(this.target, this.comment)
         .then(response => {
           // Store comment author, email, authorUrl
-          localStorage.setItem('comment-author', this.comment.author)
-          localStorage.setItem('comment-email', this.comment.email)
-          localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
+          if (this.comment.author) {
+            localStorage.setItem('comment-author', this.comment.author)
+          }
+          if (this.comment.email) {
+            localStorage.setItem('comment-email', this.comment.email)
+          }
+          if (this.comment.authorUrl) {
+            localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
+          }
 
           // clearn comment
           this.comment.content = null
