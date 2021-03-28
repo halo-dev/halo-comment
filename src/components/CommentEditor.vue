@@ -22,7 +22,13 @@
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
                   <li class="header-item-nickname">
-                    <input type="text" v-model="comment.author" @input="handleAuthorInput" placeholder="昵称 *" />
+                    <input
+                      type="text"
+                      ref="authorInput"
+                      v-model="comment.author"
+                      @input="handleAuthorInput"
+                      placeholder="昵称 *"
+                    />
                     <span></span>
                   </li>
                   <li class="header-item-email">
@@ -45,6 +51,7 @@
                       v-model="comment.content"
                       @input="handleContentInput"
                       @focus="() => (this.emojiDialogVisible = false)"
+                      ref="contentInput"
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
@@ -147,6 +154,19 @@ export default {
     this.comment.author = localStorage.getItem('comment-author')
     this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
     this.comment.email = localStorage.getItem('comment-email')
+
+    if (!this.comment.author) {
+      this.$nextTick(() => {
+        this.$refs.authorInput.focus()
+      })
+      return
+    }
+    if (!this.comment.content) {
+      this.$nextTick(() => {
+        this.$refs.contentInput.focus()
+      })
+      return
+    }
   },
   methods: {
     toogleDialogEmoji() {

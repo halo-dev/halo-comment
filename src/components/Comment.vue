@@ -1,56 +1,29 @@
 <template>
   <div class="halo-comment">
-    <section
-      class="header"
-      @click="handleCommentHeaderClick"
-    >
-      <comment-author
-        :comment="editingComment"
-        :options="options"
-      />
-
+    <section class="header" @click="handleCommentHeaderClick">
+      <comment-author :comment="editingComment" :options="options" />
     </section>
-    <section class="
-        comment-alert">
+    <section
+      class="
+        comment-alert"
+    >
       <!-- Info -->
-      <div
-        class="alert info"
-        v-for="(info, index) in infoes"
-        :key="index"
-      >
-        <span
-          class="closebtn"
-          @click="clearAlertClose"
-        >&times;</span>
+      <div class="alert info" v-for="(info, index) in infoes" :key="index">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ info }}</strong>
       </div>
 
       <!-- Success -->
-      <div
-        class="alert success"
-        v-for="(success, index) in successes"
-        :key="index"
-      >
-        <span
-          class="closebtn"
-          @click="clearAlertClose"
-        >&times;</span>
+      <div class="alert success" v-for="(success, index) in successes" :key="index">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ success }}</strong>
       </div>
 
       <!-- Warning -->
-      <div
-        class="alert warning"
-        v-for="(warning, index) in warnings"
-        :key="index"
-      >
-        <span
-          class="closebtn"
-          @click="clearAlertClose"
-        >&times;</span>
+      <div class="alert warning" v-for="(warning, index) in warnings" :key="index">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ warning }}</strong>
       </div>
-
     </section>
 
     <section class="loading">
@@ -79,7 +52,7 @@
 
     <section class="footer-editor">
       <comment-editor
-        v-show="editorVisiable"
+        v-if="editorVisiable"
         :targetId="id"
         :target="target"
         :replyingComment="replyingComment"
@@ -91,7 +64,6 @@
         @failed="handleFailedToCreateComment"
       />
     </section>
-
   </div>
 </template>
 
@@ -254,6 +226,6 @@ export default {
 
 .modal-fade-enter-active,
 .modal-fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.2s ease;
 }
 </style>
