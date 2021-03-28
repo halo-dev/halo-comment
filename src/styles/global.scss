@@ -65,7 +65,6 @@
         color: black;
       }
     }
-
   }
 
   .comment-item-author-avatar {
@@ -297,6 +296,9 @@
         border-left: 0.1rem solid cccccc;
         padding-left: 0;
         padding-right: 0;
+        .comment-items {
+          padding: 0;
+        }
       }
     }
   }
@@ -429,7 +431,7 @@
                       color: #667c99;
                     }
 
-                    &:focus~span {
+                    &:focus ~ span {
                       transform-origin: bottom left;
                       transform: scaleX(1);
                     }
@@ -522,7 +524,6 @@
 
                   .editor-item-preview,
                   .editor-item-emoji {
-
                     .editor-btn-preview,
                     .editor-btn-emoji {
                       font-size: inherit;
@@ -594,7 +595,6 @@
       }
 
       @keyframes grow {
-
         0%,
         100% {
           transform: scaleY(1);
@@ -644,7 +644,7 @@
         cursor: pointer;
         transition: all 0.8s;
         font-weight: normal;
-        color: rgba(0, 0, 0, .65);
+        color: rgba(0, 0, 0, 0.65);
         background-color: #fff;
 
         &:hover {
@@ -695,7 +695,7 @@
         padding-bottom: 2px;
       }
 
-      &>img {
+      & > img {
         width: 22px;
         height: 22px;
       }

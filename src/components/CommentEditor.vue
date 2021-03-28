@@ -1,27 +1,14 @@
 <template>
   <transition name="modal-fade">
-    <div
-      autofocus
-      class="comment-modal"
-      @click.self="close"
-      @keydown.esc.once="close"
-    >
+    <div autofocus class="comment-modal" @click.self="close" @keydown.esc.once="close">
       <div class="comment-modal-container">
         <div class="comment-poster-editor-emoji">
-          <VEmojiPicker
-            :pack="pack"
-            @select="selectEmoji"
-            v-show="emojiDialogVisible"
-            labelSearch="搜索表情"
-          />
+          <VEmojiPicker :pack="pack" @select="selectEmoji" v-show="emojiDialogVisible" labelSearch="搜索表情" />
         </div>
         <div class="comment-poster-container active">
           <ul class="comment-poster-controls">
             <li class="poster-item-close">
-              <span
-                class="editor-btn-close"
-                @click="exit"
-              >&times;</span>
+              <span class="editor-btn-close" @click="exit">&times;</span>
             </li>
           </ul>
           <div class="comment-poster-main">
@@ -31,47 +18,33 @@
                 class="comment-poster-body-avatar"
                 :src="avatar"
                 :alt="comment.author"
-              >
+              />
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
                   <li class="header-item-nickname">
-                    <input
-                      type="text"
-                      v-model="comment.author"
-                      @input="handleAuthorInput"
-                      placeholder="昵称 *"
-                    >
+                    <input type="text" v-model="comment.author" @input="handleAuthorInput" placeholder="昵称 *" />
                     <span></span>
                   </li>
                   <li class="header-item-email">
-                    <input
-                      type="email"
-                      v-model="comment.email"
-                      placeholder="邮箱 *"
-                    >
+                    <input type="email" v-model="comment.email" placeholder="邮箱 *" />
                     <span></span>
                   </li>
                   <li class="header-item-website">
-                    <input
-                      type="text"
-                      v-model="comment.authorUrl"
-                      placeholder="网站"
-                    >
+                    <input type="text" v-model="comment.authorUrl" placeholder="网站" />
                     <span></span>
                   </li>
                 </ul>
-                <span
-                  class="comment-poster-body-reply"
-                  v-if="replyingComment"
-                >回复：@{{replyingComment.author}} <small>#{{replyingComment.id}}</small></span>
+                <span class="comment-poster-body-reply" v-if="replyingComment"
+                  >回复：@{{ replyingComment.author }} <small>#{{ replyingComment.id }}</small></span
+                >
                 <div class="comment-poster-body-editor">
                   <div class="comment-poster-editor-wrapper">
                     <textarea
                       placeholder="撰写评论...（1000 个字符内）"
-                      :style="replyingComment==null?'height: 146px;':'height: 128px;'"
+                      :style="replyingComment == null ? 'height: 146px;' : 'height: 128px;'"
                       v-model="comment.content"
                       @input="handleContentInput"
-                      @focus="()=>this.emojiDialogVisible=false"
+                      @focus="() => (this.emojiDialogVisible = false)"
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
@@ -81,21 +54,15 @@
                         type="button"
                         @click="handleSubmitClick"
                         :disabled="!commentValid"
-                      >评论</button>
+                      >
+                        评论
+                      </button>
                     </li>
                     <li class="editor-item-preview">
-                      <button
-                        class="editor-btn-preview"
-                        type="button"
-                        @click="handlePreviewClick"
-                      >预览</button>
+                      <button class="editor-btn-preview" type="button" @click="handlePreviewClick">预览</button>
                     </li>
                     <li class="editor-item-emoji">
-                      <button
-                        class="editor-btn-emoji"
-                        type="button"
-                        @click="toogleDialogEmoji"
-                      >
+                      <button class="editor-btn-emoji" type="button" @click="toogleDialogEmoji">
                         表情
                       </button>
                     </li>
@@ -161,11 +128,15 @@ export default {
   },
   computed: {
     avatar() {
-      if (!this.comment.email||!this.validEmail(this.comment.email)) {
-        return '//cdn.v2ex.com/gravatar?d=' + this.options.comment_gravatar_default
+      const gravatarDefault = this.options.comment_gravatar_default
+      const gravatarSource = this.options.gravatar_source
+
+      if (!this.comment.email || !this.validEmail(this.comment.email)) {
+        return `${gravatarSource}?d=${gravatarDefault}`
       }
+
       const gravatarMd5 = md5(this.comment.email)
-      return `//cdn.v2ex.com/gravatar/${gravatarMd5}?s=256&d=` + this.options.comment_gravatar_default
+      return `${gravatarSource}${gravatarMd5}?s=256&d=${gravatarDefault}`
     },
     commentValid() {
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
@@ -234,7 +205,7 @@ export default {
     },
     validEmail(email) {
       var re = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
-      return re.test(email);
+      return re.test(email)
     }
   }
 }
