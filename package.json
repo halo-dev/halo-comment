@@ -22,12 +22,12 @@
   },
   "homepage": "https://halo.run",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "core-js": "^2.6.8",
-    "marked": "^0.6.2",
+    "marked": "^2.0.1",
     "md5": "^2.2.1",
     "promise.prototype.finally": "^3.1.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
@@ -38,7 +38,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.6.12"
   },
   "eslintConfig": {
     "root": true,
