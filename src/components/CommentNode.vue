@@ -27,7 +27,9 @@
       <div class="comment-item-contols">
         <ul>
           <li v-if="comment.hasChildren">
-            <button class="item-control-more" @click="handleMoreClick">更多</button>
+            <button class="item-control-more" :class="{ active: hasChildrenBody }" @click="handleMoreClick">
+              更多
+            </button>
           </li>
           <li><button class="item-control-reply" @click="handleReplyClick">回复</button></li>
         </ul>
@@ -114,6 +116,11 @@ export default {
   },
   methods: {
     handleMoreClick() {
+      if (this.hasChildrenBody) {
+        this.children = []
+        return
+      }
+
       // Get children
       this.children = []
       this.commentLoading = true
