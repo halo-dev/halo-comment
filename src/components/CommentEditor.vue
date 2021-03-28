@@ -136,7 +136,7 @@ export default {
   computed: {
     avatar() {
       const gravatarDefault = this.options.comment_gravatar_default
-      const gravatarSource = this.options.gravatar_source
+      const gravatarSource = this.options.gravatar_source || '//cn.gravatar.com/avatar/'
 
       if (!this.comment.email || !this.validEmail(this.comment.email)) {
         return `${gravatarSource}?d=${gravatarDefault}`
