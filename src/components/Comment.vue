@@ -69,8 +69,6 @@
 
 <script>
 import './index'
-import commentApi from '../apis/comment'
-import optionApi from '../apis/option'
 import { isObject } from '../utils/util'
 
 export default {
@@ -135,20 +133,34 @@ export default {
     loadComments() {
       this.comments = []
       this.commentLoading = true
-      commentApi
-        .listComments(this.target, this.id, 'top_view', this.pagination)
+
+      let client = null
+
+      switch (this.target) {
+        case 'posts':
+          client = this.$apiClient.post
+          break
+        case 'sheets':
+          client = this.$apiClient.sheet
+          break
+        case 'journals':
+          client = this.$apiClient.journal
+          break
+      }
+
+      client
+        .listTopComments(this.id, this.pagination)
         .then(response => {
-          this.comments = response.data.data.content
-          this.pagination.size = response.data.data.rpp
-          this.pagination.total = response.data.data.total
+          this.comments = response.data.content
+          this.pagination.total = response.data.total
         })
         .finally(() => {
           this.commentLoading = false
         })
     },
     loadOptions() {
-      optionApi.list().then(response => {
-        this.options = response.data.data
+      this.$apiClient.option.comment().then(response => {
+        this.options = response.data
       })
     },
     handleCommentHeaderClick() {

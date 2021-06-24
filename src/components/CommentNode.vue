@@ -54,7 +54,6 @@
 <script>
 import { timeAgo, isUrl } from '@/utils/util'
 import marked from 'marked'
-import commentApi from '../apis/comment'
 
 export default {
   name: 'CommentNode',
@@ -124,12 +123,29 @@ export default {
       // Get children
       this.children = []
       this.commentLoading = true
-      commentApi.listChildren(this.target, this.targetId, this.comment.id).then(response => {
-        this.children = response.data.data
-        setTimeout(() => {
+
+      let client = null
+
+      switch (this.target) {
+        case 'posts':
+          client = this.$apiClient.post
+          break
+        case 'sheets':
+          client = this.$apiClient.sheet
+          break
+        case 'journals':
+          client = this.$apiClient.journal
+          break
+      }
+
+      client
+        .listChildrenComments(this.targetId, this.comment.id)
+        .then(response => {
+          this.children = response.data
+        })
+        .finally(() => {
           this.commentLoading = false
-        }, 300)
-      })
+        })
     },
     handleReplyClick() {
       this.$emit('reply', this.comment, this.repliedSuccess)

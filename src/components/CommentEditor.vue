@@ -89,7 +89,6 @@ import md5 from 'md5'
 import VEmojiPicker from './EmojiPicker/VEmojiPicker'
 import emojiData from './EmojiPicker/data/emojis.js'
 import { isEmpty } from '../utils/util'
-import commentApi from '../apis/comment'
 
 export default {
   name: 'CommentEditor',
@@ -201,8 +200,23 @@ export default {
         // Set parent id if available
         this.comment.parentId = this.replyingComment.id
       }
-      commentApi
-        .createComment(this.target, this.comment)
+
+      let client = null
+
+      switch (this.target) {
+        case 'posts':
+          client = this.$apiClient.post
+          break
+        case 'sheets':
+          client = this.$apiClient.sheet
+          break
+        case 'journals':
+          client = this.$apiClient.journal
+          break
+      }
+
+      client
+        .comment(this.comment)
         .then(response => {
           // Store comment author, email, authorUrl
           if (this.comment.author) {
@@ -219,11 +233,11 @@ export default {
           this.comment.content = null
 
           // Emit a created event
-          this.$emit('created', response.data.data)
+          this.$emit('created', response.data)
           this.$emit('close', false)
         })
         .catch(error => {
-          this.$emit('failed', error.response)
+          this.$emit('failed', error)
         })
     },
     handlePreviewClick() {

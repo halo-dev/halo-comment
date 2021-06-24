@@ -22,11 +22,10 @@
   },
   "homepage": "https://halo.run",
   "dependencies": {
-    "axios": "^0.21.1",
+    "@halo-dev/content-api": "^1.0.0-alpha.2",
     "core-js": "^2.6.12",
-    "marked": "^2.1.1",
+    "marked": "^2.1.2",
     "md5": "^2.3.0",
-    "promise.prototype.finally": "^3.1.2",
     "vue": "^2.6.14"
   },
   "devDependencies": {
