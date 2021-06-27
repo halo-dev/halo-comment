@@ -89,6 +89,7 @@ import md5 from 'md5'
 import VEmojiPicker from './EmojiPicker/VEmojiPicker'
 import emojiData from './EmojiPicker/data/emojis.js'
 import { isEmpty } from '../utils/util'
+import apiClient from '@/plugins/api-client'
 
 export default {
   name: 'CommentEditor',
@@ -205,13 +206,13 @@ export default {
 
       switch (this.target) {
         case 'posts':
-          client = this.$apiClient.post
+          client = apiClient.post
           break
         case 'sheets':
-          client = this.$apiClient.sheet
+          client = apiClient.sheet
           break
         case 'journals':
-          client = this.$apiClient.journal
+          client = apiClient.journal
           break
       }
 

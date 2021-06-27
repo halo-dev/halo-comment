@@ -53,6 +53,7 @@
 
 <script>
 import { timeAgo, isUrl } from '@/utils/util'
+import apiClient from '@/plugins/api-client'
 import marked from 'marked'
 
 export default {
@@ -128,13 +129,13 @@ export default {
 
       switch (this.target) {
         case 'posts':
-          client = this.$apiClient.post
+          client = apiClient.post
           break
         case 'sheets':
-          client = this.$apiClient.sheet
+          client = apiClient.sheet
           break
         case 'journals':
-          client = this.$apiClient.journal
+          client = apiClient.journal
           break
       }
 
