@@ -368,6 +368,7 @@
 
           li {
             display: inline-block;
+            
           }
 
           .editor-btn-close {
@@ -415,21 +416,71 @@
                 list-style: none;
                 padding: 1px 0;
                 margin: 0 0 10px;
+                display: flex;
+                align-items: center;
+                
+                // 自定义的单选框样式， 非小视窗就隐藏
+                label[for^='currentInput'] {
+                  display: none;
+                  margin-right: .2rem;
+                  padding: .2rem .4rem;
+                  border-radius: .2rem;
+                  color: #667c99;
+                  background-color: #e8ecf3;
+                  cursor: pointer;
+                }
 
+                // 控制输入框组件是否显示的单选框， 直接隐藏，用绑定的label控制
+                input[name='currentInput'] {
+                  display: none;
+                }
+
+                // 小视窗 .comment-poster-body-header 的定义
+                @media screen and (max-width: 768px) {
+                  
+                  // 显示所有单选框的label
+                  label[for^='currentInput'] {
+                    display: initial;
+                  }
+
+                  // 选中后就把自己隐藏，然后把所对应的输入框展开
+                  input[name='currentInput']:checked  {
+                    display: none;
+                    & + li {
+                      max-width: 200px;
+                      flex: 1;
+                    }
+
+                    
+                  }
+
+                  // 隐藏所有输入组件
+                  input[name='currentInput'] + li {
+                    flex: 0;
+                    overflow: hidden;
+                  }
+                }
+
+
+                // 略微修改, flex好用些
                 li {
                   position: relative;
                   display: inline-block;
-                  margin-right: -4px;
-                  width: 33.3%;
+                  // margin-right: -4px;
+                  // width: 33.3%;
+                  flex: 1;
+                  transition: .5s;
+                  max-height: 21px;
+                  display: flex;
 
                   input {
-                    width: 100%;
                     color: #667c99;
                     font-size: 14px;
                     font-family: inherit;
                     background-color: transparent;
                     border: 1px solid transparent;
                     border-bottom-color: hsla(185, 100%, 62%, 0.2);
+                    width: 100%;
 
                     &::placeholder {
                       color: #667c99;
@@ -438,6 +489,22 @@
                     &:focus ~ span {
                       transform-origin: bottom left;
                       transform: scaleX(1);
+                    }
+                  }
+                  
+                  &.header-item-website {
+
+                    // 定义 网站前缀的select样式
+                    select {
+                      appearance:none;
+                      font-weight: bold;
+                      border: none;
+                      color: #667c99;
+                      border-bottom: 1px solid hsla(185, 100%, 62%, 0.2);
+                      cursor: pointer;
+                    }
+                    input {
+                      width: calc(100% - 80px);
                     }
                   }
 
@@ -495,6 +562,7 @@
                   overflow-x: auto;
                   white-space: nowrap;
 
+                  
                   li {
                     display: inline-block;
                     margin-right: 10px;
@@ -559,6 +627,7 @@
       .comment-modal-container {
         width: 100%;
       }
+      
     }
   }
 

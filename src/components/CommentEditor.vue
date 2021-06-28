@@ -21,6 +21,11 @@
               />
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
+                  
+                  <label for="currentInput-nickname">
+                    昵称
+                  </label>
+                  <input type="radio" name="currentInput" id="currentInput-nickname" checked />
                   <li class="header-item-nickname">
                     <input
                       type="text"
@@ -31,12 +36,28 @@
                     />
                     <span></span>
                   </li>
+
+                  <label for="currentInput-email">
+                    邮箱
+                  </label>
+                  <input type="radio" name="currentInput" id="currentInput-email" />
                   <li class="header-item-email">
                     <input type="email" v-model="comment.email" placeholder="邮箱 *" />
                     <span></span>
                   </li>
+
+                  <label for="currentInput-website">
+                    网站
+                  </label>
+                  <input type="radio" name="currentInput" id="currentInput-website" />
                   <li class="header-item-website">
-                    <input type="text" v-model="comment.authorUrl" placeholder="网站" />
+
+                    <!-- 网站协议下拉框, 就两个所以直接写了 -->
+                    <select v-model="urlInfo.tcp">
+                      <option :value="'http://'" selected>http://</option>
+                      <option :value="'https://'">https://</option>
+                    </select>
+                    <input type="text" v-model="urlInfo.domain" placeholder="网站" />
                     <span></span>
                   </li>
                 </ul>
@@ -55,7 +76,7 @@
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
-                    <li class="editor-item-reply">
+                    <li class="editor-item-reply mobile-show">
                       <button
                         class="editor-btn-reply"
                         type="button"
@@ -69,9 +90,7 @@
                       <button class="editor-btn-preview" type="button" @click="handlePreviewClick">预览</button>
                     </li>
                     <li class="editor-item-emoji">
-                      <button class="editor-btn-emoji" type="button" @click="toogleDialogEmoji">
-                        表情
-                      </button>
+                      <button class="editor-btn-emoji" type="button" @click="toogleDialogEmoji">表情</button>
                     </li>
                   </ul>
                 </div>
@@ -94,46 +113,62 @@ import apiClient from '@/plugins/api-client'
 export default {
   name: 'CommentEditor',
   components: {
-    VEmojiPicker
+    VEmojiPicker,
   },
   props: {
     targetId: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     target: {
       type: String,
       required: false,
       default: 'posts',
-      validator: function(value) {
+      validator: function (value) {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
-      }
+      },
     },
     replyingComment: {
       type: Object,
       required: false,
-      default: null
+      default: null,
     },
     options: {
       required: false,
-      default: []
-    }
+      default: [],
+    },
   },
   data() {
     return {
       pack: emojiData,
       emojiDialogVisible: false,
+      urlInfo: {  // url信息
+        tcp: 'http://',   // 协议
+        domain: null      // 域名
+      },
       comment: {
         author: null,
         authorUrl: null,
         email: null,
-        content: ''
-      }
+        content: '',
+      },
     }
   },
+  watch: {
+
+    // 深度监听urlInfo , 给comment的authorUrl定义值
+    'urlInfo': {
+      deep: true,
+      handler: function(urlInfo) {
+        this.comment.authorUrl = urlInfo.tcp + urlInfo.domain
+      }
+      
+    },  
+  },
   computed: {
+    
     avatar() {
       const gravatarDefault = this.options.comment_gravatar_default
       const gravatarSource = this.options.gravatar_source || '//cn.gravatar.com/avatar/'
@@ -147,7 +182,7 @@ export default {
     },
     commentValid() {
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
-    }
+    },
   },
   created() {
     // Get info from local storage
@@ -195,6 +230,7 @@ export default {
       this.$emit('input', this.comment)
     },
     handleSubmitClick() {
+      
       // Submit the comment
       this.comment.postId = this.targetId
       if (this.replyingComment) {
@@ -218,7 +254,7 @@ export default {
 
       client
         .comment(this.comment)
-        .then(response => {
+        .then((response) => {
           // Store comment author, email, authorUrl
           if (this.comment.author) {
             localStorage.setItem('comment-author', this.comment.author)
@@ -237,7 +273,7 @@ export default {
           this.$emit('created', response.data)
           this.$emit('close', false)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$emit('failed', error)
         })
     },
@@ -247,8 +283,8 @@ export default {
     validEmail(email) {
       var re = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
       return re.test(email)
-    }
-  }
+    },
+  },
 }
 </script>
 
