@@ -3,6 +3,7 @@
     <div autofocus class="comment-modal" @click.self="close" @keydown.esc.once="close">
       <div class="comment-modal-container">
         <div class="comment-poster-editor-emoji">
+          
           <VEmojiPicker :pack="pack" @select="selectEmoji" v-show="emojiDialogVisible" labelSearch="搜索表情" />
         </div>
         <div class="comment-poster-container active">
@@ -22,10 +23,7 @@
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
                   
-                  <label for="currentInput-nickname">
-                    昵称
-                  </label>
-                  <input type="radio" name="currentInput" id="currentInput-nickname" checked />
+                  
                   <li class="header-item-nickname">
                     <input
                       type="text"
@@ -36,29 +34,44 @@
                     />
                     <span></span>
                   </li>
-
-                  <label for="currentInput-email">
-                    邮箱
-                  </label>
-                  <input type="radio" name="currentInput" id="currentInput-email" />
+                  
                   <li class="header-item-email">
-                    <input type="email" v-model="comment.email" placeholder="邮箱 *" />
-                    <span></span>
+                    <!-- <input type="email" v-model="comment.email" placeholder="邮箱 *" />
+                    <span></span> -->
+                    <CommentInput 
+                      :type="'email'"
+                      :placeholder="'邮箱 *'"
+                      v-model="comment.email"
+                      :suffixFlag="'@'"
+                      :suggestionList="[{id:1, suffix: '@qq.com'},
+                                       {id:2,suffix: '@163.com'},
+                                       {id:3,suffix: '@foxmail.com'},
+                                       {id:4,suffix: '@gamil.com'}, ]"
+                      />
                   </li>
-
-                  <label for="currentInput-website">
-                    网站
-                  </label>
-                  <input type="radio" name="currentInput" id="currentInput-website" />
+                  
                   <li class="header-item-website">
-
-                    <!-- 网站协议下拉框, 就两个所以直接写了 -->
-                    <select v-model="urlInfo.tcp">
+                    <!-- <select v-model="urlInfo.protocol ">
                       <option :value="'http://'" selected>http://</option>
                       <option :value="'https://'">https://</option>
-                    </select>
-                    <input type="text" v-model="urlInfo.domain" placeholder="网站" />
-                    <span></span>
+                    </select> -->
+                    <!-- <CustomSelect 
+                      :options="[{'index':1, 'value':'http://'},{'index':2, 'value':'https://'},]" 
+                      :selectedIndex="urlProtocolIndex" 
+                      ref="protocolOption"/> -->
+                    <CommentInput 
+                      :placeholder="'网站'"
+                      v-model="comment.authorUrl"
+                      :suggestionList="[{id:'1', prefix: 'http://'}, {id:2,prefix: 'https://'}]"
+                      />
+                    <!-- <input
+                      type="text"
+                      v-model="comment.authorUrl"
+                      id="authorUrl"
+                      placeholder="网址 *"
+                    />
+                    <datalist id="authorUrl" /> -->
+                    <!-- <span></span> -->
                   </li>
                 </ul>
                 <span class="comment-poster-body-reply" v-if="replyingComment"
@@ -104,16 +117,24 @@
 </template>
 
 <script>
+/**
+  localStorge 属性说明
+
+
+ */
 import md5 from 'md5'
 import VEmojiPicker from './EmojiPicker/VEmojiPicker'
 import emojiData from './EmojiPicker/data/emojis.js'
 import { isEmpty } from '../utils/util'
 import apiClient from '@/plugins/api-client'
+import CommentInput from './CommentInput'
+
 
 export default {
   name: 'CommentEditor',
   components: {
     VEmojiPicker,
+    CommentInput
   },
   props: {
     targetId: {
@@ -144,10 +165,6 @@ export default {
     return {
       pack: emojiData,
       emojiDialogVisible: false,
-      urlInfo: {  // url信息
-        tcp: 'http://',   // 协议
-        domain: null      // 域名
-      },
       comment: {
         author: null,
         authorUrl: null,
@@ -155,17 +172,6 @@ export default {
         content: '',
       },
     }
-  },
-  watch: {
-
-    // 深度监听urlInfo , 给comment的authorUrl定义值
-    'urlInfo': {
-      deep: true,
-      handler: function(urlInfo) {
-        this.comment.authorUrl = urlInfo.tcp + urlInfo.domain
-      }
-      
-    },  
   },
   computed: {
     
@@ -180,16 +186,16 @@ export default {
       const gravatarMd5 = md5(this.comment.email)
       return `${gravatarSource}${gravatarMd5}?s=256&d=${gravatarDefault}`
     },
-    commentValid() {
+    commentValid() {  
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
     },
   },
   created() {
     // Get info from local storage
     this.comment.author = localStorage.getItem('comment-author')
-    this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
+    this.comment.authorUrl = localStorage.getItem('comment-author-url')
     this.comment.email = localStorage.getItem('comment-email')
-
+    
     if (!this.comment.author) {
       this.$nextTick(() => {
         this.$refs.authorInput.focus()
@@ -204,6 +210,10 @@ export default {
     }
   },
   methods: {
+    autoEmailSuffix() {
+      
+      // console.log(this.comment.email)
+    },
     toogleDialogEmoji() {
       this.emojiDialogVisible = !this.emojiDialogVisible
     },
@@ -231,8 +241,20 @@ export default {
     },
     handleSubmitClick() {
       
+      // Store comment author, email, authorUrl
+      if (this.comment.author) {
+        localStorage.setItem('comment-author', this.comment.author)
+      }
+      if (this.comment.email) {
+        localStorage.setItem('comment-email', this.comment.email)
+      }
+      if (this.comment.authorUrl) {
+        localStorage.setItem('comment-author-url', this.comment.authorUrl)
+      }
+      
       // Submit the comment
       this.comment.postId = this.targetId
+
       if (this.replyingComment) {
         // Set parent id if available
         this.comment.parentId = this.replyingComment.id
@@ -256,16 +278,20 @@ export default {
         .comment(this.comment)
         .then((response) => {
           // Store comment author, email, authorUrl
-          if (this.comment.author) {
-            localStorage.setItem('comment-author', this.comment.author)
-          }
-          if (this.comment.email) {
-            localStorage.setItem('comment-email', this.comment.email)
-          }
-          if (this.comment.authorUrl) {
-            localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
-          }
-
+      
+          // 
+          // if (this.comment.author) {
+          //   localStorage.setItem('comment-author', this.comment.author)
+          // }
+          // if (this.comment.email) {
+          //   localStorage.setItem('comment-email', this.comment.email)
+          // }
+          // if (this.urlInfo.protocol) {
+          //   localStorage.setItem('urlInfo-protocol',this.urlInfo.protocol)
+          // }
+          // if (this.urlInfo.domain) {
+          //   localStorage.setItem('urlInfo-domain',this.urlInfo.domain)
+          // }
           // clearn comment
           this.comment.content = null
 
