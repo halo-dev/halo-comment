@@ -36,8 +36,7 @@
                   </li>
                   
                   <li class="header-item-email">
-                    <!-- <input type="email" v-model="comment.email" placeholder="邮箱 *" />
-                    <span></span> -->
+                    
                     <CommentInput 
                       :type="'email'"
                       :placeholder="'邮箱 *'"
@@ -51,27 +50,13 @@
                   </li>
                   
                   <li class="header-item-website">
-                    <!-- <select v-model="urlInfo.protocol ">
-                      <option :value="'http://'" selected>http://</option>
-                      <option :value="'https://'">https://</option>
-                    </select> -->
-                    <!-- <CustomSelect 
-                      :options="[{'index':1, 'value':'http://'},{'index':2, 'value':'https://'},]" 
-                      :selectedIndex="urlProtocolIndex" 
-                      ref="protocolOption"/> -->
+                    
                     <CommentInput 
                       :placeholder="'网站'"
                       v-model="comment.authorUrl"
                       :suggestionList="[{id:'1', prefix: 'http://'}, {id:2,prefix: 'https://'}]"
                       />
-                    <!-- <input
-                      type="text"
-                      v-model="comment.authorUrl"
-                      id="authorUrl"
-                      placeholder="网址 *"
-                    />
-                    <datalist id="authorUrl" /> -->
-                    <!-- <span></span> -->
+                      
                   </li>
                 </ul>
                 <span class="comment-poster-body-reply" v-if="replyingComment"
