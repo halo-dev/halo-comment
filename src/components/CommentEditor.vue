@@ -54,6 +54,7 @@
                     <CommentInput 
                       :placeholder="'网站'"
                       v-model="comment.authorUrl"
+                      :prefixFlag="':/'"
                       :suggestionList="[{id:'1', prefix: 'http://'}, {id:2,prefix: 'https://'}]"
                       />
                       
@@ -262,21 +263,7 @@ export default {
       client
         .comment(this.comment)
         .then((response) => {
-          // Store comment author, email, authorUrl
-      
-          // 
-          // if (this.comment.author) {
-          //   localStorage.setItem('comment-author', this.comment.author)
-          // }
-          // if (this.comment.email) {
-          //   localStorage.setItem('comment-email', this.comment.email)
-          // }
-          // if (this.urlInfo.protocol) {
-          //   localStorage.setItem('urlInfo-protocol',this.urlInfo.protocol)
-          // }
-          // if (this.urlInfo.domain) {
-          //   localStorage.setItem('urlInfo-domain',this.urlInfo.domain)
-          // }
+          
           // clearn comment
           this.comment.content = null
 
