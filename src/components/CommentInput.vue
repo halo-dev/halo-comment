@@ -37,8 +37,11 @@ export default {
     computed: {
 
         suggestionListHandle() {
-
+            
             let newSuggestionList = this.suggestionList;
+
+            if(this.value == null) return
+
             // exclude prefix
             if(this.value.indexOf(this.prefixFlag) != -1) {
                 
