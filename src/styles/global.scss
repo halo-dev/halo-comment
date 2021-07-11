@@ -368,6 +368,7 @@
 
           li {
             display: inline-block;
+            
           }
 
           .editor-btn-close {
@@ -415,24 +416,60 @@
                 list-style: none;
                 padding: 1px 0;
                 margin: 0 0 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
 
                 li {
                   position: relative;
                   display: inline-block;
-                  margin-right: -4px;
-                  width: 33.3%;
+                  flex: 1;
+                  max-width: 200px;
+                  max-height: 21px;
+                  display: flex;
+                  transition:  0.5s ease;
+                  
+                  .comment-input {
+                    position: relative;
+                    z-index: 1;
+                    cursor: pointer;
+
+
+                    .comment-input-suggestion {
+                      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+                      border-radius: 0 0 .4rem .4rem;
+                      background-color: #fff;
+                      opacity: 0;
+                      transition: .4s;
+
+                      .comment-input-suggestion-item {
+                        padding: .2rem;
+                        &:hover {
+                          background-color: rgba(0, 0, 0, 0.05 );
+                        }
+                        &:not(:last-of-type) {
+                          border-bottom: 1px solid rgba(0, 0, 0, 0.4 );
+                        }
+                      }
+                    }
+                  }
 
                   input {
-                    width: 100%;
                     color: #667c99;
                     font-size: 14px;
                     font-family: inherit;
                     background-color: transparent;
                     border: 1px solid transparent;
                     border-bottom-color: hsla(185, 100%, 62%, 0.2);
+                    width: 100%;
 
                     &::placeholder {
                       color: #667c99;
+                    }
+
+                    &:focus ~ .comment-input-suggestion {
+                      opacity: 1;
                     }
 
                     &:focus ~ span {
@@ -495,6 +532,7 @@
                   overflow-x: auto;
                   white-space: nowrap;
 
+                  
                   li {
                     display: inline-block;
                     margin-right: 10px;
@@ -559,6 +597,7 @@
       .comment-modal-container {
         width: 100%;
       }
+      
     }
   }
 
