@@ -1,10 +1,10 @@
 <template>
-  <div class="comment-item" :id="comment.id">
+  <div :id="comment.id" class="comment-item">
     <img
       v-if="options.comment_gravatar_default"
-      class="comment-item-author-avatar"
-      :src="avatar"
       :alt="comment.author"
+      :src="avatar"
+      class="comment-item-author-avatar"
     />
     <div class="comment-item-main">
       <div class="comment-item-header">
@@ -15,7 +15,7 @@
         <span v-if="comment.isAdmin" class="header-admin">博主</span>
         <span class="header-time">{{ createTimeAgo }}</span>
         <a :href="'#' + comment.id">
-          <span class="header-id" :id="comment.id"> #{{ comment.id }} </span>
+          <span :id="comment.id" class="header-id"> #{{ comment.id }} </span>
         </a>
       </div>
       <div class="comment-item-content">
@@ -27,24 +27,26 @@
       <div class="comment-item-contols">
         <ul>
           <li v-if="comment.hasChildren">
-            <button class="item-control-more" :class="{ active: hasChildrenBody }" @click="handleMoreClick">
+            <button :class="{ active: hasChildrenBody }" class="item-control-more" @click="handleMoreClick">
               更多
             </button>
           </li>
-          <li><button class="item-control-reply" @click="handleReplyClick">回复</button></li>
+          <li>
+            <button class="item-control-reply" @click="handleReplyClick">回复</button>
+          </li>
         </ul>
       </div>
     </div>
-    <div class="comment-item-children" v-if="hasChildrenBody">
+    <div v-if="hasChildrenBody" class="comment-item-children">
       <section class="loading">
         <comment-loading v-show="commentLoading" />
       </section>
       <comment-body
         v-show="!commentLoading"
         :comments="children"
-        :targetId="targetId"
-        :target="target"
         :options="options"
+        :target="target"
+        :targetId="targetId"
         @reply="handleChildReply"
       />
     </div>
@@ -52,8 +54,8 @@
 </template>
 
 <script>
-import { timeAgo, isUrl } from '@/utils/util'
-import apiClient from '@/plugins/api-client'
+import { isUrl, timeAgo } from '../utils/util'
+import apiClient from '../plugins/api-client'
 import marked from 'marked'
 
 export default {

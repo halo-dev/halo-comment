@@ -1060,26 +1060,26 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@halo-dev/content-api@^1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@halo-dev/content-api/-/content-api-1.0.0-alpha.9.tgz#1844b90f40080f99f5844045c70f725a00b67d24"
-  integrity sha512-DYX3efw8kLnu4t+xryDaB8y9Vi+Xk2AcI77n1yxGAFBhOc96QZvJO7AMQObV6k/m9j63aK9OxY2jJXf1qjvClw==
+"@halo-dev/content-api@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@halo-dev/content-api/-/content-api-1.0.0-alpha.10.tgz#fa62c310cbdd2e0e73b64d44487ccd347e66ff8d"
+  integrity sha512-QrJ1bcw0WSBhe+j7fvh2/ELbfwmIMzBKTzbva58VIdmT+PXsJRPhzAjZLTuwp43BiD+N++XdT2UBtV+GABeL6w==
   dependencies:
-    "@halo-dev/rest-api-client" "^1.0.0-alpha.9"
+    "@halo-dev/rest-api-client" "^1.0.0-alpha.10"
 
-"@halo-dev/logger@^1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@halo-dev/logger/-/logger-1.0.0-alpha.9.tgz#4a14588526cfbaca1fd394fe8020d880dbec91ca"
-  integrity sha512-BckXzVRO1D6t5HxcbxQ40DSv8uf5Up3TTvmxCF5KmUNY+JEGf1MXhcvXR7gm66nHlZVSX9KUTZB5wVtjaEbe8Q==
+"@halo-dev/logger@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@halo-dev/logger/-/logger-1.0.0-alpha.10.tgz#296127f1c8114ecf0c3efa2cf9466aed48a699df"
+  integrity sha512-h5kEY8hggqZik573R+JzSPBre8f8IW+pD65uB/Ls4Qy/a2r6gnbK1Xh9tQcBWC9AAq81YQFO/hi3MZJALf6RXA==
   dependencies:
     tslib "^2.3.0"
 
-"@halo-dev/rest-api-client@^1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@halo-dev/rest-api-client/-/rest-api-client-1.0.0-alpha.9.tgz#e95b0782bc69b3ceac484083d4bbb75480730461"
-  integrity sha512-X7K0F9oBaLsR3XVbx6/FkjMJmq4KjC5yNZBMKz9C3ZEPic6QuT5r0su6U1zTZJOOx79f/8JdZgVN9A3YWtBGEQ==
+"@halo-dev/rest-api-client@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@halo-dev/rest-api-client/-/rest-api-client-1.0.0-alpha.10.tgz#cc42aaf31dd38541fa85b106a81279f397be2c96"
+  integrity sha512-lsSsA7tMTTVUmWefEtU8BbV/YG4B96TO+UtQiAaK8Si/Yuswk+YBkaC3WYll7T/QBjuXiVBhU05T9iNtA3ooKQ==
   dependencies:
-    "@halo-dev/logger" "^1.0.0-alpha.9"
+    "@halo-dev/logger" "^1.0.0-alpha.10"
     axios "^0.20.0"
     form-data "^4.0.0"
     js-base64 "^3.6.1"

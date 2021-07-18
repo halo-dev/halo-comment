@@ -1,8 +1,7 @@
 // Register components
 import Vue from 'vue'
 
-// pro components
-import CommentAuthor from './CommentAuthor'
+import CommentPlaceholder from './CommentPlaceholder'
 import CommentBody from './CommentBody'
 import CommentNode from './CommentNode'
 import CommentEditor from './CommentEditor'
@@ -10,7 +9,7 @@ import CommentLoading from './CommentLoading'
 import Pagination from './Pagination'
 
 const _components = {
-  CommentAuthor,
+  CommentPlaceholder,
   CommentBody,
   CommentNode,
   CommentEditor,

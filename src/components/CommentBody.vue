@@ -43,9 +43,6 @@ export default {
       default: []
     }
   },
-  data() {
-    return {}
-  },
   methods: {
     handleReply(comment, repliedSuccess) {
       this.$emit('reply', comment, repliedSuccess)

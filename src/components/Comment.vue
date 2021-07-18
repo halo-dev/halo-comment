@@ -1,67 +1,67 @@
 <template>
   <div class="halo-comment">
-    <section class="header" @click="handleCommentHeaderClick">
-      <comment-author :comment="editingComment" :options="options" />
+    <section class="header" @click="handleOpenEditor()">
+      <comment-placeholder :comment="editingComment" :options="options" />
     </section>
     <section
       class="
         comment-alert"
     >
       <!-- Info -->
-      <div class="alert info" v-for="(info, index) in infoes" :key="index">
+      <div v-for="(info, index) in infoes" :key="index" class="alert info">
         <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ info }}</strong>
       </div>
 
       <!-- Success -->
-      <div class="alert success" v-for="(success, index) in successes" :key="index">
+      <div v-for="(success, index) in successes" :key="index" class="alert success">
         <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ success }}</strong>
       </div>
 
       <!-- Warning -->
-      <div class="alert warning" v-for="(warning, index) in warnings" :key="index">
+      <div v-for="(warning, index) in warnings" :key="index" class="alert warning">
         <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ warning }}</strong>
       </div>
     </section>
 
     <section class="loading">
-      <comment-loading v-show="commentLoading" />
+      <comment-loading v-show="comments.loading" />
     </section>
 
     <section class="body">
       <comment-body
-        v-show="!commentLoading"
-        :comments="comments"
-        :targetId="id"
-        :target="target"
+        v-show="!comments.loading"
+        :comments="comments.data"
         :options="options"
+        :target="target"
+        :targetId="id"
         @reply="handleReply"
       />
     </section>
 
     <section class="pagination">
       <pagination
-        :page="pagination.page"
-        :size="pagination.size"
-        :total="pagination.total"
+        :page="comments.params.page"
+        :size="comments.params.size"
+        :total="comments.total"
         @change="handlePaginationChange"
       />
     </section>
 
     <section class="footer-editor">
       <comment-editor
-        v-if="editorVisiable"
-        :targetId="id"
-        :target="target"
-        :replyingComment="replyingComment"
+        v-if="editor.visible"
         :options="options"
+        :replyingComment="replyingComment"
+        :target="target"
+        :targetId="id"
         @close="handleEditorClose"
-        @exit="handleEditorExit"
-        @input="handleEditorInput"
         @created="handleCommentCreated"
+        @exit="handleEditorExit"
         @failed="handleFailedToCreateComment"
+        @input="handleEditorInput"
       />
     </section>
   </div>
@@ -92,55 +92,51 @@ export default {
   },
   data() {
     return {
-      comments: [],
-      pagination: {
-        page: 0,
-        sort: '',
-        size: 5,
-        total: 0
+      comments: {
+        data: [],
+        loading: false,
+        total: 0,
+        params: {
+          page: 0,
+          size: 10
+        }
       },
-      commentLoading: false,
-      editorVisiable: false,
-      alertVisiable: false,
+
+      options: [],
+
+      editor: {
+        visible: false
+      },
+
       editingComment: {},
       infoes: [],
       warnings: [],
       successes: [],
       repliedSuccess: null,
-      replyingComment: null,
-      options: []
+      replyingComment: null
     }
   },
   computed: {
     target() {
       // pluralize it
       return `${this.type}s`
-    },
-    infoAlertVisiable() {
-      return this.infoes !== null && this.infoes.length > 0
-    },
-    warningAlertVisiable() {
-      return this.warnings !== null && this.warnings.length > 0
-    },
-    successAlertVisiable() {
-      return this.successes !== null && this.successes.length > 0
     }
   },
   created() {
-    this.loadComments()
-    this.loadOptions()
+    this.handleListComments()
+    this.handleListOptions()
   },
   methods: {
-    loadComments() {
-      this.comments = []
-      this.commentLoading = true
+    /**
+     * List top comments.
+     */
+    handleListComments() {
+      this.comments.data = []
+      this.comments.loading = true
 
-      let client = null
+      let client = apiClient.post
 
       switch (this.target) {
-        case 'posts':
-          client = apiClient.post
-          break
         case 'sheets':
           client = apiClient.sheet
           break
@@ -150,31 +146,40 @@ export default {
       }
 
       client
-        .listTopComments(this.id, this.pagination)
+        .listTopComments(this.id, this.comments.params)
         .then(response => {
-          this.comments = response.data.content
-          this.pagination.total = response.data.total
+          this.comments.data = response.data.content
+          this.comments.total = response.data.total
         })
         .finally(() => {
-          this.commentLoading = false
+          this.comments.loading = false
         })
     },
-    loadOptions() {
+
+    /**
+     * List comment options.
+     */
+    handleListOptions() {
       apiClient.option.comment().then(response => {
         this.options = response.data
       })
     },
-    handleCommentHeaderClick() {
-      this.editorVisiable = true
+
+    /**
+     * Open comment editor.
+     */
+    handleOpenEditor() {
+      this.editor.visible = true
       this.replyingComment = null
       this.repliedSuccess = null
     },
+
     handlePaginationChange(page) {
-      this.pagination.page = page
-      this.loadComments()
+      this.comments.params.page = page
+      this.handleListComments()
     },
     handleEditorClose() {
-      this.editorVisiable = false
+      this.editor.visible = false
     },
     handleEditorExit() {
       this.handleEditorClose()
@@ -187,7 +192,7 @@ export default {
       this.clearAlertClose()
 
       if (createdComment.status === 'PUBLISHED') {
-        this.loadComments()
+        this.handleListComments()
         if (this.repliedSuccess) {
           this.repliedSuccess()
         }
@@ -218,7 +223,7 @@ export default {
     handleReply(comment, repliedSuccess) {
       this.replyingComment = comment
       this.repliedSuccess = repliedSuccess
-      this.editorVisiable = true
+      this.editor.visible = true
     },
     clearAlertClose() {
       this.infoes = []

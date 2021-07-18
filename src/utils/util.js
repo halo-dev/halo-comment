@@ -60,6 +60,11 @@ export function isUrl(str) {
   return regexp.test(str)
 }
 
+export function isEmail(email) {
+  const regexp = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
+  return regexp.test(email)
+}
+
 export function isEmpty(content) {
   return content === null || content === undefined || content === ''
 }

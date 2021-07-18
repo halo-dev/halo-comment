@@ -1,11 +1,11 @@
 <template>
-  <div id="comment-author" class="comment-placeholder">
+  <div class="comment-placeholder">
     <div class="comment-item">
       <img
         v-if="options.comment_gravatar_default"
-        class="comment-item-author-avatar"
-        :src="avatar"
         :alt="comment.author"
+        :src="avatar"
+        class="comment-item-author-avatar"
       />
       <div class="comment-item-main">
         <div class="comment-item-header">
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { isEmail } from '../utils/util'
 import marked from 'marked'
 import md5 from 'md5'
 
@@ -46,7 +47,7 @@ export default {
       const gravatarDefault = this.options.comment_gravatar_default
       const gravatarSource = this.options.gravatar_source || '//cn.gravatar.com/avatar/'
 
-      if (!this.comment.email || !this.validEmail(this.comment.email)) {
+      if (!this.comment.email || !isEmail(this.comment.email)) {
         return `${gravatarSource}?d=${gravatarDefault}`
       }
 
@@ -59,14 +60,6 @@ export default {
     this.comment.author = localStorage.getItem('comment-author')
     this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
     this.comment.email = localStorage.getItem('comment-email')
-  },
-  methods: {
-    validEmail(email) {
-      var re = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
-      return re.test(email)
-    }
   }
 }
 </script>
-
-<style lang="scss"></style>

@@ -1,12 +1,12 @@
 <template>
   <div class="comment-input">
-    <input :type="type" :value="value" :placeholder="placeholder" @input="inputHandle" />
+    <input :placeholder="placeholder" :type="type" :value="value" @input="inputHandle" />
     <section class="comment-input-suggestion">
       <div
-        class="comment-input-suggestion-item"
-        @click="useSuggestion(suggestion)"
         v-for="suggestion in suggestionListHandle"
         :key="suggestion.id"
+        class="comment-input-suggestion-item"
+        @click="useSuggestion(suggestion)"
       >
         {{ suggestionHandle(suggestion) }}
       </div>
@@ -37,17 +37,17 @@ export default {
       if (this.value == null) return
 
       // exclude prefix
-      if (this.value.indexOf(this.prefixFlag) != -1) {
+      if (this.value.indexOf(this.prefixFlag) !== -1) {
         newSuggestionList.length = 0
       }
 
       // exclude suffix
-      if (this.value.indexOf(this.suffixFlag) != -1) {
+      if (this.value.indexOf(this.suffixFlag) !== -1) {
         let currentSuffix = this.value.substr(this.value.indexOf(this.suffixFlag))
 
         // Exclude not present && 已包含
         newSuggestionList = this.suggestionList.filter(
-          val => val.suffix.indexOf(currentSuffix) > -1 && currentSuffix != val.suffix
+          val => val.suffix.indexOf(currentSuffix) > -1 && currentSuffix !== val.suffix
         )
       }
       return newSuggestionList
