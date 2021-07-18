@@ -3,6 +3,7 @@
     <div autofocus class="comment-modal" @click.self="close" @keydown.esc.once="close">
       <div class="comment-modal-container">
         <div class="comment-poster-editor-emoji">
+          
           <VEmojiPicker :pack="pack" @select="selectEmoji" v-show="emojiDialogVisible" labelSearch="搜索表情" />
         </div>
         <div class="comment-poster-container active">
@@ -21,6 +22,8 @@
               />
               <div class="comment-poster-body-content">
                 <ul class="comment-poster-body-header">
+                  
+                  
                   <li class="header-item-nickname">
                     <input
                       type="text"
@@ -31,13 +34,30 @@
                     />
                     <span></span>
                   </li>
+                  
                   <li class="header-item-email">
-                    <input type="email" v-model="comment.email" placeholder="邮箱 *" />
-                    <span></span>
+                    
+                    <CommentInput 
+                      :type="'email'"
+                      :placeholder="'邮箱 *'"
+                      v-model="comment.email"
+                      :suffixFlag="'@'"
+                      :suggestionList="[{id:1, suffix: '@qq.com'},
+                                       {id:2,suffix: '@163.com'},
+                                       {id:3,suffix: '@foxmail.com'},
+                                       {id:4,suffix: '@gamil.com'}, ]"
+                      />
                   </li>
+                  
                   <li class="header-item-website">
-                    <input type="text" v-model="comment.authorUrl" placeholder="网站" />
-                    <span></span>
+                    
+                    <CommentInput 
+                      :placeholder="'网站'"
+                      v-model="comment.authorUrl"
+                      :prefixFlag="':/'"
+                      :suggestionList="[{id:'1', prefix: 'http://'}, {id:2,prefix: 'https://'}]"
+                      />
+                      
                   </li>
                 </ul>
                 <span class="comment-poster-body-reply" v-if="replyingComment"
@@ -55,7 +75,7 @@
                     ></textarea>
                   </div>
                   <ul class="comment-poster-editor-controls">
-                    <li class="editor-item-reply">
+                    <li class="editor-item-reply mobile-show">
                       <button
                         class="editor-btn-reply"
                         type="button"
@@ -69,9 +89,7 @@
                       <button class="editor-btn-preview" type="button" @click="handlePreviewClick">预览</button>
                     </li>
                     <li class="editor-item-emoji">
-                      <button class="editor-btn-emoji" type="button" @click="toogleDialogEmoji">
-                        表情
-                      </button>
+                      <button class="editor-btn-emoji" type="button" @click="toogleDialogEmoji">表情</button>
                     </li>
                   </ul>
                 </div>
@@ -85,41 +103,49 @@
 </template>
 
 <script>
+/**
+  localStorge 属性说明
+
+
+ */
 import md5 from 'md5'
 import VEmojiPicker from './EmojiPicker/VEmojiPicker'
 import emojiData from './EmojiPicker/data/emojis.js'
 import { isEmpty } from '../utils/util'
 import apiClient from '@/plugins/api-client'
+import CommentInput from './CommentInput'
+
 
 export default {
   name: 'CommentEditor',
   components: {
-    VEmojiPicker
+    VEmojiPicker,
+    CommentInput
   },
   props: {
     targetId: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     target: {
       type: String,
       required: false,
       default: 'posts',
-      validator: function(value) {
+      validator: function (value) {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
-      }
+      },
     },
     replyingComment: {
       type: Object,
       required: false,
-      default: null
+      default: null,
     },
     options: {
       required: false,
-      default: []
-    }
+      default: [],
+    },
   },
   data() {
     return {
@@ -129,11 +155,12 @@ export default {
         author: null,
         authorUrl: null,
         email: null,
-        content: ''
-      }
+        content: '',
+      },
     }
   },
   computed: {
+    
     avatar() {
       const gravatarDefault = this.options.comment_gravatar_default
       const gravatarSource = this.options.gravatar_source || '//cn.gravatar.com/avatar/'
@@ -145,16 +172,16 @@ export default {
       const gravatarMd5 = md5(this.comment.email)
       return `${gravatarSource}${gravatarMd5}?s=256&d=${gravatarDefault}`
     },
-    commentValid() {
+    commentValid() {  
       return !isEmpty(this.comment.author) && !isEmpty(this.comment.email) && !isEmpty(this.comment.content)
-    }
+    },
   },
   created() {
     // Get info from local storage
     this.comment.author = localStorage.getItem('comment-author')
-    this.comment.authorUrl = localStorage.getItem('comment-authorUrl')
+    this.comment.authorUrl = localStorage.getItem('comment-author-url')
     this.comment.email = localStorage.getItem('comment-email')
-
+    
     if (!this.comment.author) {
       this.$nextTick(() => {
         this.$refs.authorInput.focus()
@@ -169,6 +196,10 @@ export default {
     }
   },
   methods: {
+    autoEmailSuffix() {
+      
+      // console.log(this.comment.email)
+    },
     toogleDialogEmoji() {
       this.emojiDialogVisible = !this.emojiDialogVisible
     },
@@ -195,8 +226,21 @@ export default {
       this.$emit('input', this.comment)
     },
     handleSubmitClick() {
+      
+      // Store comment author, email, authorUrl
+      if (this.comment.author) {
+        localStorage.setItem('comment-author', this.comment.author)
+      }
+      if (this.comment.email) {
+        localStorage.setItem('comment-email', this.comment.email)
+      }
+      if (this.comment.authorUrl) {
+        localStorage.setItem('comment-author-url', this.comment.authorUrl)
+      }
+      
       // Submit the comment
       this.comment.postId = this.targetId
+
       if (this.replyingComment) {
         // Set parent id if available
         this.comment.parentId = this.replyingComment.id
@@ -218,18 +262,8 @@ export default {
 
       client
         .comment(this.comment)
-        .then(response => {
-          // Store comment author, email, authorUrl
-          if (this.comment.author) {
-            localStorage.setItem('comment-author', this.comment.author)
-          }
-          if (this.comment.email) {
-            localStorage.setItem('comment-email', this.comment.email)
-          }
-          if (this.comment.authorUrl) {
-            localStorage.setItem('comment-authorUrl', this.comment.authorUrl)
-          }
-
+        .then((response) => {
+          
           // clearn comment
           this.comment.content = null
 
@@ -237,7 +271,7 @@ export default {
           this.$emit('created', response.data)
           this.$emit('close', false)
         })
-        .catch(error => {
+        .catch((error) => {
           this.$emit('failed', error)
         })
     },
@@ -247,8 +281,8 @@ export default {
     validEmail(email) {
       var re = /^[A-Za-z1-9]+([-_.][A-Za-z1-9]+)*@([A-Za-z1-9]+[-.])+[A-Za-z]{2,8}$/
       return re.test(email)
-    }
-  }
+    },
+  },
 }
 </script>
 
