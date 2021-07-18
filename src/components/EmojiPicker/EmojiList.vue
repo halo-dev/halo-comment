@@ -1,30 +1,13 @@
-/**
-  based on https://github.com/joaoeudes7/V-Emoji-Picker
- */
+/** based on https://github.com/joaoeudes7/V-Emoji-Picker */
 <template>
   <div id="Emojis">
-    <div
-      ref="container-emoji"
-      class="container-emoji"
-    >
+    <div ref="container-emoji" class="container-emoji">
       <template v-if="continuousList">
-        <div
-          class="category-line"
-          v-for="(category, category_name) in dataFilteredByCategory"
-          :key="category_name"
-        >
-          <div
-            v-show="category.length"
-            class="category-title"
-            :ref="category_name"
-          >
+        <div class="category-line" v-for="(category, category_name) in dataFilteredByCategory" :key="category_name">
+          <div v-show="category.length" class="category-title" :ref="category_name">
             {{ category_name }}
           </div>
-          <div
-            v-if="category.length"
-            class="grid-emojis"
-            :style="gridDynamic"
-          >
+          <div v-if="category.length" class="grid-emojis" :style="gridDynamic">
             <Emoji
               v-for="(emoji, index_e) in category"
               :key="`${category_name}-${index_e}`"
@@ -34,11 +17,7 @@
           </div>
         </div>
       </template>
-      <div
-        v-else
-        class="grid-emojis"
-        :style="gridDynamic"
-      >
+      <div v-else class="grid-emojis" :style="gridDynamic">
         <Emoji
           v-for="(emoji, index) in dataFiltered"
           :key="index"
@@ -121,5 +100,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

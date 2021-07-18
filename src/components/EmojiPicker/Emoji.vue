@@ -1,11 +1,6 @@
-/**
-  based on https://github.com/joaoeudes7/V-Emoji-Picker
- */
+/** based on https://github.com/joaoeudes7/V-Emoji-Picker */
 <template>
-  <span
-    class="emoji"
-    v-html="data"
-  />
+  <span class="emoji" v-html="data" />
 </template>
 
 <script>

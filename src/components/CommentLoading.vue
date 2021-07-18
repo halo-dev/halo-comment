@@ -1,8 +1,5 @@
 <template>
-  <transition
-    name="loading-fade"
-    mode="in-out"
-  >
+  <transition name="loading-fade" mode="in-out">
     <div class="comment-loader-container">
       <div class="comment-loader">
         <span></span>
@@ -18,4 +15,3 @@ export default {
   name: 'CommentLoading'
 }
 </script>
-

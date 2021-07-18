@@ -1,15 +1,8 @@
-/**
-  based on https://github.com/joaoeudes7/V-Emoji-Picker
- */
+/** based on https://github.com/joaoeudes7/V-Emoji-Picker */
 <template>
   <div id="InputSearch">
     <div class="container-search">
-      <input
-        type="text"
-        :value="value"
-        @keyup="onKeyUp($event)"
-        :placeholder="placeholder"
-      />
+      <input type="text" :value="value" @keyup="onKeyUp($event)" :placeholder="placeholder" />
     </div>
   </div>
 </template>
@@ -30,5 +23,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

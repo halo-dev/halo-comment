@@ -1,12 +1,6 @@
-/**
-  based on https://github.com/joaoeudes7/V-Emoji-Picker
- */
+/** based on https://github.com/joaoeudes7/V-Emoji-Picker */
 <template>
-  <span
-    id="VSvg"
-    :style="styleSVG"
-    v-html="icon"
-  />
+  <span id="VSvg" :style="styleSVG" v-html="icon" />
 </template>
 
 <script>
@@ -31,5 +25,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
