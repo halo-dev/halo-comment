@@ -168,7 +168,7 @@ export default {
       const gravatarSource = this.options.gravatar_source || '//cn.gravatar.com/avatar/'
 
       if (!this.comment.email || !isEmail(this.comment.email)) {
-        return `${gravatarSource}?d=${gravatarDefault}`
+        return `${gravatarSource}?s=256&d=${gravatarDefault}`
       }
 
       const gravatarMd5 = md5(this.comment.email)
