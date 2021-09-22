@@ -46,7 +46,7 @@
                         { id: 1, suffix: '@qq.com' },
                         { id: 2, suffix: '@163.com' },
                         { id: 3, suffix: '@foxmail.com' },
-                        { id: 4, suffix: '@gamil.com' }
+                        { id: 4, suffix: '@gmail.com' }
                       ]"
                       :type="'email'"
                     />
@@ -247,7 +247,7 @@ export default {
         this.comment.parentId = this.replyingComment.id
       }
 
-      let client = null
+      let client
 
       switch (this.target) {
         case 'posts':
@@ -264,7 +264,7 @@ export default {
       client
         .comment(this.comment)
         .then(response => {
-          // clearn comment
+          // clear comment
           this.comment.content = null
 
           // Emit a created event

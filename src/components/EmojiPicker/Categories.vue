@@ -3,11 +3,11 @@
   <div id="Categories">
     <div
       :class="['category', { active: index === active }]"
-      v-for="(categorie, index) in categories"
+      v-for="(category, index) in categories"
       :key="index"
       @click="onSelect(index)"
     >
-      <VSvg :name="categorie.icon" />
+      <VSvg :name="category.icon" />
     </div>
   </div>
 </template>

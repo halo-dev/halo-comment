@@ -249,7 +249,7 @@
           }
         }
 
-        .comment-item-contols {
+        .comment-item-controls {
           float: right;
           position: relative;
 
@@ -296,8 +296,6 @@
 
       .comment-item-children {
         margin-left: 4rem;
-        padding-left: 1rem;
-        border-left: 0.1rem solid cccccc;
         padding-left: 0;
         padding-right: 0;
         .comment-items {
@@ -421,7 +419,6 @@
 
                 li {
                   position: relative;
-                  display: inline-block;
                   flex: 1;
                   max-width: 200px;
                   max-height: 21px;
@@ -513,7 +510,6 @@
                     border: 0;
                     border-radius: 0;
                     padding: 0 0 10px;
-                    border: 0;
                     resize: none;
                     color: #111;
                     font-size: 14px;

@@ -24,7 +24,7 @@
         </a>
         <p v-html="compileContent"></p>
       </div>
-      <div class="comment-item-contols">
+      <div class="comment-item-controls">
         <ul>
           <li v-if="comment.hasChildren">
             <button :class="{ active: hasChildrenBody }" class="item-control-more" @click="handleMoreClick">
@@ -127,7 +127,7 @@ export default {
       this.children = []
       this.commentLoading = true
 
-      let client = null
+      let client
 
       switch (this.target) {
         case 'posts':
