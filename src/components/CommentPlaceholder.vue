@@ -1,12 +1,7 @@
 <template>
   <div class="comment-placeholder">
     <div class="comment-item">
-      <img
-        v-if="options.comment_gravatar_default"
-        :alt="comment.author"
-        :src="avatar"
-        class="comment-item-author-avatar"
-      />
+      <img :alt="comment.author" :src="avatar" class="comment-item-author-avatar" />
       <div class="comment-item-main">
         <div class="comment-item-header">
           <span class="header-author">
