@@ -56,7 +56,7 @@
 <script>
 import { isUrl, timeAgo } from '../utils/util'
 import apiClient from '../plugins/api-client'
-import marked from 'marked'
+import { marked } from 'marked'
 
 export default {
   name: 'CommentNode',
@@ -104,7 +104,7 @@ export default {
       return timeAgo(this.comment.createTime)
     },
     compileContent() {
-      return marked(this.comment.content, { sanitize: true })
+      return marked.parse(this.comment.content)
     },
     urlValid() {
       return isUrl(this.comment.authorUrl)

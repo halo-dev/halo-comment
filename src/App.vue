@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Comment :id="1" type="post" />
+    <Comment :id="17" type="post" />
   </div>
 </template>
 

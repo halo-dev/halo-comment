@@ -19,7 +19,7 @@
 
 <script>
 import { isEmail } from '../utils/util'
-import marked from 'marked'
+import { marked } from 'marked'
 import md5 from 'md5'
 
 export default {
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     renderedContent() {
-      return this.comment.content ? marked(this.comment.content, { sanitize: true }) : ''
+      return this.comment.content ? marked.parse(this.comment.content) : ''
     },
     avatar() {
       const gravatarDefault = this.options.comment_gravatar_default
