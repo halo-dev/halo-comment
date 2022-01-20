@@ -246,23 +246,8 @@ export default {
         // Set parent id if available
         this.comment.parentId = this.replyingComment.id
       }
-
-      let client
-
-      switch (this.target) {
-        case 'posts':
-          client = apiClient.post
-          break
-        case 'sheets':
-          client = apiClient.sheet
-          break
-        case 'journals':
-          client = apiClient.journal
-          break
-      }
-
-      client
-        .comment(this.comment)
+      apiClient.comment
+        .create(this.target, this.comment)
         .then(response => {
           // clear comment
           this.comment.content = null

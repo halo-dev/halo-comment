@@ -931,36 +931,6 @@ class PostClient {
         });
         return this.client.get(path, {});
     }
-    listTopComments(postId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `posts/${postId}/comments/top_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listChildrenComments(postId, commentParentId, sort) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `posts/${postId}/comments/${commentParentId}/children`,
-        });
-        return this.client.get(path, { sort });
-    }
-    listCommentsAsTree(postId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `posts/${postId}/comments/tree_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listComments(postId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `posts/${postId}/comments/list_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    comment(params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: 'posts/comments',
-        });
-        return this.client.post(path, Object.assign({}, params));
-    }
     like(postId) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
             const path = (0, url_1.buildPath)({
@@ -1175,6 +1145,7 @@ class ContentApiClient {
         this._tag = new clients_1.TagClient(this.client);
         this._theme = new clients_1.ThemeClient(this.client);
         this._user = new clients_1.UserClient(this.client);
+        this._comment = new clients_1.CommentClient(this.client);
     }
     get archive() {
         return this._archive;
@@ -1214,6 +1185,9 @@ class ContentApiClient {
     }
     get user() {
         return this._user;
+    }
+    get comment() {
+        return this._comment;
     }
 }
 exports.ContentApiClient = ContentApiClient;
@@ -3494,6 +3468,89 @@ __webpack_require__("7a56")('RegExp');
 
 /***/ }),
 
+/***/ "3cb6":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommentClient = void 0;
+const url_1 = __webpack_require__("a8c2");
+class CommentClient {
+    constructor(client) {
+        this.client = client;
+    }
+    /**
+     * Get top comments
+     *
+     * @param target posts, sheets, or journals
+     * @param targetId the id of the target
+     * @param params optional query params
+     */
+    listTopComments(target, targetId, params) {
+        const path = (0, url_1.buildPath)({
+            endpointName: `${target}/${targetId}/comments/top_view`,
+        });
+        return this.client.get(path, Object.assign({}, params));
+    }
+    /**
+     * Get children comments
+     *
+     * @param target posts, sheets, or journals
+     * @param targetId the id of the target
+     * @param commentId the id of the top comment
+     * @param params optional query params
+     */
+    listChildren(target, targetId, commentId, params) {
+        const path = (0, url_1.buildPath)({
+            endpointName: `${target}/${targetId}/comments/${commentId}/children`,
+        });
+        return this.client.get(path, Object.assign({}, params));
+    }
+    /**
+     * Get comments as tree view
+     *
+     * @param target posts, sheets, or journals
+     * @param targetId the id of the target
+     * @param params optional query params
+     */
+    listAsTreeView(target, targetId, params) {
+        const path = (0, url_1.buildPath)({
+            endpointName: `${target}/${targetId}/comments/tree_view`,
+        });
+        return this.client.get(path, Object.assign({}, params));
+    }
+    /**
+     * Get comments as list view
+     *
+     * @param target posts, sheets, or journals
+     * @param targetId the id of the target
+     * @param params optional query params
+     */
+    listAsView(target, targetId, params) {
+        const path = (0, url_1.buildPath)({
+            endpointName: `${target}/${targetId}/comments/list_view`,
+        });
+        return this.client.get(path, Object.assign({}, params));
+    }
+    /**
+     * Create a comment
+     *
+     * @param target posts, sheets, or journals
+     * @param params the comment params
+     */
+    create(target, params) {
+        const path = (0, url_1.buildPath)({
+            endpointName: `${target}/comments`,
+        });
+        return this.client.post(path, params);
+    }
+}
+exports.CommentClient = CommentClient;
+//# sourceMappingURL=CommentClient.js.map
+
+/***/ }),
+
 /***/ "3eb1":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4963,12 +5020,12 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Comment.vue?vue&type=template&id=1c416e72&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Comment.vue?vue&type=template&id=5da321d0&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"halo-comment"},[_c('section',{staticClass:"header",on:{"click":function($event){return _vm.handleOpenEditor()}}},[_c('comment-placeholder',{attrs:{"comment":_vm.editingComment,"options":_vm.options}})],1),_c('section',{staticClass:"\n      comment-alert"},[_vm._l((_vm.infoes),function(info,index){return _c('div',{key:index,staticClass:"alert info"},[_c('span',{staticClass:"closebtn",on:{"click":_vm.clearAlertClose}},[_vm._v("×")]),_c('strong',[_vm._v(_vm._s(info))])])}),_vm._l((_vm.successes),function(success,index){return _c('div',{key:index,staticClass:"alert success"},[_c('span',{staticClass:"closebtn",on:{"click":_vm.clearAlertClose}},[_vm._v("×")]),_c('strong',[_vm._v(_vm._s(success))])])}),_vm._l((_vm.warnings),function(warning,index){return _c('div',{key:index,staticClass:"alert warning"},[_c('span',{staticClass:"closebtn",on:{"click":_vm.clearAlertClose}},[_vm._v("×")]),_c('strong',[_vm._v(_vm._s(warning))])])})],2),_c('section',{staticClass:"loading"},[_c('comment-loading',{directives:[{name:"show",rawName:"v-show",value:(_vm.comments.loading),expression:"comments.loading"}]})],1),_c('section',{staticClass:"body"},[_c('comment-body',{directives:[{name:"show",rawName:"v-show",value:(!_vm.comments.loading),expression:"!comments.loading"}],attrs:{"comments":_vm.comments.data,"options":_vm.options,"target":_vm.target,"targetId":_vm.id},on:{"reply":_vm.handleReply}})],1),_c('section',{staticClass:"pagination"},[_c('pagination',{attrs:{"page":_vm.comments.params.page,"size":_vm.comments.params.size,"total":_vm.comments.total},on:{"change":_vm.handlePaginationChange}})],1),_c('section',{staticClass:"footer-editor"},[(_vm.editor.visible)?_c('comment-editor',{attrs:{"options":_vm.options,"replyingComment":_vm.replyingComment,"target":_vm.target,"targetId":_vm.id},on:{"close":_vm.handleEditorClose,"created":_vm.handleCommentCreated,"exit":_vm.handleEditorExit,"failed":_vm.handleFailedToCreateComment,"input":_vm.handleEditorInput}}):_vm._e()],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Comment.vue?vue&type=template&id=1c416e72&shadow
+// CONCATENATED MODULE: ./src/components/Comment.vue?vue&type=template&id=5da321d0&shadow
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -5274,12 +5331,12 @@ var CommentBody_component = normalizeComponent(
 )
 
 /* harmony default export */ var CommentBody = (CommentBody_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CommentNode.vue?vue&type=template&id=46626ed7&
-var CommentNodevue_type_template_id_46626ed7_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"comment-item",attrs:{"id":_vm.comment.id}},[(_vm.options.comment_gravatar_default)?_c('img',{staticClass:"comment-item-author-avatar",attrs:{"alt":_vm.comment.author,"src":_vm.avatar}}):_vm._e(),_c('div',{staticClass:"comment-item-main"},[_c('div',{staticClass:"comment-item-header"},[_c('span',{staticClass:"header-author"},[(_vm.urlValid)?_c('a',{attrs:{"href":_vm.comment.authorUrl,"target":"_blank"},domProps:{"textContent":_vm._s(_vm.comment.author)}}):_c('a',{attrs:{"href":"javascript:void(0)"},domProps:{"textContent":_vm._s(_vm.comment.author)}})]),(_vm.comment.isAdmin)?_c('span',{staticClass:"header-admin"},[_vm._v("博主")]):_vm._e(),_c('span',{staticClass:"header-time"},[_vm._v(_vm._s(_vm.createTimeAgo))]),_c('a',{attrs:{"href":'#' + _vm.comment.id}},[_c('span',{staticClass:"header-id",attrs:{"id":_vm.comment.id}},[_vm._v(" #"+_vm._s(_vm.comment.id)+" ")])])]),_c('div',{staticClass:"comment-item-content"},[(_vm.hasParent)?_c('a',{attrs:{"href":'#' + _vm.comment.parentId}},[_c('span',{staticClass:"content-at-id"},[_vm._v(" #"+_vm._s(_vm.comment.parentId)+" ")])]):_vm._e(),_c('p',{domProps:{"innerHTML":_vm._s(_vm.compileContent)}})]),_c('div',{staticClass:"comment-item-controls"},[_c('ul',[(_vm.comment.hasChildren)?_c('li',[_c('button',{staticClass:"item-control-more",class:{ active: _vm.hasChildrenBody },on:{"click":_vm.handleMoreClick}},[_vm._v("\n            更多\n          ")])]):_vm._e(),_c('li',[_c('button',{staticClass:"item-control-reply",on:{"click":_vm.handleReplyClick}},[_vm._v("回复")])])])])]),(_vm.hasChildrenBody)?_c('div',{staticClass:"comment-item-children"},[_c('section',{staticClass:"loading"},[_c('comment-loading',{directives:[{name:"show",rawName:"v-show",value:(_vm.commentLoading),expression:"commentLoading"}]})],1),_c('comment-body',{directives:[{name:"show",rawName:"v-show",value:(!_vm.commentLoading),expression:"!commentLoading"}],attrs:{"comments":_vm.children,"options":_vm.options,"target":_vm.target,"targetId":_vm.targetId},on:{"reply":_vm.handleChildReply}})],1):_vm._e()])}
-var CommentNodevue_type_template_id_46626ed7_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CommentNode.vue?vue&type=template&id=9fb27200&
+var CommentNodevue_type_template_id_9fb27200_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"comment-item",attrs:{"id":_vm.comment.id}},[(_vm.options.comment_gravatar_default)?_c('img',{staticClass:"comment-item-author-avatar",attrs:{"alt":_vm.comment.author,"src":_vm.avatar}}):_vm._e(),_c('div',{staticClass:"comment-item-main"},[_c('div',{staticClass:"comment-item-header"},[_c('span',{staticClass:"header-author"},[(_vm.urlValid)?_c('a',{attrs:{"href":_vm.comment.authorUrl,"target":"_blank"},domProps:{"textContent":_vm._s(_vm.comment.author)}}):_c('a',{attrs:{"href":"javascript:void(0)"},domProps:{"textContent":_vm._s(_vm.comment.author)}})]),(_vm.comment.isAdmin)?_c('span',{staticClass:"header-admin"},[_vm._v("博主")]):_vm._e(),_c('span',{staticClass:"header-time"},[_vm._v(_vm._s(_vm.createTimeAgo))]),_c('a',{attrs:{"href":'#' + _vm.comment.id}},[_c('span',{staticClass:"header-id",attrs:{"id":_vm.comment.id}},[_vm._v(" #"+_vm._s(_vm.comment.id)+" ")])])]),_c('div',{staticClass:"comment-item-content"},[(_vm.hasParent)?_c('a',{attrs:{"href":'#' + _vm.comment.parentId}},[_c('span',{staticClass:"content-at-id"},[_vm._v(" #"+_vm._s(_vm.comment.parentId)+" ")])]):_vm._e(),_c('p',{domProps:{"innerHTML":_vm._s(_vm.compileContent)}})]),_c('div',{staticClass:"comment-item-controls"},[_c('ul',[(_vm.comment.hasChildren)?_c('li',[_c('button',{staticClass:"item-control-more",class:{ active: _vm.hasChildrenBody },on:{"click":_vm.handleMoreClick}},[_vm._v("\n            更多\n          ")])]):_vm._e(),_c('li',[_c('button',{staticClass:"item-control-reply",on:{"click":_vm.handleReplyClick}},[_vm._v("回复")])])])])]),(_vm.hasChildrenBody)?_c('div',{staticClass:"comment-item-children"},[_c('section',{staticClass:"loading"},[_c('comment-loading',{directives:[{name:"show",rawName:"v-show",value:(_vm.commentLoading),expression:"commentLoading"}]})],1),_c('comment-body',{directives:[{name:"show",rawName:"v-show",value:(!_vm.commentLoading),expression:"!commentLoading"}],attrs:{"comments":_vm.children,"options":_vm.options,"target":_vm.target,"targetId":_vm.targetId},on:{"reply":_vm.handleChildReply}})],1):_vm._e()])}
+var CommentNodevue_type_template_id_9fb27200_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CommentNode.vue?vue&type=template&id=46626ed7&
+// CONCATENATED MODULE: ./src/components/CommentNode.vue?vue&type=template&id=9fb27200&
 
 // EXTERNAL MODULE: ./node_modules/@halo-dev/content-api/lib/index.js
 var lib = __webpack_require__("c256");
@@ -5423,23 +5480,7 @@ var apiClient = new lib["ContentApiClient"](haloRestApiClient);
 
       this.children = [];
       this.commentLoading = true;
-      var client;
-
-      switch (this.target) {
-        case 'posts':
-          client = api_client.post;
-          break;
-
-        case 'sheets':
-          client = api_client.sheet;
-          break;
-
-        case 'journals':
-          client = api_client.journal;
-          break;
-      }
-
-      client.listChildrenComments(this.targetId, this.comment.id).then(function (response) {
+      api_client.comment.listChildren(this.target, this.targetId, this.comment.id).then(function (response) {
         _this.children = response.data;
       }).finally(function () {
         _this.commentLoading = false;
@@ -5470,8 +5511,8 @@ function CommentNode_injectStyles (context) {
 
 var CommentNode_component = normalizeComponent(
   components_CommentNodevue_type_script_lang_js_,
-  CommentNodevue_type_template_id_46626ed7_render,
-  CommentNodevue_type_template_id_46626ed7_staticRenderFns,
+  CommentNodevue_type_template_id_9fb27200_render,
+  CommentNodevue_type_template_id_9fb27200_staticRenderFns,
   false,
   CommentNode_injectStyles,
   null,
@@ -5480,8 +5521,8 @@ var CommentNode_component = normalizeComponent(
 )
 
 /* harmony default export */ var CommentNode = (CommentNode_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CommentEditor.vue?vue&type=template&id=3a5123a6&
-var CommentEditorvue_type_template_id_3a5123a6_render = function () {
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/CommentEditor.vue?vue&type=template&id=2c3e45f1&
+var CommentEditorvue_type_template_id_2c3e45f1_render = function () {
 var this$1 = this;
 var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"modal-fade"}},[_c('div',{staticClass:"comment-modal",attrs:{"autofocus":""},on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }return _vm.close.apply(null, arguments)},"~keydown":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"esc",27,$event.key,["Esc","Escape"])){ return null; }return _vm.close.apply(null, arguments)}}},[_c('div',{staticClass:"comment-modal-container"},[_c('div',{staticClass:"comment-poster-editor-emoji"},[_c('VEmojiPicker',{directives:[{name:"show",rawName:"v-show",value:(_vm.emojiPicker.visible),expression:"emojiPicker.visible"}],attrs:{"pack":_vm.emojiPicker.pack,"labelSearch":"搜索表情"},on:{"select":_vm.handleSelectEmoji}})],1),_c('div',{staticClass:"comment-poster-container active"},[_c('ul',{staticClass:"comment-poster-controls"},[_c('li',{staticClass:"poster-item-close"},[_c('span',{staticClass:"editor-btn-close",on:{"click":_vm.exit}},[_vm._v("×")])])]),_c('div',{staticClass:"comment-poster-main"},[_c('div',{staticClass:"comment-poster-main-body"},[(_vm.options.comment_gravatar_default)?_c('img',{staticClass:"comment-poster-body-avatar",attrs:{"alt":_vm.comment.author,"src":_vm.avatar}}):_vm._e(),_c('div',{staticClass:"comment-poster-body-content"},[_c('ul',{staticClass:"comment-poster-body-header"},[_c('li',{staticClass:"header-item-nickname"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.comment.author),expression:"comment.author"}],ref:"authorInput",attrs:{"placeholder":"昵称 *","type":"text"},domProps:{"value":(_vm.comment.author)},on:{"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.comment, "author", $event.target.value)},_vm.handleAuthorInput]}}),_c('span')]),_c('li',{staticClass:"header-item-email"},[_c('CommentInput',{attrs:{"placeholder":'邮箱 *',"suffixFlag":'@',"suggestionList":[
                       { id: 1, suffix: '@qq.com' },
@@ -5492,10 +5533,10 @@ var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transi
                       { id: 1, prefix: 'http://' },
                       { id: 2, prefix: 'https://' }
                     ]},model:{value:(_vm.comment.authorUrl),callback:function ($$v) {_vm.$set(_vm.comment, "authorUrl", $$v)},expression:"comment.authorUrl"}})],1)]),(_vm.replyingComment)?_c('span',{staticClass:"comment-poster-body-reply"},[_vm._v("\n                回复：@"+_vm._s(_vm.replyingComment.author)+" "),_c('small',[_vm._v("#"+_vm._s(_vm.replyingComment.id))])]):_vm._e(),_c('div',{staticClass:"comment-poster-body-editor"},[_c('div',{staticClass:"comment-poster-editor-wrapper"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.comment.content),expression:"comment.content"}],ref:"contentInput",style:(_vm.replyingComment == null ? 'height: 146px;' : 'height: 128px;'),attrs:{"placeholder":"撰写评论...（1000 个字符内）"},domProps:{"value":(_vm.comment.content)},on:{"focus":function () { return (this$1.emojiPicker.visible = false); },"input":[function($event){if($event.target.composing){ return; }_vm.$set(_vm.comment, "content", $event.target.value)},_vm.handleContentInput]}})]),_c('ul',{staticClass:"comment-poster-editor-controls"},[_c('li',{staticClass:"editor-item-reply mobile-show"},[_c('button',{staticClass:"editor-btn-reply",attrs:{"disabled":!_vm.commentValid,"type":"button"},on:{"click":_vm.handleSubmitClick}},[_vm._v("\n                      评论\n                    ")])]),_c('li',{staticClass:"editor-item-emoji"},[_c('button',{staticClass:"editor-btn-emoji",attrs:{"type":"button"},on:{"click":function($event){_vm.emojiPicker.visible = !_vm.emojiPicker.visible}}},[_vm._v("\n                      表情\n                    ")])])])])])])])])])])])}
-var CommentEditorvue_type_template_id_3a5123a6_staticRenderFns = []
+var CommentEditorvue_type_template_id_2c3e45f1_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/CommentEditor.vue?vue&type=template&id=3a5123a6&
+// CONCATENATED MODULE: ./src/components/CommentEditor.vue?vue&type=template&id=2c3e45f1&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3ef1c7bb-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/EmojiPicker/VEmojiPicker.vue?vue&type=template&id=1a4101ac&
 var VEmojiPickervue_type_template_id_1a4101ac_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"EmojiPicker"}},[(_vm.showCategory)?_c('Categories',{on:{"select":function($event){return _vm.onChangeCategory($event)}}}):_vm._e(),(_vm.showSearch)?_c('InputSearch',{attrs:{"placeholder":_vm.labelSearch},model:{value:(_vm.filterEmoji),callback:function ($$v) {_vm.filterEmoji=$$v},expression:"filterEmoji"}}):_vm._e(),_c('EmojiList',{attrs:{"data":_vm.emojis,"category":_vm.category,"filter":_vm.filterEmoji,"emojisByRow":_vm.emojisByRow,"continuousList":_vm.continuousList},on:{"select":function($event){return _vm.onSelectEmoji($event)}}})],1)}
@@ -6550,23 +6591,7 @@ var CommentInput_component = normalizeComponent(
         this.comment.parentId = this.replyingComment.id;
       }
 
-      var client;
-
-      switch (this.target) {
-        case 'posts':
-          client = api_client.post;
-          break;
-
-        case 'sheets':
-          client = api_client.sheet;
-          break;
-
-        case 'journals':
-          client = api_client.journal;
-          break;
-      }
-
-      client.comment(this.comment).then(function (response) {
+      api_client.comment.create(this.target, this.comment).then(function (response) {
         // clear comment
         _this3.comment.content = null; // Emit a created event
 
@@ -6596,8 +6621,8 @@ if (style0.__inject__) style0.__inject__(context)
 
 var CommentEditor_component = normalizeComponent(
   components_CommentEditorvue_type_script_lang_js_,
-  CommentEditorvue_type_template_id_3a5123a6_render,
-  CommentEditorvue_type_template_id_3a5123a6_staticRenderFns,
+  CommentEditorvue_type_template_id_2c3e45f1_render,
+  CommentEditorvue_type_template_id_2c3e45f1_staticRenderFns,
   false,
   CommentEditor_injectStyles,
   null,
@@ -7005,19 +7030,7 @@ Object.keys(_components).forEach(function (key) {
 
       this.comments.data = [];
       this.comments.loading = true;
-      var client = api_client.post;
-
-      switch (this.target) {
-        case 'sheets':
-          client = api_client.sheet;
-          break;
-
-        case 'journals':
-          client = api_client.journal;
-          break;
-      }
-
-      client.listTopComments(this.id, this.comments.params).then(function (response) {
+      api_client.comment.listTopComments(this.target, this.id, this.comments.params).then(function (response) {
         _this.comments.data = response.data.content;
         _this.comments.total = response.data.total;
       }).finally(function () {
@@ -8805,12 +8818,6 @@ class JournalClient {
         });
         return this.client.get(path, {});
     }
-    listChildrenComments(journalId, commentParentId, sort) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `journals/${journalId}/comments/${commentParentId}/children`,
-        });
-        return this.client.get(path, { sort });
-    }
     get(journalId) {
         const path = (0, url_1.buildPath)({
             endpointName: `journals/${journalId}`,
@@ -8824,30 +8831,6 @@ class JournalClient {
             });
             yield this.client.post(path, {});
         });
-    }
-    listCommentsAsView(journalId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `journals/${journalId}/comments/list_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listCommentsAsTopView(journalId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `journals/${journalId}/comments/top_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listCommentsAsTreeView(journalId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `journals/${journalId}/comments/tree_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    comment(params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: 'journals/comments',
-        });
-        return this.client.post(path, Object.assign({}, params));
     }
 }
 exports.JournalClient = JournalClient;
@@ -12458,7 +12441,7 @@ module.exports = __webpack_require__("d38f");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserClient = exports.ThemeClient = exports.TagClient = exports.StatisticClient = exports.SheetClient = exports.PostClient = exports.PhotoClient = exports.OptionClient = exports.MenuClient = exports.LinkClient = exports.JournalClient = exports.CategoryClient = exports.ArchiveClient = void 0;
+exports.CommentClient = exports.UserClient = exports.ThemeClient = exports.TagClient = exports.StatisticClient = exports.SheetClient = exports.PostClient = exports.PhotoClient = exports.OptionClient = exports.MenuClient = exports.LinkClient = exports.JournalClient = exports.CategoryClient = exports.ArchiveClient = void 0;
 var ArchiveClient_1 = __webpack_require__("207f");
 Object.defineProperty(exports, "ArchiveClient", { enumerable: true, get: function () { return ArchiveClient_1.ArchiveClient; } });
 var CategoryClient_1 = __webpack_require__("f482");
@@ -12485,6 +12468,8 @@ var ThemeClient_1 = __webpack_require__("5b7d");
 Object.defineProperty(exports, "ThemeClient", { enumerable: true, get: function () { return ThemeClient_1.ThemeClient; } });
 var UserClient_1 = __webpack_require__("5b15");
 Object.defineProperty(exports, "UserClient", { enumerable: true, get: function () { return UserClient_1.UserClient; } });
+var CommentClient_1 = __webpack_require__("3cb6");
+Object.defineProperty(exports, "CommentClient", { enumerable: true, get: function () { return CommentClient_1.CommentClient; } });
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -16285,36 +16270,6 @@ class SheetClient {
             endpointName: 'sheets/slug',
         });
         return this.client.get(path, Object.assign({ slug }, params));
-    }
-    listTopComments(sheetId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `sheets/${sheetId}/comments/top_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listChildrenComments(sheetId, commentParentId, sort) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `sheets/${sheetId}/comments/${commentParentId}/children`,
-        });
-        return this.client.get(path, { sort });
-    }
-    listCommentsAsTree(sheetId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `sheets/${sheetId}/comments/tree_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    listComments(sheetId, params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: `sheets/${sheetId}/comments/list_view`,
-        });
-        return this.client.get(path, Object.assign({}, params));
-    }
-    comment(params) {
-        const path = (0, url_1.buildPath)({
-            endpointName: 'sheets/comments',
-        });
-        return this.client.post(path, Object.assign({}, params));
     }
 }
 exports.SheetClient = SheetClient;

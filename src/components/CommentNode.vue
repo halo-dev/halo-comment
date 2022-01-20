@@ -127,22 +127,8 @@ export default {
       this.children = []
       this.commentLoading = true
 
-      let client
-
-      switch (this.target) {
-        case 'posts':
-          client = apiClient.post
-          break
-        case 'sheets':
-          client = apiClient.sheet
-          break
-        case 'journals':
-          client = apiClient.journal
-          break
-      }
-
-      client
-        .listChildrenComments(this.targetId, this.comment.id)
+      apiClient.comment
+        .listChildren(this.target, this.targetId, this.comment.id)
         .then(response => {
           this.children = response.data
         })

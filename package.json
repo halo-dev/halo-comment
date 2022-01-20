@@ -22,7 +22,7 @@
   },
   "homepage": "https://halo.run",
   "dependencies": {
-    "@halo-dev/content-api": "^1.0.0-alpha.46",
+    "@halo-dev/content-api": "^1.0.0-alpha.47",
     "core-js": "^2.6.12",
     "marked": "^4.0.10",
     "md5": "^2.3.0",
