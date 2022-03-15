@@ -7,7 +7,6 @@ specifiers:
   '@vue/cli-plugin-babel': ~5.0.3
   '@vue/cli-plugin-eslint': ~5.0.3
   '@vue/cli-service': ~5.0.3
-  core-js: ^2.6.12
   eslint: ^7.32.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.0.0
@@ -24,7 +23,6 @@ specifiers:
 
 dependencies:
   '@halo-dev/content-api': 1.0.0-alpha.50
-  core-js: 2.6.12
   marked: 4.0.12
   md5: 2.3.0
   vue: 2.6.14
@@ -2984,12 +2982,6 @@ packages:
       browserslist: 4.19.1
       semver: 7.0.0
     dev: true
-
-  /core-js/2.6.12:
-    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
-    requiresBuild: true
-    dev: false
 
   /core-js/3.21.1:
     resolution: {integrity: sha512-FRq5b/VMrWlrmCzwRrpDYNxyHP9BcAZC+xHJaqTgIE5091ZV1NTmyh0sGOg5XqpnHvR0svdy0sv1gWA1zmhxig==}
