@@ -1,67 +1,64 @@
 <template>
-  <div class='halo-comment'>
-    <section class='header' @click='handleOpenEditor()'>
-      <comment-placeholder :comment='editingComment' :options='options' />
+  <div class="halo-comment">
+    <section class="header" @click="handleOpenEditor()">
+      <comment-placeholder :comment="editingComment" :options="options" />
     </section>
-    <section
-      class='
-        comment-alert'
-    >
+    <section class="comment-alert">
       <!-- Info -->
-      <div v-for='(info, index) in infoes' :key='index' class='alert info'>
-        <span class='closebtn' @click='clearAlertClose'>&times;</span>
+      <div v-for="(info, index) in infoes" :key="index" class="alert info">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ info }}</strong>
       </div>
 
       <!-- Success -->
-      <div v-for='(success, index) in successes' :key='index' class='alert success'>
-        <span class='closebtn' @click='clearAlertClose'>&times;</span>
+      <div v-for="(success, index) in successes" :key="index" class="alert success">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ success }}</strong>
       </div>
 
       <!-- Warning -->
-      <div v-for='(warning, index) in warnings' :key='index' class='alert warning'>
-        <span class='closebtn' @click='clearAlertClose'>&times;</span>
+      <div v-for="(warning, index) in warnings" :key="index" class="alert warning">
+        <span class="closebtn" @click="clearAlertClose">&times;</span>
         <strong>{{ warning }}</strong>
       </div>
     </section>
 
-    <section class='loading'>
-      <comment-loading v-show='comments.loading' />
+    <section class="loading">
+      <comment-loading v-show="comments.loading" />
     </section>
 
-    <section class='body'>
+    <section class="body">
       <comment-body
-        v-show='!comments.loading'
-        :comments='comments.data'
-        :options='options'
-        :target='target'
-        :targetId='id'
-        @reply='handleReply'
+        v-show="!comments.loading"
+        :comments="comments.data"
+        :options="options"
+        :target="target"
+        :targetId="id"
+        @reply="handleReply"
       />
     </section>
 
-    <section class='pagination'>
+    <section class="pagination">
       <pagination
-        :page='comments.params.page'
-        :size='comments.params.size'
-        :total='comments.total'
-        @change='handlePaginationChange'
+        :page="comments.params.page"
+        :size="comments.params.size"
+        :total="comments.total"
+        @change="handlePaginationChange"
       />
     </section>
 
-    <section class='footer-editor'>
+    <section class="footer-editor">
       <comment-editor
-        v-if='editor.visible'
-        :options='options'
-        :replyingComment='replyingComment'
-        :target='target'
-        :targetId='id'
-        @close='handleEditorClose'
-        @created='handleCommentCreated'
-        @exit='handleEditorExit'
-        @failed='handleFailedToCreateComment'
-        @input='handleEditorInput'
+        v-if="editor.visible"
+        :options="options"
+        :replyingComment="replyingComment"
+        :target="target"
+        :targetId="id"
+        @close="handleEditorClose"
+        @created="handleCommentCreated"
+        @exit="handleEditorExit"
+        @failed="handleFailedToCreateComment"
+        @input="handleEditorInput"
       />
     </section>
   </div>
@@ -84,7 +81,7 @@ export default {
       type: String,
       required: false,
       default: 'post',
-      validator: function(value) {
+      validator: function (value) {
         // The value must match one of these strings
         return ['post', 'sheet', 'journal'].indexOf(value) !== -1
       }
@@ -222,7 +219,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 @import '../styles/global';
 
 .modal-fade-enter,

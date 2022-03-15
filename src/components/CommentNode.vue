@@ -75,7 +75,7 @@ export default {
       type: String,
       required: false,
       default: 'posts',
-      validator: function(value) {
+      validator: function (value) {
         // The value must match one of these strings
         return ['posts', 'sheets', 'journals'].indexOf(value) !== -1
       }
