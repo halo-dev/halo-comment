@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-comment": "vue-cli-service build --target wc --name halo-comment 'src/components/Comment.vue'",
+    "build:wc": "vue-cli-service build --target wc --name halo-comment 'src/components/Comment.vue'",
+    "dev:wc": "vue-cli-service build --target wc --name halo-comment 'src/components/Comment.vue' --watch",
     "lint": "vue-cli-service lint"
   },
   "repository": {
@@ -22,26 +23,26 @@
   },
   "homepage": "https://halo.run",
   "dependencies": {
-    "@halo-dev/content-api": "^1.0.0-alpha.50",
+    "@halo-dev/content-api": "^1.0.0",
     "marked": "^4.0.12",
     "md5": "^2.3.0",
     "vue": "^2.6.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.7",
+    "@babel/core": "^7.17.8",
     "@babel/eslint-parser": "^7.17.0",
-    "@vue/cli-plugin-babel": "~5.0.3",
-    "@vue/cli-plugin-eslint": "~5.0.3",
-    "@vue/cli-service": "~5.0.3",
+    "@vue/cli-plugin-babel": "~5.0.4",
+    "@vue/cli-plugin-eslint": "~5.0.4",
+    "@vue/cli-service": "~5.0.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.5.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
-    "node-sass": "^4.14.1",
-    "prettier": "^2.5.1",
-    "sass-loader": "^7.3.1",
+    "prettier": "^2.6.0",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
     "vue-template-compiler": "^2.6.14"
   },
   "browserslist": [
